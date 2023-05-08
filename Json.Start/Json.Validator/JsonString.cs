@@ -56,6 +56,19 @@ namespace Json
             return false;
         }
 
+        public static bool ContainEscapedReverseSolidiusMark(string value)
+        {
+            for (int i = 0; i < value.Length - 1; i++)
+            {
+                if (value[i] == '\\' && value[i + 1] == '\\')
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public static string Quoted(string value)
         {
             return "\"" + value.Replace("\\", "\\\\").Replace("\"", "\\\"") + "\"";

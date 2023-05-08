@@ -59,10 +59,10 @@ namespace Json.Facts
             Assert.True(IsJsonString(Quoted(@"\""a\"" b")) && ContainEscapedQuotationMark((@"\""a\"" b")));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanContainEscapedReverseSolidus()
+        [Fact]
+        public void IsJsonString_CanContainEscapedReverseSolidus_ShouldReturnTrue()
         {
-            Assert.True(IsJsonString(Quoted(@"a \\ b")));
+            Assert.True(IsJsonString(Quoted(@"a \\ b")) && ContainEscapedReverseSolidiusMark(@"a \\ b"));
         }
 
         [Fact(Skip = "Remove this Skip as you implement")]
