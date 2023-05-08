@@ -30,13 +30,13 @@ namespace Json.Facts
         }
 
         [Fact]
-        public void IsJsonString_IsAnEmptyString_ShouldReturnFalse()
+        public void IsJsonString_AnEmptyStringIsNotAJsonString_ShouldReturnFalse()
         {
             Assert.False(IsJsonString(string.Empty));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void IsAnEmptyDoubleQuotedString()
+        [Fact]
+        public void IsJsonString_IsAnEmptyDoubleQuotedString_ShouldReturnTrue()
         {
             Assert.True(IsJsonString(Quoted(string.Empty)));
         }
