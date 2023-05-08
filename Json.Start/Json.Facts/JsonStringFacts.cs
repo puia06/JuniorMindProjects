@@ -6,19 +6,19 @@ namespace Json.Facts
     public class JsonStringFacts
     {
         [Fact]
-        public void IsWrappedInDoIsJsonString_IsWrappedInDoubleQuotes_ShouldReturnTrue()
+        public void IsJsonString_IsWrappedInDoubleQuotes_ShouldReturnTrue()
         {
             Assert.True(IsJsonString(Quoted("abc")));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void AlwaysStartsWithQuotes()
+        [Fact]
+        public void IsJsonString_AlwaysStartsWithQuotse_ShouldReturnFalse()
         {
             Assert.False(IsJsonString("abc\""));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void AlwaysEndsWithQuotes()
+        [Fact]
+        public void IsJsonString_AlwaysEndsWithQuotes_ShouldReturnFalse()
         {
             Assert.False(IsJsonString("\"abc"));
         }
