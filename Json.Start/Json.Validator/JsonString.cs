@@ -7,6 +7,7 @@ namespace Json
         public static bool IsJsonString(string input)
         {
             return !IsNull(input) &&
+                    HasContent(input) &&
                     IsDoubleQuoted(input);
         }
 
@@ -23,6 +24,11 @@ namespace Json
         private static bool IsNull(string value)
         {
             return value == null;
+        }
+
+        private static bool HasContent(string value)
+        {
+            return value != string.Empty;
         }
     }
 }
