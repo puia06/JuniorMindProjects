@@ -6,7 +6,7 @@ namespace Json.Facts
     public class JsonStringFacts
     {
         [Fact]
-        public void IsWrappedInDoubleQuotes()
+        public void IsWrappedInDoIsJsonString_IsWrappedInDoubleQuotes_ShouldReturnTrue()
         {
             Assert.True(IsJsonString(Quoted("abc")));
         }
