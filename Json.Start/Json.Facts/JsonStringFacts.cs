@@ -24,7 +24,7 @@ namespace Json.Facts
         }
 
         [Fact]
-        public void IsNotNull()
+        public void IsJsonString_IsNull_ShouldReturnFalse()
         {
             Assert.False(IsJsonString(null));
         }
