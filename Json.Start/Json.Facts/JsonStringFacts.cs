@@ -53,10 +53,10 @@ namespace Json.Facts
             Assert.True(IsJsonString(Quoted("⛅⚾"))  && ContainLargeUnicodeCharacters("⛅⚾"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanContainEscapedQuotationMark()
+        [Fact]
+        public void IsJsonString_CanContainEscapedQuotationMark_ShouldReturnTrue()
         {
-            Assert.True(IsJsonString(Quoted(@"\""a\"" b")));
+            Assert.True(IsJsonString(Quoted(@"\""a\"" b")) && ContainEscapedQuotationMark((@"\""a\"" b")));
         }
 
         [Fact(Skip = "Remove this Skip as you implement")]
