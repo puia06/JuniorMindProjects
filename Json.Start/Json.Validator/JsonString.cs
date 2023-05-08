@@ -6,7 +6,17 @@ namespace Json
     {
         public static bool IsJsonString(string input)
         {
-            throw new NotImplementedException();
+            return IsDoubleQuoted(input);
+        }
+
+        public static string Quoted(string value)
+        {
+            return "\"" + value.Replace("\\", "\\\\").Replace("\"", "\\\"") + "\"";
+        }
+
+        private static bool IsDoubleQuoted(string value)
+        {
+            return value[0] == '"' && value[value.Length - 1] == '"';
         }
     }
 }
