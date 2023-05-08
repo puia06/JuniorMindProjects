@@ -30,7 +30,7 @@ namespace Json.Facts
         }
 
         [Fact]
-        public void IsNotAnEmptyString()
+        public void IsJsonString_IsAnEmptyString_ShouldReturnFalse()
         {
             Assert.False(IsJsonString(string.Empty));
         }
