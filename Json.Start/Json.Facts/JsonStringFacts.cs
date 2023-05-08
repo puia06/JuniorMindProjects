@@ -41,10 +41,10 @@ namespace Json.Facts
             Assert.True(IsJsonString(Quoted(string.Empty)));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
+        [Fact]
         public void DoesNotContainControlCharacters()
         {
-            Assert.False(IsJsonString(Quoted("a\nb\rc")));
+            Assert.False(IsJsonString(Quoted("a\nb\rc")) && ContainControlCharacter("a\nb\rc"));
         }
 
         [Fact(Skip = "Remove this Skip as you implement")]

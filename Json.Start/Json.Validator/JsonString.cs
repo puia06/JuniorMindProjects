@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace Json
 {
@@ -9,6 +10,21 @@ namespace Json
             return !IsNull(input) &&
                     HasContent(input) &&
                     IsDoubleQuoted(input);
+        }
+
+        public static bool ContainControlCharacter(string value)
+        {
+            char[] letters = { 'b', 'f', 'n', 'r', 't', '/', '\\', '\"', 'u' };
+
+            for (int i = 0; i < value.Length; i++)
+            {
+                if (value[i] == '\\' && letters.Contains(value[i + 1]))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public static string Quoted(string value)
