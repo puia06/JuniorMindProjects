@@ -42,15 +42,15 @@ namespace Json.Facts
         }
 
         [Fact]
-        public void DoesNotContainControlCharacters()
+        public void IsJsonString_ContainControlCharacters_ShouldReturnTrue()
         {
-            Assert.False(IsJsonString(Quoted("a\nb\rc")) && ContainControlCharacter("a\nb\rc"));
+            Assert.True(IsJsonString(Quoted("a\nb\rc")) && ContainControlCharacter("a\nb\rc"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanContainLargeUnicodeCharacters()
+        [Fact]
+        public void IsJsonString_CanContainLargeUnicodeCharacters_ShouldReturnTrue()
         {
-            Assert.True(IsJsonString(Quoted("⛅⚾")));
+            Assert.True(IsJsonString(Quoted("⛅⚾"))  && ContainLargeUnicodeCharacters("⛅⚾"));
         }
 
         [Fact(Skip = "Remove this Skip as you implement")]

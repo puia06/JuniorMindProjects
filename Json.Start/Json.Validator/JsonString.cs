@@ -1,10 +1,13 @@
 using System;
+using System.Globalization;
 using System.Linq;
 
 namespace Json
 {
     public static class JsonString
     {
+        const int MaxASCIIValue = 127;
+
         public static bool IsJsonString(string input)
         {
             return !IsNull(input) &&
@@ -16,9 +19,22 @@ namespace Json
         {
             char[] letters = { 'b', 'f', 'n', 'r', 't', '/', '\\', '\"', 'u' };
 
-            for (int i = 0; i < value.Length; i++)
+            for (int i = 0; i < value.Length - 1; i++)
             {
                 if (value[i] == '\\' && letters.Contains(value[i + 1]))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool ContainLargeUnicodeCharacters(string value)
+        {
+            foreach (char c in value)
+            {
+                if (c > MaxASCIIValue)
                 {
                     return true;
                 }
