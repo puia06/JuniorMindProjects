@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Json
 {
@@ -15,19 +16,27 @@ namespace Json
                     IsDoubleQuoted(input);
         }
 
-        public static bool ContainControlCharacter(string value)
+        public static bool ContainValidControlCharacter(string value)
         {
-            char[] letters = { 'b', 'f', 'n', 'r', 't', '/', '\\', '\"', 'u' };
+            const int minUnicodeDigits = 4;
+            const int firstUnicodIndex = 2;
+            char[] characters = { 'b', 'f', 'n', 'r', 't', '/', '\\', '\"', 'u' };
+            int count = 0;
 
             for (int i = 0; i < value.Length - 1; i++)
             {
-                if (value[i] == '\\' && letters.Contains(value[i + 1]))
+                if (value[i] == '\\' && characters.Contains(value[i + 1]) && i != value.Length - 1)
                 {
-                    return true;
+                    count++;
+                }
+
+                if (value[i] == '\\' && value[i + 1] == 'u' && !ValidHexaDec(value, i + firstUnicodIndex, i + 1 + minUnicodeDigits))
+                {
+                    return false;
                 }
             }
 
-            return false;
+            return count > 0;
         }
 
         public static bool ContainLargeUnicodeCharacters(string value)
@@ -43,11 +52,6 @@ namespace Json
             return false;
         }
 
-        public static string Quoted(string value)
-        {
-            return "\"" + value.Replace("\\", "\\\\").Replace("\"", "\\\"") + "\"";
-        }
-
         private static bool IsDoubleQuoted(string value)
         {
             return value[0] == '"' && value[value.Length - 1] == '"';
@@ -61,6 +65,32 @@ namespace Json
         private static bool HasContent(string value)
         {
             return value != string.Empty;
+        }
+
+        private static bool ValidHexaDec(string value, int start, int end)
+        {
+            if (end > value.Length - 1)
+            {
+                return false;
+            }
+
+            while (start <= end)
+            {
+                if (value[start] >= '0' && value[start] <= '9')
+                {
+                    start++;
+                }
+                else if (value[start] >= 'a' && value[start] <= 'f' || value[start] >= 'A' && value[start] <= 'F')
+                {
+                    start++;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
