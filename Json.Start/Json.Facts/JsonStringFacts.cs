@@ -132,6 +132,12 @@ namespace Json.Facts
             Assert.False(IsJsonString(Quoted(@"a\u123")) && ContainValidControlCharacter(@"a\u123"));
         }
 
+        [Fact]
+        public void IsJsonStringt_InvalidHexNumber_ShouldReturnFalse()
+        {
+            Assert.False(IsJsonString(Quoted(@"a\u123z io")) && ContainValidControlCharacter(@"a\u123z io"));
+        }
+
         public static string Quoted(string text)
             => $"\"{text}\"";
     }
