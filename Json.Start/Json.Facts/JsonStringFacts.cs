@@ -5,131 +5,137 @@ namespace Json.Facts
 {
     public class JsonStringFacts
     {
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void IsWrappedInDoubleQuotes()
+        [Fact]
+        public void IsJsonString_IsWrappedInDoubleQuotes_ShouldReturnTrue()
         {
             Assert.True(IsJsonString(Quoted("abc")));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void AlwaysStartsWithQuotes()
+        [Fact]
+        public void IsJsonString_AlwaysStartsWithQuotse_ShouldReturnFalse()
         {
             Assert.False(IsJsonString("abc\""));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void AlwaysEndsWithQuotes()
+        [Fact]
+        public void IsJsonString_AlwaysEndsWithQuotes_ShouldReturnFalse()
         {
             Assert.False(IsJsonString("\"abc"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void IsNotNull()
+        [Fact]
+        public void IsJsonString_IsNull_ShouldReturnFalse()
         {
             Assert.False(IsJsonString(null));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void IsNotAnEmptyString()
+        [Fact]
+        public void IsJsonString_AnEmptyStringIsNotAJsonString_ShouldReturnFalse()
         {
             Assert.False(IsJsonString(string.Empty));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void IsAnEmptyDoubleQuotedString()
+        [Fact]
+        public void IsJsonString_IsAnEmptyDoubleQuotedString_ShouldReturnTrue()
         {
             Assert.True(IsJsonString(Quoted(string.Empty)));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void DoesNotContainControlCharacters()
+        [Fact]
+        public void IsJsonString_ContainControlCharacters_ShouldReturnTrue()
         {
-            Assert.False(IsJsonString(Quoted("a\nb\rc")));
+            Assert.True(IsJsonString(Quoted("a\nb\rc")) && ContainValidControlCharacter(@"a\nb\rc"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanContainLargeUnicodeCharacters()
+        [Fact]
+        public void IsJsonString_CanContainLargeUnicodeCharacters_ShouldReturnTrue()
         {
-            Assert.True(IsJsonString(Quoted("⛅⚾")));
+            Assert.True(IsJsonString(Quoted("⛅⚾"))  && ContainLargeUnicodeCharacters("⛅⚾"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanContainEscapedQuotationMark()
+        [Fact]
+        public void IsJsonString_CanContainEscapedQuotationMark_ShouldReturnTrue()
         {
-            Assert.True(IsJsonString(Quoted(@"\""a\"" b")));
+            Assert.True(IsJsonString(Quoted(@"\""a\"" b")) && ContainValidControlCharacter(@"\""a\"" b"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanContainEscapedReverseSolidus()
+        [Fact]
+        public void IsJsonString_CanContainEscapedReverseSolidus_ShouldReturnTrue()
         {
-            Assert.True(IsJsonString(Quoted(@"a \\ b")));
+            Assert.True(IsJsonString(Quoted(@"a \\ b")) && ContainValidControlCharacter(@"a \\ b"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanContainEscapedSolidus()
+        [Fact]
+        public void IsJsonString_CanContainEscapedSolidus_ShouldReturnTrue()
         {
-            Assert.True(IsJsonString(Quoted(@"a \/ b")));
+            Assert.True(IsJsonString(Quoted(@"a \/ b")) && ContainValidControlCharacter(@"a \/ b"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanContainEscapedBackspace()
+        [Fact]
+        public void IsJsonString_CanContainEscapedBackspace_ShouldReturnTrue()
         {
-            Assert.True(IsJsonString(Quoted(@"a \b b")));
+            Assert.True(IsJsonString(Quoted(@"a \b b")) && ContainValidControlCharacter(@"a \b b"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanContainEscapedFormFeed()
+        [Fact]
+        public void IsJsonString_CanContainEscapedFormFeed_ShouldReturnTrue()
         {
-            Assert.True(IsJsonString(Quoted(@"a \f b")));
+            Assert.True(IsJsonString(Quoted(@"a \f b")) && ContainValidControlCharacter(@"a \f b"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanContainEscapedLineFeed()
+        [Fact]
+        public void IsJsonString_CanContainEscapedLineFeed__ShouldReturnTrue()
         {
-            Assert.True(IsJsonString(Quoted(@"a \n b")));
+            Assert.True(IsJsonString(Quoted(@"a \n b")) && ContainValidControlCharacter(@"a \n b"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanContainEscapedCarrigeReturn()
+        [Fact]
+        public void IsJsonString_CanContainEscapedCarrigeReturn_ShouldReturnTrue()
         {
-            Assert.True(IsJsonString(Quoted(@"a \r b")));
+            Assert.True(IsJsonString(Quoted(@"a \r b")) && ContainValidControlCharacter(@"a \r b"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanContainEscapedHorizontalTab()
+        [Fact]
+        public void IsJsonString_CanContainEscapedHorizontalTab_ShouldReturnTrue()
         {
-            Assert.True(IsJsonString(Quoted(@"a \t b")));
+            Assert.True(IsJsonString(Quoted(@"a \t b")) && ContainValidControlCharacter(@"a \t b"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanContainEscapedUnicodeCharacters()
+        [Fact]
+        public void IsJsonString_CanContainEscapedUnicodeCharacters_ShouldReturnTrue()
         {
-            Assert.True(IsJsonString(Quoted(@"a \u26Be b")));
+            Assert.True(IsJsonString(Quoted(@"a \u26Be b")) && ContainValidControlCharacter(@"a \u26Be b"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanContainAnyMultipleEscapeSequences()
+        [Fact]
+        public void IsJsonString_CanContainAnyMultipleEscapeSequences_ShouldReturnTrue()
         {
-            Assert.True(IsJsonString(Quoted(@"\\\u1212\n\t\r\\\b")));
+            Assert.True(IsJsonString(Quoted(@"\\\u1212\n\t\r\\\b")) && ContainValidControlCharacter(@"\\\u1212\n\t\r\\\b"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void DoesNotContainUnrecognizedExcapceCharacters()
+        [Fact]
+        public void IsJsonString_DoesNotContainUnrecognizedExcapceCharacters_ShouldReturnFalse()
         {
-            Assert.False(IsJsonString(Quoted(@"a\x")));
+            Assert.False(IsJsonString(Quoted(@"a\x")) && ContainValidControlCharacter(@"a\x"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void DoesNotEndWithReverseSolidus()
+        [Fact]
+        public void IsJsonString_DoesNotEndWithReverseSolidus_ShouldReturnFalse()
         {
-            Assert.False(IsJsonString(Quoted(@"a\")));
+            Assert.False(IsJsonString(Quoted(@"a\")) && ContainValidControlCharacter(@"a\x"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void DoesNotEndWithAnUnfinishedHexNumber()
+        [Fact]
+        public void IsJsonStringt_EndWithAnUnfinishedHexNumber_ShouldReturnFalse()
         {
-            Assert.False(IsJsonString(Quoted(@"a\u")));
-            Assert.False(IsJsonString(Quoted(@"a\u123")));
+            Assert.False(IsJsonString(Quoted(@"a\u")) && ContainValidControlCharacter(@"a\u"));
+            Assert.False(IsJsonString(Quoted(@"a\u123")) && ContainValidControlCharacter(@"a\u123"));
+        }
+
+        [Fact]
+        public void IsJsonStringt_InvalidHexNumber_ShouldReturnFalse()
+        {
+            Assert.False(IsJsonString(Quoted(@"a\u123z io")) && ContainValidControlCharacter(@"a\u123z io"));
         }
 
         public static string Quoted(string text)

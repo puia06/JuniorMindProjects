@@ -6,145 +6,151 @@ namespace Json.Facts
 {
     public class JsonNumberFacts
     {
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanBeZero()
+        [Fact]
+        public void IsJsonNumber_CanBeZero_ShouldReturnTrue()
         {
             Assert.True(IsJsonNumber("0"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void DoesNotContainLetters()
+        [Fact]
+        public void IsJsonNumber_ContainLetters_ShouldReturnFalse()
         {
             Assert.False(IsJsonNumber("a"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanHaveASingleDigit()
+        [Fact]
+        public void IsJsonNumber_CanHaveASingleDigit_ShouldReturnTrue()
         {
             Assert.True(IsJsonNumber("7"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanHaveMultipleDigits()
+        [Fact]
+        public void IsJsonNumber_CanHaveMultipleDigits_ShouldReturnTrue()
         {
             Assert.True(IsJsonNumber("70"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void IsNotNull()
+        [Fact]
+        public void IsJsonNumber_IsNotNull_ShouldReturnFalse()
         {
             Assert.False(IsJsonNumber(null));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void IsNotAnEmptyString()
+        [Fact]
+        public void IsJsonNumber_IsNotAnEmptyString_ShouldReturnFalse()
         {
             Assert.False(IsJsonNumber(string.Empty));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void DoesNotStartWithZero()
+        [Fact]
+        public void IsJsonNumber_StartWithZero_ShouldReturnFalse()
         {
             Assert.False(IsJsonNumber("07"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanBeNegative()
+        [Fact]
+        public void IsJsonNumber_CanBeNegative_ShouldReturnTrue()
         {
             Assert.True(IsJsonNumber("-26"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanBeMinusZero()
+        [Fact]
+        public void IsJsonNumber_CanBeMinusZero_ShouldReturnTrue()
         {
             Assert.True(IsJsonNumber("-0"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanBeFractional()
+        [Fact]
+        public void IsJsonNumber_CanBeFractional_ShouldReturnTrue()
         {
             Assert.True(IsJsonNumber("12.34"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void TheFractionCanHaveLeadingZeros()
+        [Fact]
+        public void IsJsonNumber_TheFractionCanHaveLeadingZeros_ShouldReturnTrue()
         {
             Assert.True(IsJsonNumber("0.00000001"));
             Assert.True(IsJsonNumber("10.00000001"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void DoesNotEndWithADot()
+        [Fact]
+        public void IsJsonNumber_DoesNotEndWithADot_ShouldReturnFalse()
         {
             Assert.False(IsJsonNumber("12."));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void DoesNotHaveTwoFractionParts()
+        [Fact]
+        public void IsJsonNumber_HaveTwoFractionParts_ShouldReturnFalse()
         {
             Assert.False(IsJsonNumber("12.34.56"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void TheDecimalPartDoesNotAllowLetters()
+        [Fact]
+        public void IsJsonNumber_TheDecimalPartDoesNotAllowLetters_ShouldReturnFalse()
         {
             Assert.False(IsJsonNumber("12.3x"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanHaveAnExponent()
+        [Fact]
+        public void IsJsonNumber_CanHaveAnExponent_ShouldReturnTrue()
         {
             Assert.True(IsJsonNumber("12e3"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void TheExponentCanStartWithCapitalE()
+        [Fact]
+        public void IsJsonNumber_TheExponentCanStartWithCapitalE_ShouldReturnTrue()
         {
             Assert.True(IsJsonNumber("12E3"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void TheExponentCanHavePositive()
+        [Fact]
+        public void IsJsonNumber_TheExponentCanHavePositive_ShouldReturnTrue()
         {
             Assert.True(IsJsonNumber("12e+3"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void TheExponentCanBeNegative()
+        [Fact]
+        public void IsJsonNumber_TheExponentCanBeNegative_ShouldReturnTrue()
         {
             Assert.True(IsJsonNumber("61e-9"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void CanHaveFractionAndExponent()
+        [Fact]
+        public void IsJsonNumber_CanHaveFractionAndExponent_ShouldReturnTrue()
         {
             Assert.True(IsJsonNumber("12.34E3"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void TheExponentDoesNotAllowLetters()
+        [Fact]
+        public void IsJsonNumber_TheExponentDoesNotAllowLetters_ShouldReturnFalse()
         {
             Assert.False(IsJsonNumber("22e3x3"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void DoesNotHaveTwoExponents()
+        [Fact]
+        public void IsJsonNumber_DoesNotHaveTwoExponents_ShouldReturnFalse()
         {
             Assert.False(IsJsonNumber("22e323e33"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void TheExponentIsAlwaysComplete()
+        [Fact]
+        public void IsJsonNumber_TheExponentIsAlwaysComplete_ShouldReturnFalse()
         {
             Assert.False(IsJsonNumber("22e"));
             Assert.False(IsJsonNumber("22e+"));
             Assert.False(IsJsonNumber("23E-"));
         }
 
-        [Fact(Skip = "Remove this Skip as you implement")]
-        public void TheExponentIsAfterTheFraction()
+        [Fact]
+        public void IsJsonNumber_TheExponentIsAfterTheFraction_ShouldReturnFalse()
         {
             Assert.False(IsJsonNumber("22e3.3"));
+        }
+
+        [Fact]
+        public void IsJsonNumber_ContainInvalidSymbols_ShouldReturnFalse()
+        {
+            Assert.False(IsJsonNumber("22$5"));
         }
     }
 }
