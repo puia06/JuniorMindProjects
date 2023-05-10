@@ -1,55 +1,48 @@
 using System;
-using System.Globalization;
 using System.Linq;
-using System.Text.RegularExpressions;
+using System.Reflection;
 
 namespace Json
 {
     public static class JsonString
     {
-        const int MaxASCIIValue = 127;
-
         public static bool IsJsonString(string input)
         {
             return !IsNull(input) &&
                     HasContent(input) &&
-                    IsDoubleQuoted(input);
+                    IsDoubleQuoted(input) &&
+                    CanContainValidControlCharacter(input);
         }
 
-        public static bool ContainValidControlCharacter(string value)
+        private static bool CanContainValidControlCharacter(string value)
         {
             const int minUnicodeDigits = 4;
             const int firstUnicodIndex = 2;
+            int invalidIndexPosition = value.Length - 2;
+            int index = 0;
             char[] characters = { 'b', 'f', 'n', 'r', 't', '/', '\\', '\"', 'u' };
-            int count = 0;
 
-            for (int i = 0; i < value.Length - 1; i++)
+            while (index < value.Length)
             {
-                if (value[i] == '\\' && characters.Contains(value[i + 1]) && i != value.Length - 1)
+                if (value[index] == '\\')
                 {
-                    count++;
+                    if (!characters.Contains(value[index + 1]) || index == invalidIndexPosition)
+                    {
+                        return false;
+                    }
+
+                    if (value[index + 1] == 'u' && !ValidHexaDec(value, index + firstUnicodIndex, index + 1 + minUnicodeDigits))
+                    {
+                        return false;
+                    }
+
+                    index++;
                 }
 
-                if (value[i] == '\\' && value[i + 1] == 'u' && !ValidHexaDec(value, i + firstUnicodIndex, i + 1 + minUnicodeDigits))
-                {
-                    return false;
-                }
+                index++;
             }
 
-            return count > 0;
-        }
-
-        public static bool ContainLargeUnicodeCharacters(string value)
-        {
-            foreach (char c in value)
-            {
-                if (c > MaxASCIIValue)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return true;
         }
 
         private static bool IsDoubleQuoted(string value)
