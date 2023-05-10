@@ -133,9 +133,27 @@ namespace Json.Facts
         }
 
         [Fact]
+        public void IsJsonStringt_EmptySpaceAfterReverseSolidus_ShouldReturnFalse()
+        {
+            Assert.False(IsJsonString(Quoted(@"a\ b abc")));
+        }
+
+        [Fact]
         public void IsJsonStringt_InvalidHexNumber_ShouldReturnFalse()
         {
             Assert.False(IsJsonString(Quoted(@"a\u123z io")));
+        }
+
+        [Fact]
+        public void IsJsonStringt_ContainControlCharactersConsecutively_ShouldReturnTrue()
+        {
+            Assert.True(IsJsonString(Quoted(@"a\b\n\t")));
+        }
+
+        [Fact]
+        public void IsJsonStringt_EndWithValidReverseSolidus_ShouldReturnTrue()
+        {
+            Assert.True(IsJsonString(Quoted(@"abc\\")));
         }
 
         public static string Quoted(string text)
