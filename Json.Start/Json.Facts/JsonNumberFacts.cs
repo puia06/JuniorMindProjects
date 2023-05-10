@@ -104,7 +104,7 @@ namespace Json.Facts
         }
 
         [Fact]
-        public void IsJsonNumber_TheExponentCanHavePositive_ShouldReturnTrue()
+        public void IsJsonNumber_TheExponentCanBePositive_ShouldReturnTrue()
         {
             Assert.True(IsJsonNumber("12e+3"));
         }
@@ -128,7 +128,7 @@ namespace Json.Facts
         }
 
         [Fact]
-        public void IsJsonNumber_DoesNotHaveTwoExponents_ShouldReturnFalse()
+        public void IsJsonNumber_HaveTwoExponents_ShouldReturnFalse()
         {
             Assert.False(IsJsonNumber("22e323e33"));
         }
@@ -151,6 +151,78 @@ namespace Json.Facts
         public void IsJsonNumber_ContainInvalidSymbols_ShouldReturnFalse()
         {
             Assert.False(IsJsonNumber("22$5"));
+        }
+
+        [Fact]
+        public void IsJsonNumber_TheFractionCanBeNegative_ShouldReturnTrue()
+        {
+            Assert.True(IsJsonNumber("-10.001"));
+        }
+
+        [Fact]
+        public void IsJsonNumber_TheExponentCanHaveMultipleDigits_ShouldReturnTrue()
+        {
+            Assert.True(IsJsonNumber("10E123"));
+        }
+
+        [Fact]
+        public void IsJsonNumber_TheExponentCanBePositiveAndHaveMultipleDigits_ShouldReturnTrue()
+        {
+            Assert.True(IsJsonNumber("10E+123"));
+        }
+
+        [Fact]
+        public void IsJsonNumber_TheExponentCanNegativeAndHaveMultipleDigits_ShouldReturnTrue()
+        {
+            Assert.True(IsJsonNumber("10e-123"));
+        }
+
+        [Fact]
+        public void IsJsonNumber_CanBeNegativeAndHaveExponent_ShouldReturnTrue()
+        {
+            Assert.True(IsJsonNumber("-10e+1"));
+        }
+
+        [Fact]
+        public void IsJsonNumber_CanBeNegativeFractionAndHaveExponent_ShouldReturnTrue()
+        {
+            Assert.True(IsJsonNumber("-10.0e+1"));
+        }
+
+        [Fact]
+        public void IsJsonNumber_TheExponentCanBePositiveAndNegative_ShouldReturnFalse()
+        {
+            Assert.False(IsJsonNumber("10e+-1"));
+        }
+
+        [Fact]
+        public void IsJsonNumber_TheExponentCanBeDoubleNegative_ShouldReturnFalse()
+        {
+            Assert.False(IsJsonNumber("10e--1"));
+        }
+
+        [Fact]
+        public void IsJsonNumber_TheExponentCanBeDoublePositive_ShouldReturnFalse()
+        {
+            Assert.False(IsJsonNumber("10e++1"));
+        }
+
+        [Fact]
+        public void IsJsonNumber_PlusSymbolWithoutExponent_ShouldReturnFalse()
+        {
+            Assert.False(IsJsonNumber("10+1"));
+        }
+
+        [Fact]
+        public void IsJsonNumber_MinusSymbolWithoutExponent_ShouldReturnFalse()
+        {
+            Assert.False(IsJsonNumber("10-1"));
+        }
+
+        [Fact]
+        public void IsJsonNumber_CanHaveSymbols_ShouldReturnFalse()
+        {
+            Assert.False(IsJsonNumber("10!1"));
         }
     }
 }

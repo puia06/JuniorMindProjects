@@ -46,7 +46,7 @@ namespace Json
         private static bool IsValidNumber(string input)
         {
             return !EndWithPoint(input) &&
-                   !HaveTwoFractionParts(input) &&
+                   !HaveDuplicateValidSymbols(input) &&
                    HaveValidFormat(input);
         }
 
@@ -63,7 +63,7 @@ namespace Json
             {
                 if (input[i] == 'e' || input[i] == 'E')
                 {
-                    return HaveValidExponent(input, i);
+                   return HaveValidExponent(input, i);
                 }
             }
 
@@ -97,18 +97,24 @@ namespace Json
             return input[input.Length - 1] == '.';
         }
 
-        private static bool HaveTwoFractionParts(string input)
+        private static bool HaveDuplicateValidSymbols(string input)
         {
-            int count = 0;
-            foreach (char c in input)
+            int pointCount = 0;
+            int plusMinusCount = 0;
+            for (int i = 1; i < input.Length; i++)
             {
-                if (c == '.')
+                if (input[i] == '.')
                 {
-                    count++;
+                    pointCount++;
+                }
+
+                if (input[i] == '+' || input[i] == '-')
+                {
+                    plusMinusCount++;
                 }
             }
 
-            return count > 1;
+            return pointCount > 1 || plusMinusCount > 1;
         }
 
         private static bool HaveValidExponent(string input, int index)
@@ -129,7 +135,8 @@ namespace Json
                 {
                     return false;
                 }
-                else if (input[i] == '.')
+
+                if (input[i] == '.')
                 {
                     return false;
                 }
