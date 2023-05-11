@@ -33,7 +33,7 @@ namespace Json
 
             for (int i = 0; i < input.Length - 1; i++)
             {
-                if ((char.IsSymbol(input[i]) || char.IsLetter(input[i])) && !IsValidCharacter(input[i]))
+                if (!IsValidCharacter(input[i]))
                 {
                     return true;
                 }
@@ -52,11 +52,19 @@ namespace Json
             return pointCount > 1 || plusMinusCount > 1;
         }
 
-        private static bool IsValidCharacter(char c)
+        private static bool IsValidCharacter(char a)
         {
-            char[] validcharacters = { 'e', 'E', '+', '-', '.' };
+            char[] validcharacters = { 'e', 'E', '+', '-', '.', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
 
-            return validcharacters.Contains(c);
+            foreach (char c in validcharacters)
+            {
+                if (a == c)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static bool HaveValidFormat(string input)

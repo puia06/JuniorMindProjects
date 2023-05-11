@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 
 namespace Json
 {
@@ -20,7 +19,7 @@ namespace Json
                 if (value[index] == '\\')
                 {
                     index++;
-                    if (!Validator(value, index))
+                    if (!ControlCharacterValidator(value, index))
                     {
                         return false;
                     }
@@ -45,13 +44,12 @@ namespace Json
             return value != string.Empty;
         }
 
-        private static bool Validator(string value, int index)
+        private static bool ControlCharacterValidator(string value, int index)
         {
-            char[] characters = { 'b', 'f', 'n', 'r', 't', '/', '\\', '\"', 'u' };
             int startIndex = index + 1;
             int endIndex = index + 4;
 
-            if (!characters.Contains(value[index]) || index == value.Length - 1)
+            if (!IsControlCharacter(value[index]) || index == value.Length - 1)
             {
                 return false;
             }
@@ -64,25 +62,39 @@ namespace Json
             return true;
         }
 
+        private static bool IsControlCharacter(char a)
+        {
+            char[] characters = { 'b', 'f', 'n', 'r', 't', '/', '\\', '\"', 'u' };
+            foreach (char c in characters)
+            {
+                if (a == c)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private static bool ValidHexaDec(string value, int start, int end)
         {
-            while (start <= end)
+            for (int i = start; i <= end; i++)
             {
-                if (value[start] >= '0' && value[start] <= '9')
-                {
-                    start++;
-                }
-                else if (value[start] >= 'a' && value[start] <= 'f' || value[start] >= 'A' && value[start] <= 'F')
-                {
-                    start++;
-                }
-                else
+                if (!IsHexDigit(value[i]))
                 {
                     return false;
                 }
             }
 
             return true;
+        }
+
+        private static bool IsHexDigit(char c)
+        {
+            bool isvalidnumber = c >= '0' && c <= '9';
+            bool isvalidletter = (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F');
+
+            return isvalidnumber || isvalidletter;
         }
     }
 }
