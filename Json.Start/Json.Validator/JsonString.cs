@@ -15,30 +15,16 @@ namespace Json
 
         private static bool CanContainValidControlCharacter(string value)
         {
-            const int minUnicodeDigits = 4;
-            const int firstUnicodIndex = 2;
-            int invalidIndexPosition = value.Length - 2;
-            int index = 0;
-            char[] characters = { 'b', 'f', 'n', 'r', 't', '/', '\\', '\"', 'u' };
-
-            while (index < value.Length)
+            for (int index = 0; index < value.Length; index++)
             {
                 if (value[index] == '\\')
                 {
-                    if (!characters.Contains(value[index + 1]) || index == invalidIndexPosition)
-                    {
-                        return false;
-                    }
-
-                    if (value[index + 1] == 'u' && !ValidHexaDec(value, index + firstUnicodIndex, index + 1 + minUnicodeDigits))
-                    {
-                        return false;
-                    }
-
                     index++;
+                    if (!Validator(value, index))
+                    {
+                        return false;
+                    }
                 }
-
-                index++;
             }
 
             return true;
@@ -59,13 +45,27 @@ namespace Json
             return value != string.Empty;
         }
 
-        private static bool ValidHexaDec(string value, int start, int end)
+        private static bool Validator(string value, int index)
         {
-            if (end > value.Length - 1)
+            char[] characters = { 'b', 'f', 'n', 'r', 't', '/', '\\', '\"', 'u' };
+            int startIndex = index + 1;
+            int endIndex = index + 4;
+
+            if (!characters.Contains(value[index]) || index == value.Length - 1)
             {
                 return false;
             }
 
+            if (value[index] == 'u' && (endIndex > value.Length - 1 || !ValidHexaDec(value, startIndex, endIndex)))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool ValidHexaDec(string value, int start, int end)
+        {
             while (start <= end)
             {
                 if (value[start] >= '0' && value[start] <= '9')
