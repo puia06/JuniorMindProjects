@@ -54,11 +54,11 @@ namespace Json
 
         private static bool IsValidCharacter(char a)
         {
-            char[] validcharacters = { 'e', 'E', '+', '-', '.', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+            char[] validcharacters = { 'e', 'E', '+', '-', '.' };
 
             foreach (char c in validcharacters)
             {
-                if (a == c)
+                if (a == c || (a >= '0' && a <= '9'))
                 {
                     return true;
                 }

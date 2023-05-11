@@ -475,3 +475,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+Json.Start/Json.Facts/bin
+Json.Start/Json.Validator/bin
+Json.Start/obj
