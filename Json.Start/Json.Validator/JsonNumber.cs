@@ -1,6 +1,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace Json
@@ -11,8 +12,8 @@ namespace Json
         {
             return !IsNull(input) &&
                    !IsEmpty(input) &&
-                   !ContainInvalidLettersAndSymbols(input) &&
-                   IsValidNumber(input);
+                   !ContainInvalidLettersOrSymbols(input) &&
+                   HaveValidFormat(input);
         }
 
         private static bool IsNull(string input)
@@ -25,29 +26,37 @@ namespace Json
             return input == string.Empty;
         }
 
-        private static bool ContainInvalidLettersAndSymbols(string input)
+        private static bool ContainInvalidLettersOrSymbols(string input)
         {
-            for (int i = 0; i < input.Length; i++)
+            int pointCount = 0;
+            int plusMinusCount = 0;
+
+            for (int i = 0; i < input.Length - 1; i++)
             {
-                if (char.IsLetter(input[i]) && (input[i] != 'e' && input[i] != 'E'))
+                if ((char.IsSymbol(input[i]) || char.IsLetter(input[i])) && !IsValidCharacter(input[i]))
                 {
                     return true;
                 }
 
-                if (char.IsSymbol(input[i]) && (input[i] != '+' && input[i] != '-') && input[i] != '.')
+                if (input[i] == '.')
                 {
-                    return true;
+                    pointCount++;
+                }
+
+                if (input[i] == '+' || (input[i] == '-' && i != 0))
+                {
+                    plusMinusCount++;
                 }
             }
 
-            return false;
+            return pointCount > 1 || plusMinusCount > 1;
         }
 
-        private static bool IsValidNumber(string input)
+        private static bool IsValidCharacter(char c)
         {
-            return !EndWithPoint(input) &&
-                   !HaveDuplicateValidSymbols(input) &&
-                   HaveValidFormat(input);
+            char[] validcharacters = { 'e', 'E', '+', '-', '.' };
+
+            return validcharacters.Contains(c);
         }
 
         private static bool HaveValidFormat(string input)
@@ -63,7 +72,7 @@ namespace Json
             {
                 if (input[i] == 'e' || input[i] == 'E')
                 {
-                   return HaveValidExponent(input, i);
+                    return HaveValidExponent(input, i) && i < input.Length - 1 && (input[input.Length - 1] != '+' && input[input.Length - 1] != '-');
                 }
             }
 
@@ -89,7 +98,7 @@ namespace Json
             }
 
             decimal n;
-            return decimal.TryParse(input, out n);
+            return decimal.TryParse(input, out n) && !EndWithPoint(input);
         }
 
         private static bool EndWithPoint(string input)
@@ -97,46 +106,11 @@ namespace Json
             return input[input.Length - 1] == '.';
         }
 
-        private static bool HaveDuplicateValidSymbols(string input)
-        {
-            int pointCount = 0;
-            int plusMinusCount = 0;
-            for (int i = 1; i < input.Length; i++)
-            {
-                if (input[i] == '.')
-                {
-                    pointCount++;
-                }
-
-                if (input[i] == '+' || input[i] == '-')
-                {
-                    plusMinusCount++;
-                }
-            }
-
-            return pointCount > 1 || plusMinusCount > 1;
-        }
-
         private static bool HaveValidExponent(string input, int index)
         {
-            if (index >= input.Length - 1)
-            {
-                return false;
-            }
-
-            if (index == input.Length - 1 - 1 && (input[index + 1] == '+' || input[index + 1] == '-'))
-            {
-                return false;
-            }
-
             for (int i = index + 1; i < input.Length; i++)
             {
-                if (input[i] == 'e' || input[i] == 'E')
-                {
-                    return false;
-                }
-
-                if (input[i] == '.')
+                if (input[i] == 'e' || input[i] == 'E' || input[i] == '.')
                 {
                     return false;
                 }
