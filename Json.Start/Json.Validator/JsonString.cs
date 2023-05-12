@@ -64,16 +64,9 @@ namespace Json
 
         private static bool IsControlCharacter(char a)
         {
-            char[] characters = { 'b', 'f', 'n', 'r', 't', '/', '\\', '\"', 'u' };
-            foreach (char c in characters)
-            {
-                if (a == c)
-                {
-                    return true;
-                }
-            }
+            const string controlcharacters = "bfnrtu/\"\\";
 
-            return false;
+            return controlcharacters.Contains(a);
         }
 
         private static bool ValidHexaDec(string value, int start, int end)
