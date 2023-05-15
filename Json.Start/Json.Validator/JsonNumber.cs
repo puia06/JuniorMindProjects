@@ -9,73 +9,67 @@ namespace Json
 {
     public static class JsonNumber
     {
-        private const string InvalidInput = "Invalid input";
-
         public static bool IsJsonNumber(string input)
         {
-            return IsInteger(Integer(input)) &&
-                   IsFraction(Fraction(input)) &&
-                   IsExponent(Exponent(input));
+            if (IsNull(input))
+            {
+                return false;
+            }
+
+            int decimalIndex = input.IndexOf('.');
+            int exponentIndex = input.IndexOfAny("eE".ToCharArray());
+
+            return IsInteger(Integer(input, decimalIndex, exponentIndex)) &&
+                   IsFraction(Fraction(input, decimalIndex, exponentIndex)) &&
+                   IsExponent(Exponent(input, decimalIndex, exponentIndex));
         }
 
         private static bool IsInteger(string numberString)
         {
-            if (StartWithMinus(numberString))
+            if (numberString.StartsWith('-') && numberString.Length > 1)
             {
                 numberString = numberString.Remove(0, 1);
             }
 
-            return !StartWithZero(numberString) && HasValidContent(numberString);
+            return !(numberString.StartsWith('0') && numberString.Length > 1) && IsDigits(numberString);
         }
 
-        private static string Integer(string input)
+        private static string Integer(string input, int decimalIndex, int exponentIndex)
         {
-            string result = "";
+            int end = input.Length;
 
-            if (IsEmpty(input) || IsNull(input))
+            if (decimalIndex > 0)
             {
-                return InvalidInput;
+                end = decimalIndex;
             }
 
-            foreach (char c in input)
+            if (end != decimalIndex && exponentIndex > 0)
             {
-                if (!IsPoint(c) && !IsExponentChar(c))
-                {
-                    result += c;
-                }
-                else
-                {
-                    break;
-                }
+                end = exponentIndex;
             }
 
-            return result;
+            return SaveResult(input, 0, end);
         }
 
         private static bool IsFraction(string fractionString)
         {
-            return HasValidContent(fractionString);
+            return IsDigits(fractionString);
         }
 
-        private static string Fraction(string input)
+        private static string Fraction(string input, int decimalIndex, int exponentIndex)
         {
-            string result = "";
-            int length = input.Length;
-
-            if (input.Contains('.'))
+            string result = "0";
+            int end = input.Length;
+            if (exponentIndex > 0)
             {
-                int start = input.IndexOf('.') + 1;
-                if (input.Contains('e') || input.Contains('E'))
-                {
-                    length = ExtractExponentIndex(input);
-                }
+                end = exponentIndex;
+            }
 
-                if (start >= length)
-                {
-                    return InvalidInput;
-                }
+            if (decimalIndex > 0)
+            {
+                int start = decimalIndex + 1;
 
-                result = SaveResult(input, start, length);
+                result = SaveResult(input, start, end);
             }
 
             return result;
@@ -83,24 +77,19 @@ namespace Json
 
         private static bool IsExponent(string exponentString)
         {
-            return HasValidContent(exponentString);
+            return IsDigits(exponentString);
         }
 
-        private static string Exponent(string input)
+        private static string Exponent(string input, int decimalIndex, int exponentIndex)
         {
-            string result = "";
+            string result = "0";
 
-            if (input.Contains('e') || input.Contains('E'))
+            if (exponentIndex > 0)
             {
-                int start = ExtractExponentIndex(input) + 1;
-                if (start < input.Length - 1 && IsPlusMinus(input[start]))
+                int start = exponentIndex + 1;
+                if (start < input.Length - 1 && (input[start] == '+' || input[start] == '-'))
                 {
                     start++;
-                }
-
-                if (start >= input.Length)
-                {
-                    return InvalidInput;
                 }
 
                 result = SaveResult(input, start, input.Length);
@@ -109,68 +98,22 @@ namespace Json
             return result;
         }
 
-        private static bool IsEmpty(string input)
-        {
-            return input == string.Empty;
-        }
-
         private static bool IsNull(string input)
         {
             return input == null;
         }
 
-        private static bool HasValidContent(string input)
+        private static bool IsDigits(string input)
         {
             foreach (char c in input)
             {
-                if (c < '0' || c > '9')
+                if (!char.IsDigit(c))
                 {
                     return false;
                 }
             }
 
-            return true;
-        }
-
-        private static bool IsPlusMinus(char a)
-        {
-            return a == '+' || a == '-';
-        }
-
-        private static bool StartWithMinus(string input)
-        {
-            return input[0] == '-' && input.Length > 1;
-        }
-
-        private static bool StartWithZero(string input)
-        {
-            return input[0] == '0' && input.Length > 1;
-        }
-
-        private static bool IsPoint(char c)
-        {
-            return c == '.';
-        }
-
-        private static bool IsExponentChar(char c)
-        {
-            return c == 'e' || c == 'E';
-        }
-
-        private static int ExtractExponentIndex(string input)
-        {
-            int index = 0;
-
-            for (int i = 0; i < input.Length; i++)
-            {
-                if (IsExponentChar(input[i]))
-                {
-                    index = i;
-                    break;
-                }
-            }
-
-            return index;
+            return input.Length > 0;
         }
 
         private static string SaveResult(string input, int startIndex, int endIndex)
