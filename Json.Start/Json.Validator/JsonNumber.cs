@@ -1,24 +1,112 @@
+using Microsoft.CodeAnalysis;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 
 namespace Json
 {
     public static class JsonNumber
     {
+        private const string InvalidInput = "Invalid input";
+
         public static bool IsJsonNumber(string input)
         {
-            return !IsNull(input) &&
-                   !IsEmpty(input) &&
-                   !ContainInvalidLettersOrSymbols(input) &&
-                   HaveValidFormat(input);
+            return IsInteger(Integer(input)) &&
+                   IsFraction(Fraction(input)) &&
+                   IsExponent(Exponent(input));
         }
 
-        private static bool IsNull(string input)
+        private static bool IsInteger(string numberString)
         {
-            return input == null;
+            if (StartWithMinus(numberString))
+            {
+                numberString = numberString.Remove(0, 1);
+            }
+
+            return !StartWithZero(numberString) && HasValidContent(numberString);
+        }
+
+        private static string Integer(string input)
+        {
+            string result = "";
+
+            if (IsEmpty(input) || IsNull(input))
+            {
+                return InvalidInput;
+            }
+
+            foreach (char c in input)
+            {
+                if (!IsPoint(c) && !IsExponentChar(c))
+                {
+                    result += c;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return result;
+        }
+
+        private static bool IsFraction(string fractionString)
+        {
+            return HasValidContent(fractionString);
+        }
+
+        private static string Fraction(string input)
+        {
+            string result = "";
+            int length = input.Length;
+
+            if (input.Contains('.'))
+            {
+                int start = input.IndexOf('.') + 1;
+                if (input.Contains('e') || input.Contains('E'))
+                {
+                    length = ExtractExponentIndex(input);
+                }
+
+                if (start >= length)
+                {
+                    return InvalidInput;
+                }
+
+                result = SaveResult(input, start, length);
+            }
+
+            return result;
+        }
+
+        private static bool IsExponent(string exponentString)
+        {
+            return HasValidContent(exponentString);
+        }
+
+        private static string Exponent(string input)
+        {
+            string result = "";
+
+            if (input.Contains('e') || input.Contains('E'))
+            {
+                int start = ExtractExponentIndex(input) + 1;
+                if (start < input.Length - 1 && IsPlusMinus(input[start]))
+                {
+                    start++;
+                }
+
+                if (start >= input.Length)
+                {
+                    return InvalidInput;
+                }
+
+                result = SaveResult(input, start, input.Length);
+            }
+
+            return result;
         }
 
         private static bool IsEmpty(string input)
@@ -26,105 +114,74 @@ namespace Json
             return input == string.Empty;
         }
 
-        private static bool ContainInvalidLettersOrSymbols(string input)
+        private static bool IsNull(string input)
         {
-            int pointCount = 0;
-            int plusMinusCount = 0;
+            return input == null;
+        }
 
-            for (int i = 0; i < input.Length - 1; i++)
+        private static bool HasValidContent(string input)
+        {
+            foreach (char c in input)
             {
-                if (!IsValidCharacter(input[i]))
-                {
-                    return true;
-                }
-
-                if (input[i] == '.')
-                {
-                    pointCount++;
-                }
-
-                if (input[i] == '+' || (input[i] == '-' && i != 0))
-                {
-                    plusMinusCount++;
-                }
-            }
-
-            return pointCount > 1 || plusMinusCount > 1;
-        }
-
-        private static bool IsValidCharacter(char a)
-        {
-            char[] validcharacters = { 'e', 'E', '+', '-', '.' };
-
-            foreach (char c in validcharacters)
-            {
-                if (a == c || (a >= '0' && a <= '9'))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private static bool HaveValidFormat(string input)
-        {
-            return IsValidExponentFormat(input) ||
-                   IsNaturalNumber(input) ||
-                   IsDecimalNumber(input);
-        }
-
-        private static bool IsValidExponentFormat(string input)
-        {
-            for (int i = 0; i < input.Length; i++)
-            {
-                if (input[i] == 'e' || input[i] == 'E')
-                {
-                    return HaveValidExponent(input, i) && i < input.Length - 1 && (input[input.Length - 1] != '+' && input[input.Length - 1] != '-');
-                }
-            }
-
-            return false;
-        }
-
-        private static bool IsNaturalNumber(string input)
-        {
-            if (input[0] == '0' && input.Length > 1)
-            {
-                return false;
-            }
-
-            int n;
-            return int.TryParse(input, out n);
-        }
-
-        private static bool IsDecimalNumber(string input)
-        {
-            if (input[0] == '0' && input[1] != '.')
-            {
-                return false;
-            }
-
-            decimal n;
-            return decimal.TryParse(input, out n) && !EndWithPoint(input);
-        }
-
-        private static bool EndWithPoint(string input)
-        {
-            return input[input.Length - 1] == '.';
-        }
-
-        private static bool HaveValidExponent(string input, int index)
-        {
-            for (int i = index + 1; i < input.Length; i++)
-            {
-                if (input[i] == 'e' || input[i] == 'E' || input[i] == '.')
+                if (c < '0' || c > '9')
                 {
                     return false;
                 }
             }
 
             return true;
+        }
+
+        private static bool IsPlusMinus(char a)
+        {
+            return a == '+' || a == '-';
+        }
+
+        private static bool StartWithMinus(string input)
+        {
+            return input[0] == '-' && input.Length > 1;
+        }
+
+        private static bool StartWithZero(string input)
+        {
+            return input[0] == '0' && input.Length > 1;
+        }
+
+        private static bool IsPoint(char c)
+        {
+            return c == '.';
+        }
+
+        private static bool IsExponentChar(char c)
+        {
+            return c == 'e' || c == 'E';
+        }
+
+        private static int ExtractExponentIndex(string input)
+        {
+            int index = 0;
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (IsExponentChar(input[i]))
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            return index;
+        }
+
+        private static string SaveResult(string input, int startIndex, int endIndex)
+        {
+            string result = "";
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                result += input[i];
+            }
+
+            return result;
         }
     }
 }

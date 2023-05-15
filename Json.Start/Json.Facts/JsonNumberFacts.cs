@@ -49,6 +49,12 @@ namespace Json.Facts
         }
 
         [Fact]
+        public void IsJsonNumber_StartWithMinusZero_ShouldReturnFalse()
+        {
+            Assert.False(IsJsonNumber("-07"));
+        }
+
+        [Fact]
         public void IsJsonNumber_CanBeNegative_ShouldReturnTrue()
         {
             Assert.True(IsJsonNumber("-26"));
