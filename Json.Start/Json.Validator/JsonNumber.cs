@@ -53,21 +53,26 @@ namespace Json
 
         private static bool IsFraction(string fractionString)
         {
-            return IsDigits(fractionString);
+            if (fractionString.Length > 1)
+            {
+                fractionString = fractionString.Remove(0, 1);
+            }
+
+            return IsDigits(fractionString) || IsEmpty(fractionString);
         }
 
         private static string Fraction(string input, int decimalIndex, int exponentIndex)
         {
-            string result = "0";
-            int end = input.Length;
-            if (exponentIndex > 0)
-            {
-                end = exponentIndex;
-            }
-
+            string result = "";
             if (decimalIndex > 0)
             {
-                int start = decimalIndex + 1;
+                int end = input.Length;
+                int start = decimalIndex;
+
+                if (exponentIndex > 0)
+                {
+                    end = exponentIndex;
+                }
 
                 result = SaveResult(input, start, end);
             }
@@ -77,17 +82,22 @@ namespace Json
 
         private static bool IsExponent(string exponentString)
         {
-            return IsDigits(exponentString);
+            if (exponentString.Length > 1)
+            {
+                exponentString = exponentString.Remove(0, 1);
+            }
+
+            return IsDigits(exponentString) || IsEmpty(exponentString);
         }
 
         private static string Exponent(string input, int decimalIndex, int exponentIndex)
         {
-            string result = "0";
+            string result = "";
 
             if (exponentIndex > 0)
             {
-                int start = exponentIndex + 1;
-                if (start < input.Length - 1 && (input[start] == '+' || input[start] == '-'))
+                int start = exponentIndex;
+                if (start < input.Length - 1 && (input[start + 1] == '+' || input[start + 1] == '-'))
                 {
                     start++;
                 }
@@ -101,6 +111,11 @@ namespace Json
         private static bool IsNull(string input)
         {
             return input == null;
+        }
+
+        private static bool IsEmpty(string input)
+        {
+            return input == "";
         }
 
         private static bool IsDigits(string input)
