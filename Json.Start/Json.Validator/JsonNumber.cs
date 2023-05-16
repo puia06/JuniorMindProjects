@@ -29,25 +29,29 @@ namespace Json
         {
             if (numberString.StartsWith('-') && numberString.Length > 1)
             {
-                numberString = numberString.Remove(0, 1);
+                numberString = numberString[1..];
             }
 
-            return !(numberString.StartsWith('0') && numberString.Length > 1) && IsDigits(numberString);
+            if (numberString.StartsWith('0') && numberString.Length > 1)
+            {
+                return false;
+            }
+
+            return IsDigits(numberString);
         }
 
         private static string Integer(string input, int decimalIndex, int exponentIndex)
         {
             int end = decimalIndex > 0 ? decimalIndex : exponentIndex;
-            end = end > 0 ? end : input.Length;
 
-            return input[..end];
+            return end > 0 ? input[..end] : input[..input.Length];
         }
 
         private static bool IsFraction(string fractionString)
         {
             if (fractionString.Length > 1)
             {
-                fractionString = fractionString.Remove(0, 1);
+                fractionString = fractionString[1..];
             }
 
             return IsDigits(fractionString) || fractionString == string.Empty;
@@ -55,27 +59,24 @@ namespace Json
 
         private static string Fraction(string input, int decimalIndex, int exponentIndex)
         {
-            if (decimalIndex <= 0)
+            if (decimalIndex == -1)
             {
                 return string.Empty;
             }
 
-            int start = decimalIndex;
-            int end = exponentIndex > 0 ? exponentIndex : input.Length;
-
-            return input[start..end];
+            return exponentIndex > 0 ? input[decimalIndex..exponentIndex] : input[decimalIndex..input.Length];
         }
 
         private static bool IsExponent(string exponentString)
         {
             if (exponentString.Length > 1 && (exponentString[1] == '+' || exponentString[1] == '-'))
             {
-                exponentString = exponentString.Remove(0, 1);
+                exponentString = exponentString[1..];
             }
 
             if (exponentString.Length > 1)
             {
-                exponentString = exponentString.Remove(0, 1);
+                exponentString = exponentString[1..];
             }
 
             return IsDigits(exponentString) || exponentString == string.Empty;
@@ -83,9 +84,7 @@ namespace Json
 
         private static string Exponent(string input, int decimalIndex, int exponentIndex)
         {
-            int start = exponentIndex > 0 ? exponentIndex : input.Length;
-
-            return input[start..];
+            return exponentIndex != -1 ? input[exponentIndex..] : input[input.Length..];
         }
 
         private static bool IsDigits(string input)
