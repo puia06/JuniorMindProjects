@@ -1,6 +1,7 @@
 using Microsoft.CodeAnalysis;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
@@ -11,7 +12,7 @@ namespace Json
     {
         public static bool IsJsonNumber(string input)
         {
-            if (IsNull(input))
+            if (input == null)
             {
                 return false;
             }
@@ -36,19 +37,10 @@ namespace Json
 
         private static string Integer(string input, int decimalIndex, int exponentIndex)
         {
-            int end = input.Length;
+            int end = decimalIndex > 0 ? decimalIndex : exponentIndex;
+            end = end > 0 ? end : input.Length;
 
-            if (decimalIndex > 0)
-            {
-                end = decimalIndex;
-            }
-
-            if (end != decimalIndex && exponentIndex > 0)
-            {
-                end = exponentIndex;
-            }
-
-            return SaveResult(input, 0, end);
+            return input[..end];
         }
 
         private static bool IsFraction(string fractionString)
@@ -58,64 +50,42 @@ namespace Json
                 fractionString = fractionString.Remove(0, 1);
             }
 
-            return IsDigits(fractionString) || IsEmpty(fractionString);
+            return IsDigits(fractionString) || fractionString == string.Empty;
         }
 
         private static string Fraction(string input, int decimalIndex, int exponentIndex)
         {
-            string result = "";
-            if (decimalIndex > 0)
+            if (decimalIndex <= 0)
             {
-                int end = input.Length;
-                int start = decimalIndex;
-
-                if (exponentIndex > 0)
-                {
-                    end = exponentIndex;
-                }
-
-                result = SaveResult(input, start, end);
+                return string.Empty;
             }
 
-            return result;
+            int start = decimalIndex;
+            int end = exponentIndex > 0 ? exponentIndex : input.Length;
+
+            return input[start..end];
         }
 
         private static bool IsExponent(string exponentString)
         {
+            if (exponentString.Length > 1 && (exponentString[1] == '+' || exponentString[1] == '-'))
+            {
+                exponentString = exponentString.Remove(0, 1);
+            }
+
             if (exponentString.Length > 1)
             {
                 exponentString = exponentString.Remove(0, 1);
             }
 
-            return IsDigits(exponentString) || IsEmpty(exponentString);
+            return IsDigits(exponentString) || exponentString == string.Empty;
         }
 
         private static string Exponent(string input, int decimalIndex, int exponentIndex)
         {
-            string result = "";
+            int start = exponentIndex > 0 ? exponentIndex : input.Length;
 
-            if (exponentIndex > 0)
-            {
-                int start = exponentIndex;
-                if (start < input.Length - 1 && (input[start + 1] == '+' || input[start + 1] == '-'))
-                {
-                    start++;
-                }
-
-                result = SaveResult(input, start, input.Length);
-            }
-
-            return result;
-        }
-
-        private static bool IsNull(string input)
-        {
-            return input == null;
-        }
-
-        private static bool IsEmpty(string input)
-        {
-            return input == "";
+            return input[start..];
         }
 
         private static bool IsDigits(string input)
@@ -129,17 +99,6 @@ namespace Json
             }
 
             return input.Length > 0;
-        }
-
-        private static string SaveResult(string input, int startIndex, int endIndex)
-        {
-            string result = "";
-            for (int i = startIndex; i < endIndex; i++)
-            {
-                result += input[i];
-            }
-
-            return result;
         }
     }
 }
