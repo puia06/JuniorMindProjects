@@ -27,7 +27,7 @@ namespace Json
 
         private static bool IsInteger(string numberString)
         {
-            if (numberString.StartsWith('-') && numberString.Length > 1)
+            if (numberString.StartsWith('-'))
             {
                 numberString = numberString[1..];
             }
