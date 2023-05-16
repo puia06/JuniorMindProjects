@@ -44,47 +44,44 @@ namespace Json
         {
             int end = decimalIndex > 0 ? decimalIndex : exponentIndex;
 
-            return end > 0 ? input[..end] : input[..input.Length];
+            return end > 0 ? input[..end] : input;
         }
 
         private static bool IsFraction(string fractionString)
         {
-            if (fractionString.Length > 1)
-            {
-                fractionString = fractionString[1..];
-            }
-
-            return IsDigits(fractionString) || fractionString == string.Empty;
+            return fractionString == string.Empty || IsDigits(fractionString[1..]);
         }
 
         private static string Fraction(string input, int decimalIndex, int exponentIndex)
         {
-            if (decimalIndex == -1)
+            if (decimalIndex < 0)
             {
                 return string.Empty;
             }
 
-            return exponentIndex > 0 ? input[decimalIndex..exponentIndex] : input[decimalIndex..input.Length];
+            return exponentIndex > 0 ? input[decimalIndex..exponentIndex] : input[decimalIndex..];
         }
 
         private static bool IsExponent(string exponentString)
         {
-            if (exponentString.Length > 1 && (exponentString[1] == '+' || exponentString[1] == '-'))
+            if (exponentString == string.Empty)
+            {
+                return true;
+            }
+
+            exponentString = exponentString[1..];
+
+            if (exponentString.StartsWith('-') || exponentString.StartsWith('+'))
             {
                 exponentString = exponentString[1..];
             }
 
-            if (exponentString.Length > 1)
-            {
-                exponentString = exponentString[1..];
-            }
-
-            return IsDigits(exponentString) || exponentString == string.Empty;
+            return IsDigits(exponentString);
         }
 
         private static string Exponent(string input, int decimalIndex, int exponentIndex)
         {
-            return exponentIndex != -1 ? input[exponentIndex..] : input[input.Length..];
+            return exponentIndex != -1 ? input[exponentIndex..] : string.Empty;
         }
 
         private static bool IsDigits(string input)
