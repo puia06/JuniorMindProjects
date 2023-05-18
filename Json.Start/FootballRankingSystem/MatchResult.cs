@@ -38,21 +38,5 @@ namespace FootballRankingSystem
                 teamTwo.AddPoints(1);
             }
         }
-        public Team GetTeamOne()
-        {
-            return teamOne;
-        }
-        public Team GetTeamTwo()
-        {
-            return teamTwo;
-        }
-        public int GetScoreTeamOne()
-        {
-            return scoreTeamOne;
-        }
-        public int GetScoreTeamTwo()
-        {
-            return scoreTeamTwo;
-        }
     }
 }

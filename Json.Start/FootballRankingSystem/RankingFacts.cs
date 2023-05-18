@@ -10,28 +10,6 @@ namespace FootballRankingSystem
     public class RankingFacts
     {
         [Fact]
-        public void RankingConstructor_ShouldCreateARankingObj()
-        {
-            Team[] teams =
-            {
-                new Team("Real Madrid", 4),
-                new Team("Barcelona", 3),
-                new Team("Atletico Madrid", 1)
-            };
-
-            Team[] expectedTeams =
-            {
-                 new Team("Real Madrid", 4),
-                 new Team("Barcelona", 3),
-                 new Team("Atletico Madrid", 1)
-            };
-
-            Ranking ranking = new Ranking(teams);
-
-            Assert.Equal(expectedTeams, ranking.GetTeams());
-        }
-
-        [Fact]
         public void GetSortedTeams_ShouldSortDescending()
         {
             Team[] teams =
@@ -49,8 +27,10 @@ namespace FootballRankingSystem
             };
 
             Ranking ranking = new Ranking(teams);
+            ranking.BubbleSort();
+            Ranking expectedRanking = new Ranking(expectedTeams);
 
-            Assert.Equal(expectedTeams, ranking.GetSortedTeams());
+            Assert.Equal(expectedRanking, ranking);
         }
 
         [Fact]
@@ -71,8 +51,10 @@ namespace FootballRankingSystem
             };
 
             Ranking ranking = new Ranking(teams);
+            ranking.BubbleSort();
+            Ranking expectedRanking = new Ranking(expectedTeams);
 
-            Assert.Equal(expectedTeams, ranking.GetSortedTeams());
+            Assert.Equal(expectedRanking, ranking);
         }
 
         [Fact]
@@ -93,8 +75,10 @@ namespace FootballRankingSystem
             };
 
             Ranking ranking = new Ranking(teams);
+            ranking.BubbleSort();
+            Ranking expectedRanking = new Ranking(expectedTeams);
 
-            Assert.Equal(expectedTeams, ranking.GetSortedTeams());
+            Assert.Equal(expectedRanking, ranking);
         }
 
         [Fact]
@@ -114,8 +98,10 @@ namespace FootballRankingSystem
 
 
             Ranking ranking = new Ranking(teams);
+            ranking.BubbleSort();
+            Ranking expectedRanking = new Ranking(expectedTeams);
 
-            Assert.Equal(expectedTeams, ranking.GetSortedTeams());
+            Assert.Equal(expectedRanking, ranking);
         }
 
         [Fact]
@@ -135,8 +121,10 @@ namespace FootballRankingSystem
 
 
             Ranking ranking = new Ranking(teams);
+            ranking.BubbleSort();
+            Ranking expectedRanking = new Ranking(expectedTeams);
 
-            Assert.Equal(expectedTeams, ranking.GetSortedTeams());
+            Assert.Equal(expectedRanking, ranking);
         }
 
         [Fact]
@@ -158,7 +146,10 @@ namespace FootballRankingSystem
             };
             Ranking ranking = new Ranking(teams);
             ranking.AddNewTeam(newTeam);
-            Assert.Equal(expectedTeams, ranking.GetSortedTeams());
+            Ranking expectedRanking = new Ranking(expectedTeams);
+
+            Assert.Equal(expectedRanking, ranking);
+
         }
 
         [Fact]
@@ -170,10 +161,10 @@ namespace FootballRankingSystem
                 new Team("Real Madrid", 3),
                 new Team("Atletico Madrid", 2)
             };
-
+            Team Barcelona = new Team("Barcelona", 4);
             Ranking ranking = new Ranking(teams);
 
-            Assert.Equal(1, ranking.GetPosition("Barcelona"));
+            Assert.Equal(1, ranking.GetPosition(Barcelona));
         }
 
         [Fact]
@@ -185,10 +176,10 @@ namespace FootballRankingSystem
                 new Team("Atletico Madrid", 2),
                 new Team("Barcelona", 4)
             };
-
+            Team Barcelona = new Team("Barcelona", 4);
             Ranking ranking = new Ranking(teams);
 
-            Assert.Equal(1, ranking.GetPosition("Barcelona"));
+            Assert.Equal(1, ranking.GetPosition(Barcelona));
         }
 
         [Fact]
@@ -202,8 +193,8 @@ namespace FootballRankingSystem
             };
 
             Ranking ranking = new Ranking(teams);
-
-            Assert.Equal("Real Madrid", ranking.GetTeamByPosition(2));
+            Team RealMadrid = new Team("Real Madrid", 3);
+            Assert.Equal(RealMadrid, ranking.GetTeamByPosition(2));
         }
 
         [Fact]
@@ -217,8 +208,9 @@ namespace FootballRankingSystem
             };
 
             Ranking ranking = new Ranking(teams);
+            Team RealMadrid = new Team("Real Madrid", 3);
 
-            Assert.Equal("Real Madrid", ranking.GetTeamByPosition(2));
+            Assert.Equal(RealMadrid, ranking.GetTeamByPosition(2));
         }
 
         [Fact]
@@ -244,8 +236,10 @@ namespace FootballRankingSystem
             Ranking ranking = new Ranking(teams);
             MatchResult firstMatch = new MatchResult(teams[3], teams[2], scoreteamOne, scoreteamTwo);
             firstMatch.UpdatePoints();
+            ranking.BubbleSort();
+            Ranking expectedRanking = new Ranking(expectedTeams);
 
-            Assert.Equal(expectedTeams, ranking.GetSortedTeams());
+            Assert.Equal(expectedRanking, ranking);
         }
 
         [Fact]
@@ -272,8 +266,10 @@ namespace FootballRankingSystem
             int scoreteamTwo = 0;
             MatchResult firstMatch = new MatchResult(teams[3], teams[1], scoreteamOne, scoreteamTwo);
             firstMatch.UpdatePoints();
+            ranking.BubbleSort();
+            Ranking expectedRanking = new Ranking(expectedTeams);
 
-            Assert.Equal(expectedTeams, ranking.GetSortedTeams());
+            Assert.Equal(expectedRanking, ranking);
         }
 
         [Fact]
@@ -304,8 +300,10 @@ namespace FootballRankingSystem
             MatchResult secondMatch = new MatchResult(teams[1], teams[2], scoreRealMadrid, scoreAtletico);
             firstMatch.UpdatePoints();
             secondMatch.UpdatePoints();
+            ranking.BubbleSort();
+            Ranking expectedRanking = new Ranking(expectedTeams);
 
-            Assert.Equal(expectedTeams, ranking.GetSortedTeams());
+            Assert.Equal(expectedRanking, ranking);
         }
     }
 }

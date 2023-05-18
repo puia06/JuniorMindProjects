@@ -20,25 +20,19 @@ namespace FootballRankingSystem
 
         public void AddPoints(int pointToAdd)
         {
-            this.points = points + pointToAdd;
+            this.points += pointToAdd;
         }
 
-        public string GetName()
+        public override bool Equals(object? obj)
         {
-            return name;
+            return obj is Team team &&
+                   name == team.name &&
+                   points == team.points;
         }
+
         public int GetPoints()
         {
             return points;
-        }
-        public override bool Equals(object obj)
-        {
-            if (obj is Team other)
-            {
-                return name == other.name && points == other.points;
-            }
-
-            return false;
         }
     }
 }

@@ -6,31 +6,25 @@ using System.Threading.Tasks;
 
 namespace FootballRankingSystem
 {
-    public class TeanFacts
+    public class TeamFacts
     {
-        [Fact]
-        public void TeamConstructor_ShouldCreateATeamObj()
-        {
-            Team team1 = new Team("Real Madrid", 4);
-
-            Assert.Equal("Real Madrid", team1.GetName());
-            Assert.Equal(4, team1.GetPoints());
-        }
 
         [Fact]
         public void AddPoints_ShouldUpdatePoints()
         {
             Team team1 = new Team("Real Madrid", 4);
+            Team expectedResult = new Team("Real Madrid", 7);
             team1.AddPoints(3);
-            Assert.Equal(7, team1.GetPoints());
+            Assert.True(team1.Equals(expectedResult));
         }
 
         [Fact]
         public void AddPoints_AddZeroPoints_ShouldUpdatePoints()
         {
             Team team1 = new Team("Real Madrid", 4);
+            Team expectedResult = new Team("Real Madrid", 4);
             team1.AddPoints(0);
-            Assert.Equal(4, team1.GetPoints());
+            Assert.True(team1.Equals(expectedResult));
         }
 
         [Fact]

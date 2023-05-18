@@ -15,34 +15,25 @@ namespace FootballRankingSystem
         {
             this.teams = teams;
         }
-        public Team[] GetTeams()
-        {
-            return teams;
-        }
 
-        public Team[] GetSortedTeams()
+        public int GetPosition(Team team)
         {
-            return BubbleSort(teams);
-        }
-
-        public int GetPosition(string name)
-        {
-           Team[] sortedTeams = GetSortedTeams();
-           for (int i = 0; i < sortedTeams.Length; i++)
+           BubbleSort();
+           for (int i = 0; i < teams.Length; i++)
             {
-                if (sortedTeams[i].GetName() == name)
+                if (teams[i].Equals(team))
                 {
-                    return i + 1;
+                    return (i + 1);
                 }
             }
 
             return -1;
         }
 
-        public string GetTeamByPosition(int position)
+        public Team? GetTeamByPosition(int position)
         {
-            Team[] sortedTeams = GetSortedTeams();
-            return position <= sortedTeams.Length ? sortedTeams[position - 1].GetName() : "";
+            BubbleSort();
+            return position <= teams.Length ? teams[position - 1] : null;
         }
 
 
@@ -53,9 +44,10 @@ namespace FootballRankingSystem
             Array.Copy(teams, newArray, length);
             newArray[length] = team;
             this.teams = newArray;
+            BubbleSort();
         }
 
-        private static Team[] BubbleSort(Team[] teams)
+        public void BubbleSort()
         {
             bool repeat;
 
@@ -72,27 +64,34 @@ namespace FootballRankingSystem
                 }
             }
             while (repeat);
-
-            return teams;
         }
+
 
         private static void Swap(Team[] teams, int firstIndex, int secondIndex)
         {
-            (int minIndex, int maxIndex) = GetMinMaxIndex(firstIndex, secondIndex);
-            Team temp = teams[minIndex];
-            teams[minIndex] = teams[maxIndex];
-            teams[maxIndex] = temp;
+            Team temp = teams[firstIndex];
+            teams[firstIndex] = teams[secondIndex];
+            teams[secondIndex] = temp;
         }
 
-        private static (int minIndex, int maxIndex) GetMinMaxIndex(int firstIndex, int secondIndex)
+        public override bool Equals(object? obj)
         {
-            if (firstIndex > secondIndex)
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            Ranking otherRanking = (Ranking)obj;
+
+            if (teams.Length != otherRanking.teams.Length)
+                return false;
+
+            for (int i = 0; i < teams.Length; i++)
             {
-                return (secondIndex, firstIndex);
+                if (!teams[i].Equals(otherRanking.teams[i]))
+                    return false;
             }
 
-            return (firstIndex, secondIndex);
-        } 
+            return true;
+        }
     }
 }
 

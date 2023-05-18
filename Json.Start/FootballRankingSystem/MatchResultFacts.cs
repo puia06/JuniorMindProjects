@@ -9,22 +9,6 @@ namespace FootballRankingSystem
     public class MatchResultFacts
     {
         [Fact]
-        public void MatchResultConstructor_ShouldCreateAMatchResulObj()
-        {
-            Team team1 = new Team("Real Madrid", 4);
-            Team team2 = new Team("Barcelona", 3);
-            int scoreTeam1 = 2;
-            int scoreTeam2 = 1;
-
-            MatchResult match = new MatchResult(team1, team2, scoreTeam1, scoreTeam2);
-
-            Assert.Equal(team1, match.GetTeamOne());
-            Assert.Equal(team2, match.GetTeamTwo());
-            Assert.Equal(2, match.GetScoreTeamOne());
-            Assert.Equal(1, match.GetScoreTeamTwo());
-        }
-
-        [Fact]
         public void UpdatePoints_TeamOneWin_ShouldUpdatePoints()
         {
             Team team1 = new Team("Real Madrid", 4);
@@ -34,9 +18,11 @@ namespace FootballRankingSystem
 
             MatchResult match = new MatchResult(team1, team2, scoreTeam1, scoreTeam2);
             match.UpdatePoints();
+            Team team1ExpectedPoints = new Team("Real Madrid", 7);
+            Team team2ExpectedPoints = new Team("Barcelona", 3);
 
-            Assert.Equal(7, match.GetTeamOne().GetPoints());
-            Assert.Equal(3, match.GetTeamTwo().GetPoints());
+            Assert.Equal(team1ExpectedPoints, team1);
+            Assert.Equal(team2ExpectedPoints, team2);
         }
 
         [Fact]
@@ -49,9 +35,11 @@ namespace FootballRankingSystem
 
             MatchResult match = new MatchResult(team1, team2, scoreTeam1, scoreTeam2);
             match.UpdatePoints();
+            Team team1ExpectedPoints = new Team("Real Madrid", 4);
+            Team team2ExpectedPoints = new Team("Barcelona", 6);
 
-            Assert.Equal(4, match.GetTeamOne().GetPoints());
-            Assert.Equal(6, match.GetTeamTwo().GetPoints());
+            Assert.Equal(team1ExpectedPoints, team1);
+            Assert.Equal(team2ExpectedPoints, team2);
         }
 
         [Fact]
@@ -64,9 +52,11 @@ namespace FootballRankingSystem
 
             MatchResult match = new MatchResult(team1, team2, scoreTeam1, scoreTeam2);
             match.UpdatePoints();
+            Team team1ExpectedPoints = new Team("Real Madrid", 5);
+            Team team2ExpectedPoints = new Team("Barcelona", 4);
 
-            Assert.Equal(5, match.GetTeamOne().GetPoints());
-            Assert.Equal(4, match.GetTeamTwo().GetPoints());
+            Assert.Equal(team1ExpectedPoints, team1);
+            Assert.Equal(team2ExpectedPoints, team2);
         }
     }
 }
