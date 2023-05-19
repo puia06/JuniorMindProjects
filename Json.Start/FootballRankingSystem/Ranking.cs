@@ -56,7 +56,7 @@ namespace FootballRankingSystem
                 repeat = false;
                 for (int i = 0; i < teams.Length - 1; i++)
                 {
-                    if (teams[i].GetPoints() < teams[i + 1].GetPoints())
+                    if (teams[i].HasLessPointsThan(teams[i + 1]))
                     {
                         Swap(teams, i, i + 1);
                         repeat = true;

@@ -23,16 +23,16 @@ namespace FootballRankingSystem
             this.points += pointToAdd;
         }
 
+        public bool HasLessPointsThan(Team team)
+        {
+            return points < team.points;
+        }
+
         public override bool Equals(object? obj)
         {
             return obj is Team team &&
                    name == team.name &&
                    points == team.points;
-        }
-
-        public int GetPoints()
-        {
-            return points;
         }
     }
 }
