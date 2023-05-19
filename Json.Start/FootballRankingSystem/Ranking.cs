@@ -11,17 +11,16 @@ namespace FootballRankingSystem
     {
         private Team[] teams;
 
-        public Ranking(Team[] teams)
+        public Ranking()
         {
-            this.teams = teams;
+            teams = new Team[0];
         }
 
         public int GetPosition(Team team)
         {
-           BubbleSort();
            for (int i = 0; i < teams.Length; i++)
             {
-                if (teams[i].Equals(team))
+                if (teams[i] == team)
                 {
                     return (i + 1);
                 }
@@ -30,24 +29,34 @@ namespace FootballRankingSystem
             return -1;
         }
 
+
+        public void MatchResult(Team team1, Team team2,int scoreTeamOne, int scoreTeamTwo )
+        {
+            if (scoreTeamOne > scoreTeamTwo)
+            {
+                team1.AddWin();
+            }
+            if (scoreTeamOne == scoreTeamTwo)
+            {
+                team1.AddDraw();
+                team2.AddDraw();
+            }
+            BubbleSort();
+        }
+
         public Team? GetTeamByPosition(int position)
         {
-            BubbleSort();
             return position <= teams.Length ? teams[position - 1] : null;
         }
 
-
         public void AddNewTeam(Team team)
         {
-            int length = teams.Length;
-            Team[] newArray = new Team[length + 1];
-            Array.Copy(teams, newArray, length);
-            newArray[length] = team;
-            this.teams = newArray;
+            Array.Resize(ref teams, teams.Length + 1);
+            teams[teams.Length - 1] = team;
             BubbleSort();
         }
 
-        public void BubbleSort()
+        private void BubbleSort()
         {
             bool repeat;
 
@@ -58,7 +67,7 @@ namespace FootballRankingSystem
                 {
                     if (teams[i].HasLessPointsThan(teams[i + 1]))
                     {
-                        Swap(teams, i, i + 1);
+                        Swap( i, i + 1);
                         repeat = true;
                     }
                 }
@@ -67,30 +76,11 @@ namespace FootballRankingSystem
         }
 
 
-        private static void Swap(Team[] teams, int firstIndex, int secondIndex)
+        private void Swap(int firstIndex, int secondIndex)
         {
             Team temp = teams[firstIndex];
             teams[firstIndex] = teams[secondIndex];
             teams[secondIndex] = temp;
-        }
-
-        public override bool Equals(object? obj)
-        {
-            if (obj == null || GetType() != obj.GetType())
-                return false;
-
-            Ranking otherRanking = (Ranking)obj;
-
-            if (teams.Length != otherRanking.teams.Length)
-                return false;
-
-            for (int i = 0; i < teams.Length; i++)
-            {
-                if (!teams[i].Equals(otherRanking.teams[i]))
-                    return false;
-            }
-
-            return true;
         }
     }
 }

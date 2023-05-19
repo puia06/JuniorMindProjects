@@ -18,21 +18,18 @@ namespace FootballRankingSystem
             this.points = points;
         }
 
-        public void AddPoints(int pointToAdd)
+            public void AddWin()
         {
-            this.points += pointToAdd;
+            this.points += 3;
+        }
+        public void AddDraw()
+        {
+            this.points += 1;
         }
 
         public bool HasLessPointsThan(Team team)
         {
             return points < team.points;
-        }
-
-        public override bool Equals(object? obj)
-        {
-            return obj is Team team &&
-                   name == team.name &&
-                   points == team.points;
         }
     }
 }
