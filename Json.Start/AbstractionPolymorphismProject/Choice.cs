@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AbstractionPolymorphismProject
 {
-    public class Choice
+    public class Choice : IPattern
     {
         private readonly IPattern[] patterns;
 
