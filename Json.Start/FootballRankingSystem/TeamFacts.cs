@@ -8,7 +8,6 @@ namespace FootballRankingSystem
 {
     public class TeamFacts
     {
-
         [Fact]
         public void HasLessPointsThan_SecondTeamHasMore_ShouldReturnTrue()
         {

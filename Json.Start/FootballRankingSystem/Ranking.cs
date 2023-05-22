@@ -30,16 +30,16 @@ namespace FootballRankingSystem
         }
 
 
-        public void MatchResult(Team team1, Team team2,int scoreTeamOne, int scoreTeamTwo )
+        public void MatchResult(Team homeTeam, Team awayTeam,int scoreHomeTeam, int scoreAwayTeam )
         {
-            if (scoreTeamOne > scoreTeamTwo)
+            if (scoreHomeTeam > scoreAwayTeam)
             {
-                team1.AddWin();
+                homeTeam.AddWin();
             }
-            if (scoreTeamOne == scoreTeamTwo)
+            if (scoreHomeTeam == scoreAwayTeam)
             {
-                team1.AddDraw();
-                team2.AddDraw();
+                homeTeam.AddDraw();
+                awayTeam.AddDraw();
             }
             BubbleSort();
         }

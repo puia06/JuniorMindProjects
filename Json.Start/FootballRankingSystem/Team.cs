@@ -22,6 +22,7 @@ namespace FootballRankingSystem
         {
             this.points += 3;
         }
+
         public void AddDraw()
         {
             this.points += 1;
