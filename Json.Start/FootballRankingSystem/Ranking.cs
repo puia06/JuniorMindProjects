@@ -29,7 +29,6 @@ namespace FootballRankingSystem
             return -1;
         }
 
-
         public void MatchResult(Team homeTeam, Team awayTeam,int scoreHomeTeam, int scoreAwayTeam )
         {
             if (scoreHomeTeam > scoreAwayTeam)
@@ -74,7 +73,6 @@ namespace FootballRankingSystem
             }
             while (repeat);
         }
-
 
         private void Swap(int firstIndex, int secondIndex)
         {
