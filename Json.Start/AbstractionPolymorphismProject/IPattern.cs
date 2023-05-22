@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace AbstractionPolymorphismProject
 {
-    internal interface IPattern
+    public interface IPattern
     {
+        bool Match(string text);
     }
 }
