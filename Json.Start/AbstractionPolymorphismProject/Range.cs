@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AbstractionPolymorphismProject
 {
-    internal class Range
+    internal class Range : IPattern
     {
         readonly private char start;
         readonly private char end;

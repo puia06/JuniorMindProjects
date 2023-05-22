@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AbstractionPolymorphismProject
 {
-    public class Character
+    public class Character : IPattern
     {
         readonly char pattern;
 
