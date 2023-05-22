@@ -9,8 +9,8 @@ namespace AbstractionPolymorphismProject
 {
     internal class Range
     {
-        private char start;
-        private char end;
+        readonly private char start;
+        readonly private char end;
 
         public Range(char start, char end)
         {
