@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace AbstractionPolymorphismProject
 {
-    public interface IPattern
+    public interface IMatch
     {
-        IMatch Match(string text);
+        bool Success();
+        string RemainingText();
     }
 }

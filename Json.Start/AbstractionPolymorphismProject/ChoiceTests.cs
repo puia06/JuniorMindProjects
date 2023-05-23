@@ -10,8 +10,9 @@
                 new Range('1', '9')
             );
             string test = "012";
+            var result = digit.Match(test);
 
-            Assert.True(digit.Match(test));
+            Assert.True(result.Success());
         }
 
         [Fact]
@@ -22,8 +23,9 @@
                 new Range('1', '9')
             );
             string test = "12";
+            var result = digit.Match(test);
 
-            Assert.True(digit.Match(test));
+            Assert.True(result.Success());
         }
 
         [Fact]
@@ -34,8 +36,9 @@
                 new Range('1', '9')
             );
             string test = "92";
+            var result = digit.Match(test);
 
-            Assert.True(digit.Match(test));
+            Assert.True(result.Success());
         }
 
         [Fact]
@@ -46,8 +49,9 @@
              new Range('1', '9')
          );
             string test = "a9";
+            var result = digit.Match(test);
 
-            Assert.False(digit.Match(test));
+            Assert.False(result.Success());
         }
 
         [Fact]
@@ -57,8 +61,9 @@
                      new Character('0'),
                      new Range('1', '9')
                  );
+            var result = digit.Match(null);
 
-            Assert.False(digit.Match(null));
+            Assert.False(result.Success());
         }
 
         [Fact]
@@ -68,8 +73,9 @@
                        new Character('0'),
                        new Range('1', '9')
                    );
+            var result = digit.Match("");
 
-            Assert.False(digit.Match(""));
+            Assert.False(result.Success());
         }
 
         [Fact]
@@ -87,8 +93,9 @@
                )
             );
             string test = "a9";
+            var result = hex.Match(test);
 
-            Assert.True(hex.Match(test));
+            Assert.True(result.Success());
         }
 
         [Fact]
@@ -106,8 +113,9 @@
                )
             );
             string test = "f8";
+            var result = hex.Match(test);
 
-            Assert.True(hex.Match(test));
+            Assert.True(result.Success());
         }
 
         [Fact]
@@ -125,8 +133,9 @@
                )
             );
             string test = "A9";
+            var result = hex.Match(test);
 
-            Assert.True(hex.Match(test));
+            Assert.True(result.Success());
         }
 
         [Fact]
@@ -144,8 +153,9 @@
                )
             );
             string test = "F8";
+            var result = hex.Match(test);
 
-            Assert.True(hex.Match(test));
+            Assert.True(result.Success());
         }
 
         [Fact]
@@ -163,8 +173,9 @@
                )
             );
             string test = "g8";
+            var result = hex.Match(test);
 
-            Assert.False(hex.Match(test));
+            Assert.False(result.Success());
         }
 
         [Fact]
@@ -182,8 +193,9 @@
                )
             );
             string test = "0ab";
+            var result = hex.Match(test);
 
-            Assert.True(hex.Match(test));
+            Assert.True(result.Success());
         }
 
 
@@ -202,8 +214,9 @@
                )
             );
             string test = "abc";
+            var result = hex.Match(test);
 
-            Assert.True(hex.Match(test));
+            Assert.True(result.Success());
         }
     }
 }

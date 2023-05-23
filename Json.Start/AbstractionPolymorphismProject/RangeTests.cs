@@ -7,8 +7,9 @@ namespace AbstractionPolymorphismProject
         {
             var digit = new Range('a', 'f');
             string test = "abc";
+            var result = digit.Match(test);
 
-            Assert.True(digit.Match(test));
+            Assert.True(result.Success());
         }
 
         [Fact]
@@ -16,8 +17,9 @@ namespace AbstractionPolymorphismProject
         {
             var digit = new Range('a', 'f');
             string test = "fab";
+            var result = digit.Match(test);
 
-            Assert.True(digit.Match(test));
+            Assert.True(result.Success());
         }
 
         [Fact]
@@ -25,8 +27,9 @@ namespace AbstractionPolymorphismProject
         {
             var digit = new Range('a', 'f');
             string test = "bcd";
+            var result = digit.Match(test);
 
-            Assert.True(digit.Match(test));
+            Assert.True(result.Success());
         }
 
         [Fact]
@@ -34,8 +37,9 @@ namespace AbstractionPolymorphismProject
         {
             var digit = new Range('a', 'f');
             string test = "1abc";
+            var result = digit.Match(test);
 
-            Assert.False(digit.Match(test));
+            Assert.False(result.Success());
         }
 
         [Fact]
@@ -43,8 +47,9 @@ namespace AbstractionPolymorphismProject
         {
             var digit = new Range('a', 'f');
             string test = null;
+            var result = digit.Match(test);
 
-            Assert.False(digit.Match(test));
+            Assert.False(result.Success());
         }
 
         [Fact]
@@ -52,8 +57,9 @@ namespace AbstractionPolymorphismProject
         {
             var digit = new Range('a', 'f');
             string test = "";
+            var result = digit.Match(test);
 
-            Assert.False(digit.Match(test));
+            Assert.False(result.Success());
         }
     }
 }

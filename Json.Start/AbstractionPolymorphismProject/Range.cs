@@ -18,14 +18,19 @@ namespace AbstractionPolymorphismProject
             this.end = end;
         }
 
-        public bool Match(string text)
+        public IMatch Match(string text)
         {
-            if (!string.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(text))
             {
-                return text[0] >= start && text[0] <= end;
+                return new Match(false, text);
             }
 
-            return false;
+            if (text[0] >= start && text[0] <= end)
+            {
+                return new Match(true, text);
+            }
+
+            return new Match(false, text);
         }
     }
 }

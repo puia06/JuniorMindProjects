@@ -13,8 +13,9 @@ namespace AbstractionPolymorphismProject
         {
             var x = new Character('x');
             string test = "xabc";
+            var result = x.Match(test);
 
-            Assert.True(x.Match(test));
+            Assert.True(result.Success());
         }
 
         [Fact]
@@ -22,8 +23,9 @@ namespace AbstractionPolymorphismProject
         {
             var x = new Character('x');
             string test = "abc";
+            var result = x.Match(test);
 
-            Assert.False(x.Match(test));
+            Assert.False(result.Success());
         }
 
         [Fact]
@@ -31,8 +33,9 @@ namespace AbstractionPolymorphismProject
         {
             var x = new Character('x');
             string test = null;
+            var result = x.Match(test);
 
-            Assert.False(x.Match(test));
+            Assert.False(result.Success());
         }
 
         [Fact]
@@ -40,8 +43,9 @@ namespace AbstractionPolymorphismProject
         {
             var x = new Character('x');
             string test = "";
+            var result = x.Match(test);
 
-            Assert.False(x.Match(test));
+            Assert.False(result.Success());
         }
     }
 }
