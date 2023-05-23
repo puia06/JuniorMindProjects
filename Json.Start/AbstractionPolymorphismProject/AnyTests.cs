@@ -17,11 +17,11 @@ namespace AbstractionPolymorphismProject
             var result = e.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal("cd", result.RemainingText());
+            Assert.Equal("a", result.RemainingText());
         }
 
         [Fact]
-        public void Match_SecondTextCharacterMatch_AnyFirstCharacter_ShouldReturnTrueAndRemainingText()
+        public void Match_FirstTextCharacterMatch_AnySecondCharacter_ShouldReturnTrueAndRemainingText()
         {
             var e = new Any("eE");
 
@@ -33,7 +33,7 @@ namespace AbstractionPolymorphismProject
         }
 
         [Fact]
-        public void Match_TextCharacterMatch_DifferentAnyCharacters_ShouldReturnFalseAndRemainingText()
+        public void Match_FirstTextCharacterMatch_DifferentAnyCharacters_ShouldReturnFalseAndRemainingText()
         {
             var e = new Any("eE");
 
@@ -52,7 +52,7 @@ namespace AbstractionPolymorphismProject
             string test = null;
             var result = e.Match(test);
 
-            Assert.True(result.Success());
+            Assert.False(result.Success());
             Assert.Equal(null, result.RemainingText());
         }
 
@@ -64,8 +64,69 @@ namespace AbstractionPolymorphismProject
             string test = "";
             var result = e.Match(test);
 
-            Assert.True(result.Success());
+            Assert.False(result.Success());
             Assert.Equal("", result.RemainingText());
         }
+
+        [Fact]
+        public void Match_FirstTextCharacterMatch_AnyFirstCharacter_Symbols_ShouldReturnTrueAndRemainingText()
+        {
+            var e = new Any("-+");
+
+            string test = "+3";
+            var result = e.Match(test);
+
+            Assert.True(result.Success());
+            Assert.Equal("3", result.RemainingText());
+        }
+
+        [Fact]
+        public void Match_FirstTextCharacterMatch_AnySecondCharacter_Symbols_ShouldReturnTrueAndRemainingText()
+        {
+            var e = new Any("-+");
+
+            string test = "-2";
+            var result = e.Match(test);
+
+            Assert.True(result.Success());
+            Assert.Equal("2", result.RemainingText());
+        }
+
+        [Fact]
+        public void Match_FirstTextCharacterMatch_DifferentAnyCharacters_Symbols_ShouldReturnFalseAndRemainingText()
+        {
+            var e = new Any("eE");
+
+            string test = "2";
+            var result = e.Match(test);
+
+            Assert.False(result.Success());
+            Assert.Equal("2", result.RemainingText());
+        }
+
+        [Fact]
+        public void Match_NullTextCharacterMatch_AnyCharacters_Symbols_ShouldReturnFalseAndRemainingText()
+        {
+            var e = new Any("-+");
+
+            string test = null;
+            var result = e.Match(test);
+
+            Assert.False(result.Success());
+            Assert.Equal(null, result.RemainingText());
+        }
+
+        [Fact]
+        public void Match_EmptyTextCharacterMatch_AnyCharacters_Symbols_ShouldReturnFalseAndRemainingText()
+        {
+            var e = new Any("1+");
+
+            string test = "";
+            var result = e.Match(test);
+
+            Assert.False(result.Success());
+            Assert.Equal("", result.RemainingText());
+        }
+
     }
 }
