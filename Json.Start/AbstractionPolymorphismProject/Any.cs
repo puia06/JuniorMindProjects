@@ -16,14 +16,9 @@ namespace AbstractionPolymorphismProject
 
         public IMatch Match(string text)
         {
-            if (string.IsNullOrEmpty(text))
-            {
-                return new Match(false, text);
-            }
-
             foreach (char c in accepted)
             {
-                if (text[0] == c)
+                if (!string.IsNullOrEmpty(text) && text[0] == c)
                 {
                     text = text[1..];
                     return new Match(true, text);

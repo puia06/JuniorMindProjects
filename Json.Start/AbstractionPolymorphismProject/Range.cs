@@ -20,12 +20,7 @@ namespace AbstractionPolymorphismProject
 
         public IMatch Match(string text)
         {
-            if (string.IsNullOrEmpty(text))
-            {
-                return new Match(false, text);
-            }
-
-            if (text[0] >= start && text[0] <= end)
+            if (!string.IsNullOrEmpty(text) && text[0] >= start && text[0] <= end)
             {
                 text = text[1..];
                 return new Match(true, text);

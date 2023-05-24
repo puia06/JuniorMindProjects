@@ -22,8 +22,7 @@ namespace AbstractionPolymorphismProject
                 var match = pattern.Match(text);
                 if (match.Success())
                 {
-                    text = text[1..];
-                    return new Match(true, text);
+                    return new Match(true, match.RemainingText());
                 }
             }
             return new Match(false, text);
