@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AbstractionPolymorphismProject
 {
-    public class Many
+    public class Many : IPattern
     {
         private readonly IPattern pattern;
         public Many(IPattern pattern)
