@@ -22,8 +22,7 @@ namespace AbstractionPolymorphismProject
         {
             if (!string.IsNullOrEmpty(text) && text[0] >= start && text[0] <= end)
             {
-                text = text[1..];
-                return new Match(true, text);
+                return new Match(true, text[1..]);
             }
 
             return new Match(false, text);

@@ -19,8 +19,7 @@ namespace AbstractionPolymorphismProject
         {
             if (!string.IsNullOrEmpty(text) && text[0] == pattern)
             {
-                text = text[1..];
-                return new Match(true, text);
+                return new Match(true, text[1..]);
             }
 
             return new Match(false, text); 

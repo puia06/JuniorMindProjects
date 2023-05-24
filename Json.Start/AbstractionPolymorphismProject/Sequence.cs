@@ -16,10 +16,10 @@ namespace AbstractionPolymorphismProject
 
         public IMatch Match(string text)
         {
-            var match = new Match(true, text);
+            IMatch match = new Match(true, text);
             foreach (var pattern in patterns)
             {
-                match = (Match)pattern.Match(match.RemainingText());
+                match = pattern.Match(match.RemainingText());
                 if (!(match.Success()))
                 {
                     return new Match(false, text);
