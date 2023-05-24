@@ -24,6 +24,7 @@ namespace AbstractionPolymorphismProject
 
             if (text[0] == pattern)
             {
+                text = text[1..];
                 return new Match(true, text);
             }
 

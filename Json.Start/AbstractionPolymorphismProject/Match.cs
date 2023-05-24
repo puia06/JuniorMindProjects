@@ -24,7 +24,7 @@ namespace AbstractionPolymorphismProject
 
         public string RemainingText()
         {
-            return success ? remainingText[1..] : remainingText;
+            return remainingText;
         }
     }
 }

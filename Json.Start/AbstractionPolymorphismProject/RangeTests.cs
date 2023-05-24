@@ -10,6 +10,7 @@ namespace AbstractionPolymorphismProject
             var result = digit.Match(test);
 
             Assert.True(result.Success());
+            Assert.Equal("bc", result.RemainingText());
         }
 
         [Fact]
@@ -20,6 +21,7 @@ namespace AbstractionPolymorphismProject
             var result = digit.Match(test);
 
             Assert.True(result.Success());
+            Assert.Equal("ab", result.RemainingText());
         }
 
         [Fact]
@@ -30,6 +32,7 @@ namespace AbstractionPolymorphismProject
             var result = digit.Match(test);
 
             Assert.True(result.Success());
+            Assert.Equal("cd", result.RemainingText());
         }
 
         [Fact]
@@ -40,6 +43,7 @@ namespace AbstractionPolymorphismProject
             var result = digit.Match(test);
 
             Assert.False(result.Success());
+            Assert.Equal("1abc", result.RemainingText());
         }
 
         [Fact]
@@ -50,6 +54,7 @@ namespace AbstractionPolymorphismProject
             var result = digit.Match(test);
 
             Assert.False(result.Success());
+            Assert.Equal(null, result.RemainingText());
         }
 
         [Fact]
@@ -60,6 +65,7 @@ namespace AbstractionPolymorphismProject
             var result = digit.Match(test);
 
             Assert.False(result.Success());
+            Assert.Equal("", result.RemainingText());
         }
     }
 }

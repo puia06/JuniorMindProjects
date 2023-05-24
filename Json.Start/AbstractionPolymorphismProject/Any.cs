@@ -25,6 +25,7 @@ namespace AbstractionPolymorphismProject
             {
                 if (text[0] == c)
                 {
+                    text = text[1..];
                     return new Match(true, text);
                 }
             }

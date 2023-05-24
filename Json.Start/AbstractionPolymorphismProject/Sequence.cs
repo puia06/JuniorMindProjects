@@ -23,14 +23,14 @@ namespace AbstractionPolymorphismProject
                 if (match.Success())
                 {
                     text = match.RemainingText();
-                }
+                } 
                 else
                 {
                     return new Match(false, initialText);
                 }
             }
 
-            return new Match(true, ' ' + text);
+            return new Match(true, text);
 
         }
     }

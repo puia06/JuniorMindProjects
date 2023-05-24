@@ -13,6 +13,7 @@
             var result = digit.Match(test);
 
             Assert.True(result.Success());
+            Assert.Equal("12", result.RemainingText());
         }
 
         [Fact]
@@ -26,6 +27,7 @@
             var result = digit.Match(test);
 
             Assert.True(result.Success());
+            Assert.Equal("2", result.RemainingText());
         }
 
         [Fact]
@@ -39,6 +41,7 @@
             var result = digit.Match(test);
 
             Assert.True(result.Success());
+            Assert.Equal("2", result.RemainingText());
         }
 
         [Fact]
@@ -52,6 +55,7 @@
             var result = digit.Match(test);
 
             Assert.False(result.Success());
+            Assert.Equal("a9", result.RemainingText());
         }
 
         [Fact]
@@ -64,6 +68,7 @@
             var result = digit.Match(null);
 
             Assert.False(result.Success());
+            Assert.Equal(null, result.RemainingText());
         }
 
         [Fact]
@@ -76,6 +81,7 @@
             var result = digit.Match("");
 
             Assert.False(result.Success());
+            Assert.Equal("", result.RemainingText());
         }
 
         [Fact]
@@ -96,6 +102,7 @@
             var result = hex.Match(test);
 
             Assert.True(result.Success());
+            Assert.Equal("9", result.RemainingText());
         }
 
         [Fact]
@@ -116,6 +123,7 @@
             var result = hex.Match(test);
 
             Assert.True(result.Success());
+            Assert.Equal("8", result.RemainingText());
         }
 
         [Fact]
@@ -136,6 +144,7 @@
             var result = hex.Match(test);
 
             Assert.True(result.Success());
+            Assert.Equal("9", result.RemainingText());
         }
 
         [Fact]
@@ -156,6 +165,7 @@
             var result = hex.Match(test);
 
             Assert.True(result.Success());
+            Assert.Equal("8", result.RemainingText());
         }
 
         [Fact]
@@ -176,6 +186,7 @@
             var result = hex.Match(test);
 
             Assert.False(result.Success());
+            Assert.Equal("g8", result.RemainingText());
         }
 
         [Fact]
@@ -196,6 +207,7 @@
             var result = hex.Match(test);
 
             Assert.True(result.Success());
+            Assert.Equal("ab", result.RemainingText());
         }
 
 
@@ -217,6 +229,7 @@
             var result = hex.Match(test);
 
             Assert.True(result.Success());
+            Assert.Equal("bc", result.RemainingText());
         }
     }
 }

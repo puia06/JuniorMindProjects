@@ -27,6 +27,7 @@ namespace AbstractionPolymorphismProject
 
             if (text[0] >= start && text[0] <= end)
             {
+                text = text[1..];
                 return new Match(true, text);
             }
 

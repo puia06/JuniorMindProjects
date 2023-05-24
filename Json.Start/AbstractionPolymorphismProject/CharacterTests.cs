@@ -16,6 +16,7 @@ namespace AbstractionPolymorphismProject
             var result = x.Match(test);
 
             Assert.True(result.Success());
+            Assert.Equal("abc", result.RemainingText());
         }
 
         [Fact]
@@ -26,6 +27,7 @@ namespace AbstractionPolymorphismProject
             var result = x.Match(test);
 
             Assert.False(result.Success());
+            Assert.Equal("abc", result.RemainingText());
         }
 
         [Fact]
@@ -36,6 +38,7 @@ namespace AbstractionPolymorphismProject
             var result = x.Match(test);
 
             Assert.False(result.Success());
+            Assert.Equal(null, result.RemainingText());
         }
 
         [Fact]
@@ -46,6 +49,7 @@ namespace AbstractionPolymorphismProject
             var result = x.Match(test);
 
             Assert.False(result.Success());
+            Assert.Equal("", result.RemainingText());
         }
     }
 }
