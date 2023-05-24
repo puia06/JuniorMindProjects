@@ -13,7 +13,7 @@ namespace AbstractionPolymorphismProject
            //
          }
 
-        public void Match(string text)
+        public IMatch Match(string text)
         {
         }
     }
