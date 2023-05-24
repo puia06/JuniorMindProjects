@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Xml.Linq;
 
 namespace AbstractionPolymorphismProject
 {
@@ -20,16 +16,28 @@ namespace AbstractionPolymorphismProject
             {
                 return new Match(false, text);
             }
-
-            for (int i = 0; i < prefix.Length; i++)
+            /*
+            foreach(char c in prefix)
             {
-                if (!(prefix[i] == text[i]))
+                if (!text.StartsWith(c))
                 {
                     return new Match(false, text);
                 }
+
+                text = text[1..];
+            }
+            */
+            string textPrefix = "";
+            if (text.Length >= prefix.Length)
+            {
+                 textPrefix = text.Substring(0, prefix.Length);
+            }
+            if (textPrefix.Equals(prefix))
+            {
+                return new Match(true, text[prefix.Length..]);
             }
 
-            return new Match(true, text[prefix.Length..]);
+            return new Match(false, text);
         }
     }
 }

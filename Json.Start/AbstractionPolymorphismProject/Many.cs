@@ -21,25 +21,22 @@ namespace AbstractionPolymorphismProject
                 return new Match(true, null);
             }
 
-            string result = "";
-            int lengh = text.Length;
-
-            for (int i = 0; i < lengh; i++)
+            int lenght = text.Length;
+            for (int i = 0; i < lenght; i++)
             {
                 IMatch match = pattern.Match(text);
 
-                if (match.Success() && result == "")
+                if (match.Success())
                 {
                     text = match.RemainingText();
                 }
                 else
                 {
-                    result += text[0];
-                    text = text[1..];
+                    break;
                 }
             }
 
-            return new Match(true, result);
+            return new Match(true, text);
         }
     }
 }

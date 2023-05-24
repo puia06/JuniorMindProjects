@@ -20,7 +20,7 @@ namespace AbstractionPolymorphismProject
             foreach (var pattern in patterns)
             {
                 match = pattern.Match(match.RemainingText());
-                if (!(match.Success()))
+                if (!match.Success())
                 {
                     return new Match(false, text);
                 } 

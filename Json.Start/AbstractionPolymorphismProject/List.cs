@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace AbstractionPolymorphismProject
 {
-    public class OneOrMore : IPattern
+    public class List
     {
         private readonly IPattern pattern;
-        public OneOrMore(IPattern pattern)
+
+        public List(IPattern element, IPattern separator)
         {
             // aici folosește-te de clasele implementate deja
-            // pentru a construi un pattern care să îl folosești în Match
+            // pentru a construi un pattern pe care să îl folosești în Match
             this.pattern = pattern;
         }
 
@@ -20,5 +21,5 @@ namespace AbstractionPolymorphismProject
         {
             return pattern.Match(text);
         }
-    } 
+    }
 }
