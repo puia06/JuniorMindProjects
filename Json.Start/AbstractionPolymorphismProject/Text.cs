@@ -26,7 +26,9 @@ namespace AbstractionPolymorphismProject
 
                 text = text[1..];
             }
+            return new Match(true, text);
             */
+
             string textPrefix = "";
             if (text.Length >= prefix.Length)
             {

@@ -13,7 +13,7 @@ namespace AbstractionPolymorphismProject
         {
             var a = new Many(new Character('a'));
 
-            string test = "abc";
+            string test = "abc"; 
             var result = a.Match(test);
 
             Assert.True(result.Success());
