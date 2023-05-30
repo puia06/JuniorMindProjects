@@ -16,27 +16,13 @@ namespace AbstractionPolymorphismProject
 
         public IMatch Match(string text)
         {
-            if (text == null)
+            IMatch match = pattern.Match(text);
+            while (match.Success())
             {
-                return new Match(true, null);
+                match = pattern.Match(match.RemainingText());
             }
 
-            int lenght = text.Length;
-            for (int i = 0; i < lenght; i++)
-            {
-                IMatch match = pattern.Match(text);
-
-                if (match.Success())
-                {
-                    text = match.RemainingText();
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            return new Match(true, text);
+            return new Match(true, match.RemainingText());
         }
     }
 }
