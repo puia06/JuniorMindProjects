@@ -12,7 +12,7 @@ namespace AbstractionPolymorphismProject
         public void IsJsonString_IsWrappedInDoubleQuotes_ShouldReturnTrue()
         {
             var a = new String();
-            var result = a.Match("abc");
+            var result = a.Match(Quoted("abc"));
             Assert.True(result.Success());
         }
 

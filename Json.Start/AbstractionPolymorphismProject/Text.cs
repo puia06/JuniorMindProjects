@@ -12,18 +12,9 @@ namespace AbstractionPolymorphismProject
 
         public IMatch Match(string text)
         {
-
-            if (string.IsNullOrEmpty(text) || prefix == null)
-            {
-                return new Match(false, text);
-            }
-
-            if (text.StartsWith(prefix))
-            {
-                return new Match(true, text[prefix.Length..]);
-            }
-
-            return new Match(false, text);
+            return string.IsNullOrEmpty(text) || prefix == null || !text.StartsWith(prefix)
+                  ? new Match(false, text)
+                  : new Match(true, text[prefix.Length..]);
         }
     }
 }
