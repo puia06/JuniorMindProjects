@@ -30,6 +30,7 @@ namespace AbstractionPolymorphismProject
             var a = new Number();
             var result = a.Match("7");
             Assert.True(result.Success());
+
         }
 
         [Fact]
@@ -38,6 +39,7 @@ namespace AbstractionPolymorphismProject
             var a = new Number();
             var result = a.Match("70");
             Assert.True(result.Success());
+
         }
 
         [Fact]
@@ -61,7 +63,8 @@ namespace AbstractionPolymorphismProject
         {
             var a = new Number();
             var result = a.Match("07");
-            Assert.False(result.Success());
+            Assert.True(result.Success());
+            Assert.Equal("7", result.RemainingText());
         }
 
         [Fact]
@@ -69,7 +72,8 @@ namespace AbstractionPolymorphismProject
         {
             var a = new Number();
             var result = a.Match("-07");
-            Assert.False(result.Success());
+            Assert.True(result.Success());
+            Assert.Equal("7", result.RemainingText());
         }
 
         [Fact]
@@ -111,7 +115,8 @@ namespace AbstractionPolymorphismProject
         {
             var a = new Number();
             var result = a.Match("12.");
-            Assert.False(result.Success());
+            Assert.True(result.Success());
+            Assert.Equal(".", result.RemainingText());
         }
 
         [Fact]
@@ -119,7 +124,8 @@ namespace AbstractionPolymorphismProject
         {
             var a = new Number();
             var result = a.Match("12.34.56");
-            Assert.False(result.Success());
+            Assert.True(result.Success());
+            Assert.Equal(".56", result.RemainingText());
         }
 
         [Fact]
@@ -127,7 +133,8 @@ namespace AbstractionPolymorphismProject
         {
             var a = new Number();
             var result = a.Match("12.3x");
-            Assert.False(result.Success());
+            Assert.True(result.Success());
+            Assert.Equal("x", result.RemainingText());
         }
 
         [Fact]
@@ -175,7 +182,8 @@ namespace AbstractionPolymorphismProject
         {
             var a = new Number();
             var result = a.Match("12e3x3");
-            Assert.False(result.Success());
+            Assert.True(result.Success());
+            Assert.Equal("x3", result.RemainingText());
         }
 
         [Fact]
@@ -183,7 +191,8 @@ namespace AbstractionPolymorphismProject
         {
             var a = new Number();
             var result = a.Match("22e323e33");
-            Assert.False(result.Success());
+            Assert.True(result.Success());
+            Assert.Equal("e33", result.RemainingText());
         }
 
         [Fact]
@@ -193,9 +202,12 @@ namespace AbstractionPolymorphismProject
             var result = a.Match("22e");
             var resu = a.Match("22e+");
             var res = a.Match("22E-");
-            Assert.False(result.Success());
-            Assert.False(resu.Success());
-            Assert.False(res.Success());
+            Assert.True(result.Success());
+            Assert.Equal("e", result.RemainingText());
+            Assert.True(resu.Success());
+            Assert.Equal("e+", resu.RemainingText());
+            Assert.True(res.Success());
+            Assert.Equal("E-", res.RemainingText());
 
         }
 
@@ -204,7 +216,8 @@ namespace AbstractionPolymorphismProject
         {
             var a = new Number();
             var result = a.Match("22e3.2");
-            Assert.False(result.Success());
+            Assert.True(result.Success());
+            Assert.Equal(".2", result.RemainingText());
         }
 
         [Fact]
@@ -236,7 +249,8 @@ namespace AbstractionPolymorphismProject
         {
             var a = new Number();
             var result = a.Match("10+-1");
-            Assert.False(result.Success());
+            Assert.True(result.Success());
+            Assert.Equal("+-1", result.RemainingText());
         }
 
         [Fact]
@@ -244,7 +258,8 @@ namespace AbstractionPolymorphismProject
         {
             var a = new Number();
             var result = a.Match("10e--1");
-            Assert.False(result.Success());
+            Assert.True(result.Success());
+            Assert.Equal("e--1", result.RemainingText());
         }
 
         [Fact]
@@ -252,7 +267,8 @@ namespace AbstractionPolymorphismProject
         {
             var a = new Number();
             var result = a.Match("10e++1");
-            Assert.False(result.Success());
+            Assert.True(result.Success());
+            Assert.Equal("e++1", result.RemainingText());
         }
 
         [Fact]
@@ -260,7 +276,8 @@ namespace AbstractionPolymorphismProject
         {
             var a = new Number();
             var result = a.Match("10+1");
-            Assert.False(result.Success());
+            Assert.True(result.Success());
+            Assert.Equal("+1", result.RemainingText());
         }
 
         [Fact]
@@ -268,7 +285,8 @@ namespace AbstractionPolymorphismProject
         {
             var a = new Number();
             var result = a.Match("10-1");
-            Assert.False(result.Success());
+            Assert.True(result.Success());
+            Assert.Equal("-1", result.RemainingText());
         }
     }
 }

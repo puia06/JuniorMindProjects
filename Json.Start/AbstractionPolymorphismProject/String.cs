@@ -12,7 +12,11 @@ namespace AbstractionPolymorphismProject
 
         public String()
         {
-            pattern = pattern;
+            var hexaNumber  = new Any("0123456789abcdefABCDEF");
+            var validHexaSequencer = new Sequence(hexaNumber,hexaNumber, hexaNumber, hexaNumber);
+            var controlCharacter = new Optional(new Sequence(new Character('\\'), new Any("bfnrt/\"\\")));
+            var hexaCharacter = new Optional(new Sequence(new Character('\\'), new Character('u')));
+            pattern = new Sequence(new Character('\"'), new Sequence());
         }
 
         public IMatch Match(string text)
