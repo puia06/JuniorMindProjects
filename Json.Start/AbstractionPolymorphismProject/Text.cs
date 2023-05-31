@@ -2,7 +2,7 @@
 
 namespace AbstractionPolymorphismProject
 {
-    public class Text
+    public class Text : IPattern
     {
         private readonly string prefix;
         public Text(string prefix)

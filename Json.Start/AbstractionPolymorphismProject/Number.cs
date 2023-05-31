@@ -19,7 +19,6 @@ namespace AbstractionPolymorphismProject
             var exponent = new Optional(new Sequence(new Any("eE"), new Optional(new Any("+-")), digits));
 
             pattern = new Sequence(integerPart, decimalPart, exponent);
-
         }
 
         public IMatch Match(string text)

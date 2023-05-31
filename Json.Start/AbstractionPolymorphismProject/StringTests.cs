@@ -22,6 +22,7 @@ namespace AbstractionPolymorphismProject
             var a = new String();
             var result = a.Match("abc\"");
             Assert.False(result.Success());
+            Assert.Equal("abc\"", result.RemainingText());
         }
 
         [Fact]
