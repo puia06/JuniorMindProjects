@@ -8,7 +8,7 @@ namespace AbstractionPolymorphismProject
 {
     public class Choice : IPattern
     {
-        private readonly IPattern[] patterns;
+        private IPattern[] patterns;
 
         public Choice(params IPattern[] patterns)
         {
@@ -26,6 +26,12 @@ namespace AbstractionPolymorphismProject
                 }
             }
             return new Match(false, text);
+        }
+
+        public void Add(IPattern pattern)
+        {
+            Array.Resize(ref patterns, patterns.Length + 1);
+            patterns[patterns.Length - 1] = pattern;
         }
     }
 }

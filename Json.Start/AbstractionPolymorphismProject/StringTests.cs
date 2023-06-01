@@ -53,7 +53,7 @@ namespace AbstractionPolymorphismProject
         public void IsJsonString_ContainControlCharacters_ShouldReturnTrue()
         {
             var a = new String();
-            var result = a.Match(Quoted("a\nb\rc"));
+            var result = a.Match(Quoted(@"a\nb\rc"));
             Assert.True(result.Success());
         }
 

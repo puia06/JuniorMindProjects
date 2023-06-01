@@ -231,5 +231,39 @@
             Assert.True(result.Success());
             Assert.Equal("bc", result.RemainingText());
         }
+
+        [Fact]
+        public void Match_ComplexChoiceObj_AddNewPattern_ShouldReturnTrue()
+        {
+            var value = new Choice(
+      new String(),
+      new Number(),
+      new Text("true"),
+      new Text("false"),
+      new Text("null")
+  );
+
+            var key = new String();
+            var pair = new Sequence(key, new Character(':'),  value);
+
+            var array = new Sequence(new Character('['), new List(new String(), new Character(',')), new Character(']'));
+            var objectt = new Sequence(new Character('{'), new OneOrMore(pair), new Character('}'));
+
+            value.Add(array);
+            value.Add(objectt);
+
+            var testJson = "\"abc\"" +
+                "3" +
+                "true" +
+                "false" +
+                "null" +
+                "[]" +
+                "{ \"key\":\"value\" }";
+            var result = value.Match(testJson);
+
+            Assert.True(result.Success());
+            Assert.Equal("", result.RemainingText());
+
+        }
     }
 }
