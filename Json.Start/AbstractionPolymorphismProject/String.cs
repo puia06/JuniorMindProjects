@@ -12,13 +12,10 @@ namespace AbstractionPolymorphismProject
 
         public String()
         {
-            var letter = new Range('a', 'z');
-            var validLargeUnicode = new Range('\u0120', '\uFFFF');
-            var emptySpace = new Character('\u0020');
-            var hexDigit = new Choice(new Range('0', '9'), new Range('a', 'f'), new Range('A', 'F'));
-            var validHexaSequence = new Sequence(new Character('u'), hexDigit, hexDigit, hexDigit, hexDigit);
-            var controlCharacter = new Sequence(new Character('\\'), new Choice(new Any("bfnrt/\"\\"), validHexaSequence));
-            pattern = new Sequence(new Character('\"'), new OneOrMore(new Choice(letter, controlCharacter, emptySpace, validLargeUnicode)), new Character('\"'));
+            var character = new Choice(new Range('\u0020', '\u0021'), new Range('\u0023', '\u005B'), new Range('\u005D', '\uFFFF'));
+            var hex = new Choice(new Range('0', '9'), new Range('a', 'f'), new Range('A', 'F'));
+            var escape = new Sequence(new Character('\\'), new Choice(new Any("bfnrt/\"\\"), new Sequence(new Character('u'), hex, hex, hex, hex)));
+            pattern = new Sequence(new Character('\"'), new OneOrMore(new Choice(escape, character)), new Character('\"'));
         }
 
         public IMatch Match(string text)
