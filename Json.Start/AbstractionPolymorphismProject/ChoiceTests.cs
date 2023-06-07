@@ -233,7 +233,7 @@
         }
 
         [Fact]
-        public void Match_ComplexChoiceObj_AddNewPattern_ShouldReturnTrue()
+        public void Match_ComplexChoiceObj_AddNewArrayPattern_ShouldReturnTrue()
         {
             var value = new Choice(
       new String(),
@@ -243,22 +243,43 @@
       new Text("null")
   );
 
-            var key = new String();
-            var pair = new Sequence(key, new Character(':'),  value);
-
-            var array = new Sequence(new Character('['), new List(new String(), new Character(',')), new Character(']'));
-            var objectt = new Sequence(new Character('{'), new OneOrMore(pair), new Character('}'));
+            var ws = new Choice(new Sequence(new Character('\"')), new Character('\"'), new Character('\u0020'), new Character('\u000A'), new Character('\u000D'), new Character('\u0009'));
+            var element = new Sequence(ws, value, ws);
+            var elements = new Choice(element, new Character(','), new List(element, new Character(',')));
+            var array = new Sequence(new Character('['), new Choice(ws, elements), new Character(']'));
 
             value.Add(array);
+
+            var testJson = "[true, abc]";
+            var result = value.Match(testJson);
+
+            Assert.True(result.Success());
+            Assert.Equal("", result.RemainingText());
+
+        }
+
+        [Fact]
+        public void Match_ComplexChoiceObj_AddNewObjectPattern_ShouldReturnTrue()
+        {
+            var value = new Choice(
+      new String(),
+      new Number(),
+      new Text("true"),
+      new Text("false"),
+      new Text("null")
+  );
+
+            var stringg = new String();
+            var ws = new Choice(new Sequence(new Character('\"')), new Character('\"'), new Character('\u0020'), new Character('\u000A'), new Character('\u000D'), new Character('\u0009'));
+            var element = new Sequence(ws, value, ws);
+            var member = new Sequence(ws, stringg, ws, new Character(':'), element);
+            var members = new Choice(member, new Sequence(member, new Character(','), new List(member, new Character(','))));
+
+            var objectt = new Sequence(new Character('{'), new Choice(ws, members), new Character('}'));
+
             value.Add(objectt);
 
-            var testJson = "\"abc\"" +
-                "3" +
-                "true" +
-                "false" +
-                "null" +
-                "[]" +
-                "{ \"key\":\"value\" }";
+            var testJson = "name: ";
             var result = value.Match(testJson);
 
             Assert.True(result.Success());

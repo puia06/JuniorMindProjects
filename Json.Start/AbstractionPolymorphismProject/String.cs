@@ -12,10 +12,11 @@ namespace AbstractionPolymorphismProject
 
         public String()
         {
-            var character = new Choice(new Range('\u0020', '\u0021'), new Range('\u0023', '\u005B'), new Range('\u005D', '\uFFFF'));
             var hex = new Choice(new Range('0', '9'), new Range('a', 'f'), new Range('A', 'F'));
             var escape = new Sequence(new Character('\\'), new Choice(new Any("bfnrt/\"\\"), new Sequence(new Character('u'), hex, hex, hex, hex)));
-            pattern = new Sequence(new Character('\"'), new OneOrMore(new Choice(escape, character)), new Character('\"'));
+            var character = new Choice(new Range('\u0020', '\u0021'), new Range('\u0023', '\u005B'), new Range('\u005D', '\uFFFF'), escape);
+            var characters = new Choice(new Sequence(new Character('\"'), new Character('\"')), new OneOrMore(character));
+            pattern = new Sequence(new Character('\"'), characters, new Character('\"'));
         }
 
         public IMatch Match(string text)
