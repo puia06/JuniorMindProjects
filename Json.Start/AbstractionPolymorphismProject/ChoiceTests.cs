@@ -242,15 +242,21 @@
       new Text("false"),
       new Text("null")
   );
-
-            var ws = new Choice(new Sequence(new Character('\"')), new Character('\"'), new Character('\u0020'), new Character('\u000A'), new Character('\u000D'), new Character('\u0009'));
+            var wss = new Choice(new Text(""), new Character('\u0020'), new Character('\u000A'), new Character('\u000D'), new Character('\u0009'));
+            var ws = new Choice(
+             new Text(""),
+             new Sequence(new Character('\u0020'), wss),
+             new Sequence(new Character('\u000A'), wss),
+             new Sequence(new Character('\u000D'), wss),
+             new Sequence(new Character('\u0009'), wss)
+         );
             var element = new Sequence(ws, value, ws);
-            var elements = new Choice(element, new Character(','), new List(element, new Character(',')));
-            var array = new Sequence(new Character('['), new Choice(ws, elements), new Character(']'));
+            var elements = new Choice(new Sequence(element, new Character(','), new List(element, new Character(','))), element);
+            var array = new Sequence(new Character('['),new Choice(ws, elements), new Character(']'));
 
             value.Add(array);
 
-            var testJson = "[true, abc]";
+            var testJson = "[true, \"abc\"]"; 
             var result = value.Match(testJson);
 
             Assert.True(result.Success());
@@ -270,7 +276,7 @@
   );
 
             var stringg = new String();
-            var ws = new Choice(new Sequence(new Character('\"')), new Character('\"'), new Character('\u0020'), new Character('\u000A'), new Character('\u000D'), new Character('\u0009'));
+            var ws = new Choice(new Text(""), new Character('\u0020'), new Character('\u000A'), new Character('\u000D'), new Character('\u0009'));
             var element = new Sequence(ws, value, ws);
             var member = new Sequence(ws, stringg, ws, new Character(':'), element);
             var members = new Choice(member, new Sequence(member, new Character(','), new List(member, new Character(','))));
@@ -279,7 +285,7 @@
 
             value.Add(objectt);
 
-            var testJson = "name: ";
+            var testJson = " ";
             var result = value.Match(testJson);
 
             Assert.True(result.Success());
