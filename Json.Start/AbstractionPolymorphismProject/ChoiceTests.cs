@@ -233,6 +233,22 @@
         }
 
         [Fact]
+        public void Match_ComplexChoiceObj_AddPattern_ValidCharInDigit_ShouldReturnTrue()
+        {
+            var digit = new Choice(
+                    new Character('0'),
+                    new Range('1', '9')
+                );
+            var e = new Character('e');
+            digit.Add(e);
+            string test = "eabc";
+            var result = digit.Match(test);
+
+            Assert.True(result.Success());
+            Assert.Equal("abc", result.RemainingText());
+        }
+
+        [Fact]
         public void Match_ComplexChoiceObj_AddNewArrayPattern_ShouldReturnTrue()
         {
             var value = new Choice(
