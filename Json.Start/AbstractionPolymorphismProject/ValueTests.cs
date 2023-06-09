@@ -67,7 +67,7 @@ namespace AbstractionPolymorphismProject
         public void Match_ArrayValue_ShouldReturnTrue()
         {
             var value = new Value();
-            var testJson = "[true, \"abc\"]";
+            var testJson = "[ ]";
             var result = value.Match(testJson);
 
             Assert.True(result.Success());
@@ -83,6 +83,16 @@ namespace AbstractionPolymorphismProject
             var result = value.Match(testJson);
 
             Assert.True(result.Success());
+            Assert.Equal("", result.RemainingText());
+        }
+
+        [Fact]
+        public void Match_Array_Fail()
+        {
+            var value = new Value();
+            var testCase = "[false, \"abc\"]";
+                var result = value.Match(testCase);
+                Assert.True(result.Success());
             Assert.Equal("", result.RemainingText());
         }
     }

@@ -16,39 +16,39 @@ namespace AbstractionPolymorphismProject
             var value = new Choice(
         new String(),
         new Number(),
-        new Text("true"),
         new Text("false"),
+        new Text("true"),
         new Text("null")
         );
 
             var stringg = new String();
-            var wss = new Choice(new Text(""), new Character('\u0020'), new Character('\u000A'), new Character('\u000D'), new Character('\u0009'));
+            var wss = new Choice(new Character('\u0020'), new Character('\u000A'), new Character('\u000D'), new Character('\u0009'), new Text(""));
             var ws = new Choice(
-             new Text(""),
              new Sequence(new Character('\u0020'), wss),
              new Sequence(new Character('\u000A'), wss),
              new Sequence(new Character('\u000D'), wss),
-             new Sequence(new Character('\u0009'), wss)
+             new Sequence(new Character('\u0009'), wss),
+             new Text("")
          );
             var element = new Sequence(ws, value, ws);
             var member = new Sequence(ws, stringg, ws, new Character(':'), element);
             var members = new List(member, new Character(','));
             var elements = new List(element, new Character(','));
-
+            var choice = new Choice();
+            choice.Add(ws);
+            choice.Add(elements);
             var objectt = new Sequence(new Character('{'), new Choice(ws, members), new Character('}'));
             var array = new Sequence(new Character('['), new Choice(ws, elements), new Character(']'));
             value.Add(objectt);
             value.Add(array);
-
             pattern = new Choice(
-      objectt,
       array,
       new String(),
       new Number(),
-      new Text("true"),
       new Text("false"),
+      new Text("true"),
       new Text("null")
-  );
+  ) ;
         }
 
         public IMatch Match(string text)
