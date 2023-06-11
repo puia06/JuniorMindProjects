@@ -79,7 +79,7 @@ namespace AbstractionPolymorphismProject
         {
             var value = new Value();
 
-            var testJson = " ";
+            var testJson = "{ }";
             var result = value.Match(testJson);
 
             Assert.True(result.Success());
@@ -87,13 +87,54 @@ namespace AbstractionPolymorphismProject
         }
 
         [Fact]
-        public void Match_Array_Fail()
+        public void Match_Array_Elements_ShouldReturnTrue()
         {
             var value = new Value();
             var testCase = "[false, \"abc\"]";
                 var result = value.Match(testCase);
                 Assert.True(result.Success());
             Assert.Equal("", result.RemainingText());
+        }
+
+        [Fact]
+        public void Match_Object_Members_ShouldReturnTrue()
+        {
+            var value = new Value();
+            var testCase = "{\r\n \"name\" :\"John Doe\",\r\n    \"age\" :30,\r\n    \"city\" :\"New York\"\r\n}";
+            var result = value.Match(testCase);
+            Assert.True(result.Success());
+            Assert.Equal("", result.RemainingText());
+        }
+
+
+        [Fact]
+        public void Match_Object_IncorrectString_ShouldReturnFalse()
+        {
+            var value = new Value();
+            var testCase = "{name\" :\"John Doe\",\r\n    \"age\" :30,\r\n    \"city\" :\"New York\"\r\n}";
+            var result = value.Match(testCase);
+            Assert.False(result.Success());
+            Assert.Equal("{name\" :\"John Doe\",\r\n    \"age\" :30,\r\n    \"city\" :\"New York\"\r\n}", result.RemainingText());
+        }
+
+        [Fact]
+        public void Match_Object_wsws_ShouldReturnTrue()
+        {
+            var value = new Value();
+            var testCase = "{ \n }";
+            var result = value.Match(testCase);
+            Assert.True(result.Success());
+            Assert.Equal("", result.RemainingText());
+        }
+
+        [Fact]
+        public void Match_Object_invalidObject_ShouldReturnFalse()
+        {
+            var value = new Value();
+            var testCase = "{ \n  r}";
+            var result = value.Match(testCase);
+            Assert.False(result.Success());
+            Assert.Equal("{ \n  r}", result.RemainingText());
         }
     }
 }
