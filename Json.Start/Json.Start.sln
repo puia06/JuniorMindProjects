@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Json.Facts", "Json.Facts\Js
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FootballRankingSystem", "FootballRankingSystem\FootballRankingSystem.csproj", "{8283127E-22D7-41C7-BBD1-693B119544D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbstractionPolymorphismProject", "AbstractionPolymorphismProject\AbstractionPolymorphismProject.csproj", "{577A1FE2-4AF7-4B1E-A58B-AD06A8AABBB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbstractionPolymorphismProject", "AbstractionPolymorphismProject\AbstractionPolymorphismProject.csproj", "{577A1FE2-4AF7-4B1E-A58B-AD06A8AABBB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
