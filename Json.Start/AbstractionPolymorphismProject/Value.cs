@@ -22,13 +22,7 @@ namespace AbstractionPolymorphismProject
         );
 
             var stringg = new String();
-            /*var ws = new Choice();
-            ws.Add(new Sequence(new Character('\u0020'), ws));
-            ws.Add(new Sequence(new Character('\u000A'), ws));
-            ws.Add(new Sequence(new Character('\u000D'), ws));
-            ws.Add(new Sequence(new Character('\u0009'), ws));
-            ws.Add(new Sequence(new Text("")));*/
-            var ws = new Choice(new OneOrMore(new Any(" \t\r\n")), new Text(""));
+            var ws = new Many(new Any(" \t\r\n"));
 
             var element = new Sequence(ws, value, ws);
             var member = new Sequence(ws, stringg, ws, new Character(':'), element);
