@@ -28,12 +28,12 @@ namespace AbstractionPolymorphismProject
             var member = new Sequence(ws, stringg, ws, new Character(':'), element);
             var members = new List(member, new Character(','));
             var elements = new List(element, new Character(','));
-            var objectt = new Sequence(new Character('{'),ws, members, new Character('}'));
-            var array = new Sequence(new Character('['),ws, elements, new Character(']'));
+            var objectt = new Sequence(new Character('{'), ws, members, new Character('}'));
+            var array = new Sequence(new Character('['), ws, elements, new Character(']'));
             value.Add(objectt);
             value.Add(array);
 
-            pattern = value;
+            pattern = element;
         }
 
         public IMatch Match(string text)

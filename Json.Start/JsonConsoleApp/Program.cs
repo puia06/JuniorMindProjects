@@ -2,26 +2,33 @@
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        Console.WriteLine("Introdu un text pe a afla daca este un JSON valid");
-        string line;
         string textJson = "";
-        while ((line = Console.ReadLine()) != string.Empty)
+        try
         {
-            textJson += line;
+            using (var sr = new StreamReader("Sample.txt"))
+            {
+                textJson = sr.ReadToEnd();
+            }
+        }
+        catch (IOException e)
+        {
+            Console.WriteLine("The file could not be read:");
+            Console.WriteLine(e.Message);
         }
 
         Value value = new Value();
 
-        if (value.Match(textJson).Success() && value.Match(textJson).RemainingText() == "")
-        {
-            Console.WriteLine("Textul introdus este un Json valid");
-        }
-        else
-        {
-            Console.WriteLine("Textul introdus nu este un Json valid");
-        }
+         if (value.Match(textJson).Success() && value.Match(textJson).RemainingText() == "")
+         {
+             Console.WriteLine("Textul introdus este un Json valid");
+         }
+         else
+         {
+             Console.WriteLine("Textul introdus nu este un Json valid");
+         }
+        
         Console.ReadKey();
     }
 }
