@@ -2,20 +2,21 @@
 
 class Program
 {
-    static void Main()
+    static void Main(string[] args)
     {
         string textJson = "";
-        try
+        if (args.Length > 0)
         {
-            using (var sr = new StreamReader("Sample.txt"))
+            string filePath = args[0];
+            using (StreamReader sr = new StreamReader(filePath))
             {
-                textJson = sr.ReadToEnd();
+                string fileContent = File.ReadAllText(filePath);
+                textJson = fileContent;
             }
         }
-        catch (IOException e)
+        else
         {
-            Console.WriteLine("The file could not be read:");
-            Console.WriteLine(e.Message);
+            Console.WriteLine("Nu a fost furnizată o cale către fișierul text.");
         }
 
         Value value = new Value();
