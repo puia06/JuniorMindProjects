@@ -8,10 +8,16 @@ class Program
         if (args.Length > 0)
         {
             string filePath = args[0];
-            using (StreamReader sr = new StreamReader(filePath))
+            try
             {
-                string fileContent = File.ReadAllText(filePath);
-                textJson = fileContent;
+                using (StreamReader sr = new StreamReader(filePath))
+                {
+                    textJson = sr.ReadToEnd();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"A apărut o eroare la citirea fișierului: {e.Message}");
             }
         }
         else
