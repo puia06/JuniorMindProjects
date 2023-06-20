@@ -18,16 +18,19 @@ class Program
             catch (Exception e)
             {
                 Console.WriteLine($"A apărut o eroare la citirea fișierului: {e.Message}");
+                return;
             }
         }
         else
         {
             Console.WriteLine("Nu a fost furnizată o cale către fișierul text.");
+            return;
         }
 
         Value value = new Value();
+        var matchResult = value.Match(textJson);
 
-         if (value.Match(textJson).Success() && value.Match(textJson).RemainingText() == "")
+        if (matchResult.Success() && matchResult.RemainingText() == "")
          {
              Console.WriteLine("Textul introdus este un Json valid");
          }
@@ -35,7 +38,5 @@ class Program
          {
              Console.WriteLine("Textul introdus nu este un Json valid");
          }
-        
-        Console.ReadKey();
     }
 }
