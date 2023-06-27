@@ -54,7 +54,7 @@ namespace AbstractionPolymorphismProject
             var result = digit.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal(null, result.RemainingText());
+            Assert.Null(result.RemainingText());
         }
 
         [Fact]

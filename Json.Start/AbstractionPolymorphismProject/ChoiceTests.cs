@@ -68,7 +68,7 @@
             var result = digit.Match(null);
 
             Assert.False(result.Success());
-            Assert.Equal(null, result.RemainingText());
+            Assert.Null(result.RemainingText());
         }
 
         [Fact]

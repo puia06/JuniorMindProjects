@@ -1,35 +1,43 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.VisualBasic;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AbstractionPolymorphismProject
 {
-    public class Value
+    public class Value 
     {
         private readonly IPattern pattern;
 
         public Value()
         {
+            var stringg = new String();
+            var comma = new Character(',');
+            var colon = new Character(':');
+            var x = new Character('{');
+            var y = new Character('}');
+            var a = new Character('[');
+            var b = new Character(']');
+            var ws = new Many(new Any(" \t\r\n"));
+
             var value = new Choice(
-        new String(),
+        stringg,
         new Number(),
         new Text("false"),
         new Text("true"),
         new Text("null")
         );
 
-            var stringg = new String();
-            var ws = new Many(new Any(" \t\r\n"));
-
             var element = new Sequence(ws, value, ws);
-            var member = new Sequence(ws, stringg, ws, new Character(':'), element);
-            var members = new List(member, new Character(','));
-            var elements = new List(element, new Character(','));
-            var objectt = new Sequence(new Character('{'), ws, members, new Character('}'));
-            var array = new Sequence(new Character('['), ws, elements, new Character(']'));
+            var member = new Sequence(ws, stringg, ws, colon, element);
+            var members = new List(member, comma);
+            var elements = new List(element, comma);
+            var objectt = new Sequence(x, ws, members, y);
+            var array = new Sequence(a, ws, elements, b);
             value.Add(objectt);
             value.Add(array);
 
@@ -38,7 +46,7 @@ namespace AbstractionPolymorphismProject
 
         public IMatch Match(string text)
         {
-            return pattern.Match(text);
+             return pattern.Match(text);
         }
     }
 }

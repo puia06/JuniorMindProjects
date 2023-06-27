@@ -77,7 +77,7 @@ namespace AbstractionPolymorphismProject
             var result = a.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal(null, result.RemainingText());
+            Assert.Null(result.RemainingText());
         }
 
         [Fact]

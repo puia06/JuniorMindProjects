@@ -15,7 +15,7 @@ namespace AbstractionPolymorphismProject
         }
 
         public IMatch Match(string text)
-        {
+        {   
             IMatch match = new Match(true, text);
             foreach (var pattern in patterns)
             {

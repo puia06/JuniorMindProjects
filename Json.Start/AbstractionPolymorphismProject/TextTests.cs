@@ -57,7 +57,7 @@ namespace AbstractionPolymorphismProject
             var result = truee.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal(null, result.RemainingText());
+            Assert.Null(result.RemainingText());
         }
 
         [Fact]
@@ -123,7 +123,7 @@ namespace AbstractionPolymorphismProject
             var result = falsee.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal(null, result.RemainingText());
+            Assert.Null(result.RemainingText());
         }
 
         [Fact]
@@ -161,7 +161,7 @@ namespace AbstractionPolymorphismProject
             var result = empty.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal(null, result.RemainingText());
+            Assert.Null(result.RemainingText());
         }
     }
 }
