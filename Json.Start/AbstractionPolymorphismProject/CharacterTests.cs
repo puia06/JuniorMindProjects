@@ -12,44 +12,49 @@ namespace AbstractionPolymorphismProject
         public void Match_StartsWith_pattern_ShouldReturnTrue()
         {
             var x = new Character('x');
-            string test = "xabc";
+            StringView test = new StringView("xabc");
+            int expectedPosition = 1;
             var result = x.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal("abc", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
+
 
         [Fact]
         public void Match_StartsWith_DifferentCharacter_ShouldReturnTrue()
         {
             var x = new Character('x');
-            string test = "abc";
+            StringView test = new StringView("abc");
+            int expectedPosition = 0;
             var result = x.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal("abc", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
         public void Match_NullString_ShouldReturnFalse()
         {
             var x = new Character('x');
-            string test = null;
+            StringView test = new StringView(null);
+            int expectedPosition = 0;
             var result = x.Match(test);
 
             Assert.False(result.Success());
-            Assert.Null(result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
         public void Match_EmptyString_ShouldReturnFalse()
         {
             var x = new Character('x');
-            string test = "";
+            StringView test = new StringView("");
+            int expectedPosition = 0;
             var result = x.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal("", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
     }
 }

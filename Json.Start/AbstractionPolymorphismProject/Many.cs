@@ -11,10 +11,10 @@ namespace AbstractionPolymorphismProject
         private readonly IPattern pattern;
         public Many(IPattern pattern)
         {
-           this.pattern = pattern;
+            this.pattern = pattern;
         }
 
-        public IMatch Match(string text)
+        public IMatch Match(StringView text)
         {
             IMatch match = pattern.Match(text);
             while (match.Success())

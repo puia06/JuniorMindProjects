@@ -14,9 +14,9 @@ namespace AbstractionPolymorphismProject
             this.pattern = new Sequence(pattern, new Many(pattern));
         }
 
-        public IMatch Match(string text)
+        public IMatch Match(StringView text)
         {
             return pattern.Match(text);
         }
-    } 
+    }
 }

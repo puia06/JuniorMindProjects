@@ -15,14 +15,15 @@ namespace AbstractionPolymorphismProject
             this.pattern = pattern;
         }
 
-        public IMatch Match(string text)
+        public IMatch Match(StringView text)
         {
-            if (!string.IsNullOrEmpty(text) && text[0] == pattern)
+            if (!string.IsNullOrEmpty(text.GetText()) && !text.EndPosition() && text.CharPeek() == pattern)
             {
-                return new Match(true, text[1..]);
+                text.NextPosition();
+                return new Match(true, text);
             }
 
-            return new Match(false, text); 
+            return new Match(false, text);
         }
     }
 }

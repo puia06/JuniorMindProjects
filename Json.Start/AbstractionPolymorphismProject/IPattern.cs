@@ -8,6 +8,6 @@ namespace AbstractionPolymorphismProject
 {
     public interface IPattern
     {
-        IMatch Match(string text);
+        IMatch Match(StringView text);
     }
 }

@@ -18,11 +18,12 @@ namespace AbstractionPolymorphismProject
             this.end = end;
         }
 
-        public IMatch Match(string text)
+        public IMatch Match(StringView text)
         {
-            if (!string.IsNullOrEmpty(text) && text[0] >= start && text[0] <= end)
+            if (!string.IsNullOrEmpty(text.GetText()) && !text.EndPosition() && text.CharPeek() >= start && text.CharPeek() <= end)
             {
-                return new Match(true, text[1..]);
+                text.NextPosition();
+                return new Match(true, text);
             }
 
             return new Match(false, text);

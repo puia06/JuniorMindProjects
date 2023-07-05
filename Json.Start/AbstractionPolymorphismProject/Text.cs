@@ -7,14 +7,21 @@ namespace AbstractionPolymorphismProject
         private readonly string prefix;
         public Text(string prefix)
         {
-          this.prefix = prefix;
-         }
+            this.prefix = prefix;
+        }
 
-        public IMatch Match(string text)
+        public IMatch Match(StringView text)
         {
-            return string.IsNullOrEmpty(text) || prefix == null || !text.StartsWith(prefix)
-                  ? new Match(false, text)
-                  : new Match(true, text[prefix.Length..]);
+            if (string.IsNullOrEmpty(text.GetText()) || prefix == null || !text.GetText().StartsWith(prefix))
+            {
+                return new Match(false, text);
+            }
+            for (int i = 0; i < prefix.Length; i++)
+            {
+                text.NextPosition();
+            }
+
+            return new Match(true, text);
         }
     }
 }

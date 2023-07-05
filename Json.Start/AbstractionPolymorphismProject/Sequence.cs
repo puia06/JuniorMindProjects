@@ -14,16 +14,18 @@ namespace AbstractionPolymorphismProject
             this.patterns = patterns;
         }
 
-        public IMatch Match(string text)
-        {   
+        public IMatch Match(StringView text)
+        {
             IMatch match = new Match(true, text);
+            int initialPosition = text.GetPosition();
             foreach (var pattern in patterns)
             {
                 match = pattern.Match(match.RemainingText());
                 if (!match.Success())
                 {
+                    text.SetPosition(initialPosition);
                     return new Match(false, text);
-                } 
+                }
             }
 
             return match;

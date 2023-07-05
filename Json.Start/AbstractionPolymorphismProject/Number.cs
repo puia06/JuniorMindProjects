@@ -14,14 +14,14 @@ namespace AbstractionPolymorphismProject
         public Number()
         {
             var digits = new OneOrMore(new Range('0', '9'));
-            var integerPart = new Sequence(new Optional(new Character ('-')), new Choice(new Character('0'), digits));
+            var integerPart = new Sequence(new Optional(new Character('-')), new Choice(new Character('0'), digits));
             var decimalPart = new Optional(new Sequence(new Character('.'), digits));
             var exponent = new Optional(new Sequence(new Any("eE"), new Optional(new Any("+-")), digits));
 
             pattern = new Sequence(integerPart, decimalPart, exponent);
         }
 
-        public IMatch Match(string text)
+        public IMatch Match(StringView text)
         {
             return pattern.Match(text);
         }

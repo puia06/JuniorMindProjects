@@ -13,11 +13,12 @@ namespace AbstractionPolymorphismProject
         {
             var a = new OneOrMore(new Range('0', '9'));
 
-            string test = "123";
+            StringView test = new StringView("123");
+            int expectedPosition = test.GetText().Length;
             var result = a.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal("", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -25,11 +26,12 @@ namespace AbstractionPolymorphismProject
         {
             var a = new OneOrMore(new Range('0', '9'));
 
-            string test = "1a";
+            StringView test = new StringView("1a");
+            int expectedPosition = 1;
             var result = a.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal("a", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -37,11 +39,12 @@ namespace AbstractionPolymorphismProject
         {
             var a = new OneOrMore(new Range('0', '9'));
 
-            string test = "bc";
+            StringView test = new StringView("bc");
+            int expectedPosition = 0;
             var result = a.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal("bc", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -49,11 +52,12 @@ namespace AbstractionPolymorphismProject
         {
             var a = new OneOrMore(new Range('0', '9'));
 
-            string test = "";
+            StringView test = new StringView("");
+            int expectedPosition = 0;
             var result = a.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal("", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -61,11 +65,12 @@ namespace AbstractionPolymorphismProject
         {
             var a = new OneOrMore(new Range('0', '9'));
 
-            string test = null;
+            StringView test = new StringView(null);
+            int expectedPosition = 0;
             var result = a.Match(test);
 
             Assert.False(result.Success());
-            Assert.Null(result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
     }
 }

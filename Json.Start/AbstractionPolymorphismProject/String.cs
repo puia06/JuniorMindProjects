@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,7 +22,7 @@ namespace AbstractionPolymorphismProject
             pattern = new Sequence(new Character('\"'), characters, new Character('\"'));
         }
 
-        public IMatch Match(string text)
+        public IMatch Match(StringView text)
         {
             return pattern.Match(text);
         }

@@ -14,7 +14,7 @@ namespace AbstractionPolymorphismProject
             this.pattern = pattern;
         }
 
-        public IMatch Match(string text)
+        public IMatch Match(StringView text)
         {
             IMatch match = pattern.Match(text);
 

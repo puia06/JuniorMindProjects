@@ -13,11 +13,25 @@ namespace AbstractionPolymorphismProject
         {
             var e = new Any("eE");
 
-            string test = "ea";
+            StringView test = new StringView("ea");
+            int expectedPosition = 1;
             var result = e.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal("a", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+        }
+
+        [Fact]
+        public void Match_FirstTextCharacterMatchh_AnyFirstCharacter_ShouldReturnTrueAndRemainingText()
+        {
+            var e = new Any("eE");
+
+            StringView test = new StringView("Ea");
+            int expectedPosition = 1;
+            var result = e.Match(test);
+
+            Assert.True(result.Success());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -25,11 +39,12 @@ namespace AbstractionPolymorphismProject
         {
             var e = new Any("eE");
 
-            string test = "Ea";
+            StringView test = new StringView("Ea");
+            int expectedPosition = 1;
             var result = e.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal("a", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -37,11 +52,12 @@ namespace AbstractionPolymorphismProject
         {
             var e = new Any("eE");
 
-            string test = "a";
+            StringView test = new StringView("a");
+            int expectedPosition = 0;
             var result = e.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal("a", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -49,11 +65,12 @@ namespace AbstractionPolymorphismProject
         {
             var e = new Any("eE");
 
-            string test = null;
+            StringView test = new StringView(null);
             var result = e.Match(test);
+            int expectedPosition = 0;
 
             Assert.False(result.Success());
-            Assert.Null(result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -61,11 +78,12 @@ namespace AbstractionPolymorphismProject
         {
             var e = new Any("eE");
 
-            string test = "";
+            StringView test = new StringView("");
+            int expectedPosition = 0;
             var result = e.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal("", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -73,11 +91,12 @@ namespace AbstractionPolymorphismProject
         {
             var e = new Any("-+");
 
-            string test = "+3";
+            StringView test = new StringView("+3");
+            int expectedPosition = 1;
             var result = e.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal("3", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -85,11 +104,12 @@ namespace AbstractionPolymorphismProject
         {
             var e = new Any("-+");
 
-            string test = "-2";
+            StringView test = new StringView("-2");
+            int expectedPosition = 1;
             var result = e.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal("2", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -97,11 +117,12 @@ namespace AbstractionPolymorphismProject
         {
             var e = new Any("eE");
 
-            string test = "2";
+            StringView test = new StringView("2");
+            int expectedPosition = 0;
             var result = e.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal("2", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -109,11 +130,12 @@ namespace AbstractionPolymorphismProject
         {
             var e = new Any("-+");
 
-            string test = null;
+            StringView test = new StringView(null);
             var result = e.Match(test);
+            int expectedPosition = 0;
 
             Assert.False(result.Success());
-            Assert.Null(result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -121,12 +143,12 @@ namespace AbstractionPolymorphismProject
         {
             var e = new Any("1+");
 
-            string test = "";
+            StringView test = new StringView("");
+            int expectedPosition = 0;
             var result = e.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal("", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
-
     }
 }

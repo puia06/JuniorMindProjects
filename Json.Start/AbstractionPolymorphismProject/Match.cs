@@ -9,20 +9,20 @@ namespace AbstractionPolymorphismProject
     public class Match : IMatch
     {
         private bool success;
-        private string remainingText;
+        private StringView remainingText;
 
-        public Match(bool success, string remainingText)
+        public Match(bool success, StringView remainingText)
         {
             this.success = success;
             this.remainingText = remainingText;
         }
 
         public bool Success()
-        { 
+        {
             return success;
         }
 
-        public string RemainingText()
+        public StringView RemainingText()
         {
             return remainingText;
         }

@@ -1,5 +1,6 @@
 ﻿using AbstractionPolymorphismProject;
 using Newtonsoft.Json;
+using System.Linq.Expressions;
 using System.Text;
 
 class Program
@@ -10,8 +11,6 @@ class Program
         if (args.Length > 0)
         {
             string filePath = args[0];
-            //string filePath = @"C:\Users\puiac\Desktop\MyProjects\GitProjects\JuniorMindProjects\Json.Start\JsonConsoleApp\Sample.txt";
-
             try
             {
                 using (StreamReader sr = new StreamReader(filePath))
@@ -33,9 +32,11 @@ class Program
         }
 
         Value value = new Value();
-        var matchResult = value.Match(textJson);
+        StringView text = new StringView(textJson);
+        int expectedResult = text.GetText().Length;
+        var matchResult = value.Match(text);
 
-        if (matchResult.RemainingText() == "")
+        if (matchResult.RemainingText().GetPosition() == expectedResult)
         {
             Console.WriteLine("Textul introdus este un Json valid");
         }

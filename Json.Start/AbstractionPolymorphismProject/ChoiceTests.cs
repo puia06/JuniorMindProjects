@@ -9,11 +9,12 @@
                 new Character('0'),
                 new Range('1', '9')
             );
-            string test = "012";
+            StringView test = new StringView("012");
+            int expectedPosition = 1;
             var result = digit.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal("12", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -23,11 +24,12 @@
                 new Character('0'),
                 new Range('1', '9')
             );
-            string test = "12";
+            StringView test = new StringView("12");
+            int expectedPosition = 1;
             var result = digit.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal("2", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -37,11 +39,12 @@
                 new Character('0'),
                 new Range('1', '9')
             );
-            string test = "92";
+            StringView test = new StringView("92");
+            int expectedPosition = 1;
             var result = digit.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal("2", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -51,11 +54,12 @@
              new Character('0'),
              new Range('1', '9')
          );
-            string test = "a9";
+            StringView test = new StringView("a9");
+            int expectedPosition = 0;
             var result = digit.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal("a9", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -65,10 +69,12 @@
                      new Character('0'),
                      new Range('1', '9')
                  );
-            var result = digit.Match(null);
+            StringView test = new StringView(null);
+            int expectedPosition = 0;
+            var result = digit.Match(test);
 
             Assert.False(result.Success());
-            Assert.Null(result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -78,10 +84,12 @@
                        new Character('0'),
                        new Range('1', '9')
                    );
-            var result = digit.Match("");
+            StringView test = new StringView("");
+            int expectedPosition = 0;
+            var result = digit.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal("", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -98,11 +106,12 @@
                    new Range('A', 'F')
                )
             );
-            string test = "a9";
+            StringView test = new StringView("a9");
+            int expectedPosition = 1;
             var result = hex.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal("9", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -119,11 +128,12 @@
                    new Range('A', 'F')
                )
             );
-            string test = "f8";
+            StringView test = new StringView("f8");
+            int expectedPosition = 1;
             var result = hex.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal("8", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -140,11 +150,12 @@
                    new Range('A', 'F')
                )
             );
-            string test = "A9";
+            StringView test = new StringView("A9");
+            int expectedPosition = 1;
             var result = hex.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal("9", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -161,11 +172,12 @@
                    new Range('A', 'F')
                )
             );
-            string test = "F8";
+            StringView test = new StringView("F8");
+            int expectedPosition = 1;
             var result = hex.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal("8", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -182,11 +194,12 @@
                    new Range('A', 'F')
                )
             );
-            string test = "g8";
+            StringView test = new StringView("g8");
+            int expectedPosition = 0;
             var result = hex.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal("g8", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -203,11 +216,12 @@
                    new Range('A', 'F')
                )
             );
-            string test = "0ab";
+            StringView test = new StringView("0ab");
+            int expectedPosition = 1;
             var result = hex.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal("ab", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
 
@@ -225,11 +239,12 @@
                    new Range('A', 'F')
                )
             );
-            string test = "abc";
+            StringView test = new StringView("abc");
+            int expectedPosition = 1;
             var result = hex.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal("bc", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
 
         [Fact]
@@ -241,11 +256,12 @@
                 );
             var e = new Character('e');
             digit.Add(e);
-            string test = "eabc";
+            StringView test = new StringView("eabc");
+            int expectedPosition = 1;
             var result = digit.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal("abc", result.RemainingText());
+            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
         }
     }
 }
