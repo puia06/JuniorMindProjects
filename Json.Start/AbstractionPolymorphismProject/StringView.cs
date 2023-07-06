@@ -37,11 +37,6 @@ namespace AbstractionPolymorphismProject
             return this.text.StartsWith(prefix);
         }
 
-        public StringView SaveLastPosition()
-        {
-            return new StringView(text, position);
-        } 
-
         public int GetPosition()
         {
             return this.position;
@@ -54,7 +49,7 @@ namespace AbstractionPolymorphismProject
 
         public StringView Advance(int step = 1)
         {
-            return new StringView(this.text, this.position += step);
+            return new StringView(text, position += step);
         }
     }
 }
