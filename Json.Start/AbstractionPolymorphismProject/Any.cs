@@ -16,11 +16,11 @@ namespace AbstractionPolymorphismProject
 
         public IMatch Match(StringView text)
         {
-            if (text.IsNullOrEmpty() || text.IsEndPosition() || !accepted.Contains(text.CharPeek()))
+            if (text.IsEmpty() || !accepted.Contains(text.CharPeek()))
             {
                 return new Match(false, text);
             }
-            text.NextPosition();
+            text.AdvancePosition();
 
             return new Match(true, text);
         }

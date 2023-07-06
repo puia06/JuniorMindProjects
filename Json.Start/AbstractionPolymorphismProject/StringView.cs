@@ -17,7 +17,7 @@ namespace AbstractionPolymorphismProject
             this.position = 0;
         }
 
-        public StringView(string text, int position)
+        private StringView(string text, int position)
         {
             this.text = text;
             this.position = position;
@@ -27,9 +27,9 @@ namespace AbstractionPolymorphismProject
             return this.text;
         }
 
-        public bool IsNullOrEmpty()
+        public bool IsEmpty()
         {
-            return string.IsNullOrEmpty(this.text);
+            return string.IsNullOrEmpty(this.text) || text.Length == this.position;
         }
 
         public bool StartsWith(string prefix)
@@ -47,23 +47,14 @@ namespace AbstractionPolymorphismProject
             return this.position;
         }
 
-        public bool IsUnavailablePosition()
-        {
-            return position >= text.Length;
-        }
         public char CharPeek()
         {
             return text[position];
         }
 
-        public StringView NextPosition()
+        public StringView AdvancePosition()
         {
             return new StringView(text, position++);
-        }
-
-        public bool IsEndPosition()
-        {
-            return text.Length == this.position;
         }
     }
 }
