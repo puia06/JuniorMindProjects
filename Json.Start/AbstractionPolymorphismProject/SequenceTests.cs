@@ -16,11 +16,11 @@ namespace AbstractionPolymorphismProject
     new Character('b')
             );
             StringView test = new StringView("abcd");
-            int expectedPosition = 2;
+            StringView expectedResult = new StringView("abcd", 2);
             var result = ab.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -31,11 +31,11 @@ namespace AbstractionPolymorphismProject
     new Character('b')
             );
             StringView test = new StringView("ax");
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView("ax", 0);
             var result = ab.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -46,11 +46,11 @@ namespace AbstractionPolymorphismProject
     new Character('b')
             );
             StringView test = new StringView("def");
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView("def", 0);
             var result = ab.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -61,11 +61,11 @@ namespace AbstractionPolymorphismProject
     new Character('b')
             );
             StringView test = new StringView("");
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView("", 0);
             var result = ab.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -76,11 +76,11 @@ namespace AbstractionPolymorphismProject
     new Character('b')
             );
             StringView test = new StringView(null);
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView(null, 0);
             var result = ab.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -102,11 +102,11 @@ namespace AbstractionPolymorphismProject
                 )
             );
             StringView test = new StringView("u1234");
-            int expectedPosition = test.GetText().Length;
+            StringView expectedResult = new StringView("u1234", 5);
             var result = hexSeq.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
 
@@ -129,11 +129,11 @@ namespace AbstractionPolymorphismProject
                 )
             );
             StringView test = new StringView("uabcdef");
-            int expectedPosition = 5;
+            StringView expectedResult = new StringView("uabcdef", 5);
             var result = hexSeq.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -155,11 +155,11 @@ namespace AbstractionPolymorphismProject
                 )
             );
             StringView test = new StringView("uB005 ab");
-            int expectedPosition = 5;
+            StringView expectedResult = new StringView("uB005 ab", 5);
             var result = hexSeq.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -181,11 +181,11 @@ namespace AbstractionPolymorphismProject
                 )
             );
             StringView test = new StringView("abc");
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView("abc", 0);
             var result = hexSeq.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -207,11 +207,11 @@ namespace AbstractionPolymorphismProject
                 )
             );
             StringView test = new StringView(null);
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView(null, 0);
             var result = hexSeq.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
     }
 }

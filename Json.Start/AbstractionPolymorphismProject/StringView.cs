@@ -17,7 +17,7 @@ namespace AbstractionPolymorphismProject
             this.position = 0;
         }
 
-        private StringView(string text, int position)
+        public StringView(string text, int position)
         {
             this.text = text;
             this.position = position;
@@ -49,7 +49,13 @@ namespace AbstractionPolymorphismProject
 
         public StringView Advance(int step = 1)
         {
-            return new StringView(text, position += step);
+            int newPosition = position + step;
+            return new StringView(text, newPosition);
+        }
+
+        public bool CompareTo(StringView x)
+        {
+            return this.text == x.text && this.position == x.position;
         }
     }
 }

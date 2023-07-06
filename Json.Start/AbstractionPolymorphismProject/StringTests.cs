@@ -14,9 +14,9 @@ namespace AbstractionPolymorphismProject
             var a = new String();
             StringView testJson = new StringView(Quoted("abc"));
             var result = a.Match(testJson);
-            int expectedPosition = testJson.GetText().Length;
+            StringView expectedResult = new StringView(Quoted("abc"), 5);
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -25,9 +25,9 @@ namespace AbstractionPolymorphismProject
             var a = new String();
             StringView testJson = new StringView("abc\"");
             var result = a.Match(testJson);
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView("abc\"", 0);
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -35,10 +35,10 @@ namespace AbstractionPolymorphismProject
         {
             var a = new String();
             StringView testJson = new StringView("\"abc");
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView("\"abc", 0);
             var result = a.Match(testJson);
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -46,10 +46,10 @@ namespace AbstractionPolymorphismProject
         {
             var a = new String();
             StringView testJson = new StringView(null);
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView(null, 0);
             var result = a.Match(testJson);
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -57,54 +57,58 @@ namespace AbstractionPolymorphismProject
         {
             var a = new String();
             StringView testJson = new StringView("");
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView("", 0);
             var result = a.Match(testJson);
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
         public void IsJsonString_ContainControlCharacters_ShouldReturnTrue()
         {
             var a = new String();
-            StringView testJson = new StringView(Quoted(@"a\nb\rc"));
-            int expectedPosition = testJson.GetText().Length;
+            string st = Quoted(@"a\nb\rc");
+            StringView testJson = new StringView(st);
+            StringView expectedResult = new StringView(st, st.Length);
             var result = a.Match(testJson);
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
         public void IsJsonString_CanContainLargeUnicodeCharacters_ShouldReturnTrue()
         {
             var a = new String();
-            StringView testJson = new StringView(Quoted("⛅⚾"));
-            int expectedPosition = testJson.GetText().Length;
+            string st = Quoted("⛅⚾");
+            StringView testJson = new StringView(st);
+            StringView expectedResult = new StringView(st, st.Length);
             var result = a.Match(testJson);
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
         public void IsJsonString_CanContainEscapedQuotationMark_ShouldReturnTrue()
         {
             var a = new String();
-            StringView testJson = new StringView(Quoted(@"\""a\"" b"));
-            int expectedPosition = testJson.GetText().Length;
+            string st = Quoted(@"\""a\"" b");
+            StringView testJson = new StringView(st);
+            StringView expectedResult = new StringView(st, st.Length);
             var result = a.Match(testJson);
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
         public void IsJsonString_CanContainEscapedReverseSolidus_ShouldReturnTrue()
         {
             var a = new String();
-            StringView testJson = new StringView(Quoted(@"a \\ b"));
-            int expectedPosition = testJson.GetText().Length;
+            string st = Quoted(@"a \\ b");
+            StringView testJson = new StringView(st);
+            StringView expectedResult = new StringView(st, st.Length);
             var result = a.Match(testJson);
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
 
         }
 
@@ -113,88 +117,96 @@ namespace AbstractionPolymorphismProject
         {
 
             var a = new String();
-            StringView testJson = new StringView(Quoted(@"a \/ b"));
-            int expectedPosition = testJson.GetText().Length;
+            string st = Quoted(@"a \/ b");
+            StringView testJson = new StringView(st);
+            StringView expectedResult = new StringView(st, st.Length);
             var result = a.Match(testJson);
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
         public void IsJsonString_CanContainEscapedBackspace_ShouldReturnTrue()
         {
             var a = new String();
-            StringView testJson = new StringView(Quoted(@"a \b b"));
-            int expectedPosition = testJson.GetText().Length;
+            string st = Quoted(@"a \b b");
+            StringView testJson = new StringView(st);
+            StringView expectedResult = new StringView(st, st.Length);
             var result = a.Match(testJson);
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
         public void IsJsonString_CanContainEscapedFormFeed_ShouldReturnTrue()
         {
             var a = new String();
-            StringView testJson = new StringView(Quoted(@"a \f b"));
-            int expectedPosition = testJson.GetText().Length;
+            string st = Quoted(@"a \f b");
+            StringView testJson = new StringView(st);
+            StringView expectedResult = new StringView(st, st.Length);
             var result = a.Match(testJson);
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
         public void IsJsonString_CanContainEscapedLineFeed__ShouldReturnTrue()
         {
             var a = new String();
-            StringView testJson = new StringView(Quoted(@"a \n b"));
-            int expectedPosition = testJson.GetText().Length;
+            string st = Quoted(@"a \n b");
+            StringView testJson = new StringView(st);
+            StringView expectedResult = new StringView(st, st.Length);
             var result = a.Match(testJson);
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
         public void IsJsonString_CanContainEscapedCarrigeReturn_ShouldReturnTrue()
         {
             var a = new String();
-            StringView testJson = new StringView(Quoted(@"a \r b"));
-            int expectedPosition = testJson.GetText().Length;
+            string st = Quoted(@"a \r b");
+            StringView testJson = new StringView(st);
+            StringView expectedResult = new StringView(st, st.Length);
             var result = a.Match(testJson);
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
         public void IsJsonString_CanContainEscapedHorizontalTab_ShouldReturnTrue()
         {
             var a = new String();
-            StringView testJson = new StringView(Quoted(@"a \t b"));
-            int expectedPosition = testJson.GetText().Length;
+            string st = Quoted(@"a \t b");
+            StringView testJson = new StringView(st);
+            StringView expectedResult = new StringView(st, st.Length);
             var result = a.Match(testJson);
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
         public void IsJsonString_CanContainEscapedUnicodeCharacters_ShouldReturnTrue()
         {
             var a = new String();
-            StringView testJson = new StringView(Quoted(@"a \u26Be b"));
-            int expectedPosition = testJson.GetText().Length;
+            string st = Quoted(@"a \u26Be b");
+            StringView testJson = new StringView(st);
+            StringView expectedResult = new StringView(st, st.Length);
             var result = a.Match(testJson);
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
         public void IsJsonString_CanContainAnyMultipleEscapeSequences_ShouldReturnTrue()
         {
             var a = new String();
-            StringView testJson = new StringView(Quoted(@"\\\u1212\n\t\r\\\b"));
-            int expectedPosition = testJson.GetText().Length;
+            string st = Quoted(@"\\\u1212\n\t\r\\\b");
+            StringView testJson = new StringView(st);
+            StringView expectedResult = new StringView(st, st.Length);
             var result = a.Match(testJson);
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -202,10 +214,10 @@ namespace AbstractionPolymorphismProject
         {
             var a = new String();
             StringView testJson = new StringView(Quoted(@"a\x"));
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView(Quoted(@"a\x"), 0);
             var result = a.Match(testJson);
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -213,10 +225,10 @@ namespace AbstractionPolymorphismProject
         {
             var a = new String();
             StringView testJson = new StringView(Quoted(@"a\"));
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView(Quoted(@"a\"), 0);
             var result = a.Match(testJson);
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -226,13 +238,14 @@ namespace AbstractionPolymorphismProject
             StringView test1Json = new StringView(Quoted(@"a\u"));
             var ab = new String();
             StringView test2Json = new StringView(Quoted(@"a\u123"));
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView(Quoted(@"a\u"), 0);
+            StringView expectedResultt = new StringView(Quoted(@"a\u123"), 0);
             var result = a.Match(test1Json);
             var resultt = ab.Match(test2Json);
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText())); 
             Assert.False(resultt.Success());
-            Assert.Equal(expectedPosition, resultt.RemainingText().GetPosition());
+            Assert.True(expectedResultt.CompareTo(resultt.RemainingText()));
         }
 
         [Fact]
@@ -240,10 +253,10 @@ namespace AbstractionPolymorphismProject
         {
             var a = new String();
             StringView testJson = new StringView(Quoted(@"a\ b abc"));
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView(Quoted(@"a\ b abc"), 0);
             var result = a.Match(testJson);
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -251,32 +264,34 @@ namespace AbstractionPolymorphismProject
         {
             var a = new String();
             StringView testJson = new StringView(Quoted(@"a\u123z io"));
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView(Quoted(@"a\u123z io"), 0);
             var result = a.Match(testJson);
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
         public void IsJsonStringt_ContainControlCharactersConsecutively_ShouldReturnTrue()
         {
             var a = new String();
-            StringView testJson = new StringView(Quoted(@"a\b\n\t"));
-            int expectedPosition = testJson.GetText().Length;
+            string st = Quoted(@"a\b\n\t");
+            StringView testJson = new StringView(st);
+            StringView expectedResult = new StringView(st, st.Length);
             var result = a.Match(testJson);
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
         public void IsJsonStringt_EndWithValidReverseSolidus_ShouldReturnTrue()
         {
             var a = new String();
-            StringView testJson = new StringView(Quoted(@"abc\\"));
-            int expectedPosition = testJson.GetText().Length;
+            string st = Quoted(@"abc\\");
+            StringView testJson = new StringView(st);
+            StringView expectedResult = new StringView(st, st.Length);
             var result = a.Match(testJson);
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         public static string Quoted(string text)

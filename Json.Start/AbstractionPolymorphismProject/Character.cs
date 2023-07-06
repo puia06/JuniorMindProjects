@@ -19,8 +19,7 @@ namespace AbstractionPolymorphismProject
         {
             if (!text.IsEmpty() && text.CharPeek() == pattern)
             {
-                text.Advance();
-                return new Match(true, text);
+                return new Match(true, text.Advance());
             }
 
             return new Match(false, text);

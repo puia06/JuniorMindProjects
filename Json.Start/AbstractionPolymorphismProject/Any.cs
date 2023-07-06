@@ -20,9 +20,8 @@ namespace AbstractionPolymorphismProject
             {
                 return new Match(false, text);
             }
-            text.Advance();
 
-            return new Match(true, text);
+            return new Match(true, text.Advance());
         }
     }
 }

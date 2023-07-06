@@ -7,11 +7,11 @@ namespace AbstractionPolymorphismProject
         {
             var digit = new Range('a', 'f');
             StringView test = new StringView("abc");
-            int expectedPosition = 1;
+            StringView expectedResult = new StringView("abc", 1);
             var result = digit.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -19,11 +19,11 @@ namespace AbstractionPolymorphismProject
         {
             var digit = new Range('a', 'f');
             StringView test = new StringView("fab");
-            int expectedPosition = 1;
+            StringView expectedResult = new StringView("fab", 1);
             var result = digit.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -31,11 +31,11 @@ namespace AbstractionPolymorphismProject
         {
             var digit = new Range('a', 'f');
             StringView test = new StringView("bcd");
-            int expectedPosition = 1;
+            StringView expectedResult = new StringView("bcd", 1);
             var result = digit.Match(test);
 
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -43,11 +43,11 @@ namespace AbstractionPolymorphismProject
         {
             var digit = new Range('a', 'f');
             StringView test = new StringView("1abc");
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView("1abc", 0);
             var result = digit.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -55,11 +55,11 @@ namespace AbstractionPolymorphismProject
         {
             var digit = new Range('a', 'f');
             StringView test = new StringView(null);
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView(null, 0);
             var result = digit.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -67,11 +67,11 @@ namespace AbstractionPolymorphismProject
         {
             var digit = new Range('a', 'f');
             StringView test = new StringView("");
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView("", 0);
             var result = digit.Match(test);
 
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
     }
 }

@@ -14,11 +14,11 @@ namespace AbstractionPolymorphismProject
         {
             var value = new Value();
             StringView testJson = new StringView("true");
-            int expectedPosition = testJson.GetText().Length;
+            StringView expectedResult = new StringView("true", 4);
             var result = value.Match(testJson);
 
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -26,11 +26,11 @@ namespace AbstractionPolymorphismProject
         {
             var value = new Value();
             StringView testJson = new StringView("false");
-            int expectedPosition = testJson.GetText().Length;
+            StringView expectedResult = new StringView("false", 5);
             var result = value.Match(testJson);
 
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -38,23 +38,24 @@ namespace AbstractionPolymorphismProject
         {
             var value = new Value();
             StringView testJson = new StringView("null");
-            int expectedPosition = testJson.GetText().Length;
+            StringView expectedResult = new StringView("null", 4);
             var result = value.Match(testJson);
 
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
         public void Match_StringValue_ShouldReturnTrue()
         {
             var value = new Value();
-            StringView testJson = new StringView("\"abc\"");
-            int expectedPosition = testJson.GetText().Length;
+            string st = "\"abc\"";
+            StringView testJson = new StringView(st);
+            StringView expectedResult = new StringView(st, st.Length);
             var result = value.Match(testJson);
 
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -62,11 +63,11 @@ namespace AbstractionPolymorphismProject
         {
             var value = new Value();
             StringView testJson = new StringView("7");
-            int expectedPosition = testJson.GetText().Length;
+            StringView expectedResult = new StringView("7", 1);
             var result = value.Match(testJson);
 
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -74,11 +75,11 @@ namespace AbstractionPolymorphismProject
         {
             var value = new Value();
             StringView testJson = new StringView("[ ]");
-            int expectedPosition = testJson.GetText().Length;
+            StringView expectedResult = new StringView("[ ]", 3);
             var result = value.Match(testJson);
 
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -87,33 +88,35 @@ namespace AbstractionPolymorphismProject
             var value = new Value();
 
             StringView testJson = new StringView("{ }");
-            int expectedPosition = testJson.GetText().Length;
+            StringView expectedResult = new StringView("{ }", 3);
             var result = value.Match(testJson);
 
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
         public void Match_Array_Elements_ShouldReturnTrue()
         {
             var value = new Value();
-            StringView testJson = new StringView("[false, \"abc\"]");
-            int expectedPosition = testJson.GetText().Length;
+            string st = "[false, \"abc\"]";
+            StringView testJson = new StringView(st);
+            StringView expectedResult = new StringView(st, st.Length);
             var result = value.Match(testJson);
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
         public void Match_Object_Members_ShouldReturnTrue()
         {
             var value = new Value();
-            StringView testJson = new StringView("{\r\n \"name\" :\"John Doe\",\r\n    \"age\" :30,\r\n    \"city\" :\"New York\"\r\n}");
-            int expectedPosition = testJson.GetText().Length;
+            string st = "{\r\n \"name\" :\"John Doe\",\r\n    \"age\" :30,\r\n    \"city\" :\"New York\"\r\n}";
+            StringView testJson = new StringView(st);
+            StringView expectedResult = new StringView(st, st.Length);
             var result = value.Match(testJson);
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -122,20 +125,21 @@ namespace AbstractionPolymorphismProject
             var value = new Value();
             StringView testJson = new StringView("{name\" :\"John Doe\",\r\n    \"age\" :30,\r\n    \"city\" :\"New York\"\r\n}");
             var result = value.Match(testJson);
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView("{name\" :\"John Doe\",\r\n    \"age\" :30,\r\n    \"city\" :\"New York\"\r\n}", 0);
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
         public void Match_Object_wsws_ShouldReturnTrue()
         {
             var value = new Value();
-            StringView testJson = new StringView("{ \n }");
-            int expectedPosition = testJson.GetText().Length;
+            string st = "{ \n }";
+            StringView testJson = new StringView(st);
+            StringView expectedResult = new StringView(st, st.Length);
             var result = value.Match(testJson);
             Assert.True(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
 
         [Fact]
@@ -143,10 +147,10 @@ namespace AbstractionPolymorphismProject
         {
             var value = new Value();
             StringView testJson = new StringView("{ \n  r}");
-            int expectedPosition = 0;
+            StringView expectedResult = new StringView("{ \n  r}", 0);
             var result = value.Match(testJson);
             Assert.False(result.Success());
-            Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
+            Assert.True(expectedResult.CompareTo(result.RemainingText()));
         }
     }
 }
