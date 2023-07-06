@@ -22,7 +22,7 @@ namespace AbstractionPolymorphismProject
         {
             if (!text.IsEmpty() && text.CharPeek() >= start && text.CharPeek() <= end)
             {
-                text.AdvancePosition();
+                text.Advance();
                 return new Match(true, text);
             }
 

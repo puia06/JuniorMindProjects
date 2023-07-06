@@ -52,9 +52,9 @@ namespace AbstractionPolymorphismProject
             return text[position];
         }
 
-        public StringView AdvancePosition()
+        public StringView Advance(int step = 1)
         {
-            return new StringView(text, position++);
+            return new StringView(this.text, this.position += step);
         }
     }
 }

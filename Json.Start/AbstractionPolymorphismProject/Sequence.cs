@@ -17,13 +17,12 @@ namespace AbstractionPolymorphismProject
         public IMatch Match(StringView text)
         {
             IMatch match = new Match(true, text);
-            StringView initialStringView = text.SaveLastPosition();
             foreach (var pattern in patterns)
             {
-                match = pattern.Match(match.RemainingText());
+                match = pattern.Match(text);
                 if (!match.Success())
                 {
-                    return new Match(false, initialStringView);
+                    return new Match(false, text);
                 }
             }
 

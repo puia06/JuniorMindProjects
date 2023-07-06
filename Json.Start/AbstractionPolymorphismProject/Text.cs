@@ -16,10 +16,7 @@ namespace AbstractionPolymorphismProject
             {
                 return new Match(false, text);
             }
-            for (int i = 0; i < prefix.Length; i++)
-            {
-                text.AdvancePosition();
-            }
+            text.Advance(prefix.Length);
 
             return new Match(true, text);
         }

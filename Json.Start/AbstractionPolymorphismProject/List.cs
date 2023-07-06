@@ -12,8 +12,7 @@ namespace AbstractionPolymorphismProject
 
         public List(IPattern element, IPattern separator)
         {
-            var seq = new Sequence(separator, element);
-            this.pattern = new Optional(new Sequence(element, new Many(seq)));
+            this.pattern = new Optional(new Sequence(element, new Many(new Sequence(separator, element))));
         }
 
         public IMatch Match(StringView text)

@@ -19,7 +19,7 @@ namespace AbstractionPolymorphismProject
         {
             if (!text.IsEmpty() && text.CharPeek() == pattern)
             {
-                text.AdvancePosition();
+                text.Advance();
                 return new Match(true, text);
             }
 
