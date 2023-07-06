@@ -12,7 +12,7 @@ namespace AbstractionPolymorphismProject
 
         public IMatch Match(StringView text)
         {
-            if (string.IsNullOrEmpty(text.GetText()) || prefix == null || !text.GetText().StartsWith(prefix))
+            if (text.IsNullOrEmpty() || prefix == null || !text.StartsWith(prefix))
             {
                 return new Match(false, text);
             }

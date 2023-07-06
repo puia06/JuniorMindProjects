@@ -20,7 +20,7 @@ namespace AbstractionPolymorphismProject
 
         public IMatch Match(StringView text)
         {
-            if (!string.IsNullOrEmpty(text.GetText()) && !text.EndPosition() && text.CharPeek() >= start && text.CharPeek() <= end)
+            if (!text.IsNullOrEmpty() && !text.IsEndPosition() && text.CharPeek() >= start && text.CharPeek() <= end)
             {
                 text.NextPosition();
                 return new Match(true, text);

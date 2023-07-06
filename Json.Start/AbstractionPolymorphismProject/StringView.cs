@@ -16,37 +16,52 @@ namespace AbstractionPolymorphismProject
             this.text = text;
             this.position = 0;
         }
+
+        public StringView(string text, int position)
+        {
+            this.text = text;
+            this.position = position;
+        }
         public string GetText()
         {
             return this.text;
         }
+
+        public bool IsNullOrEmpty()
+        {
+            return string.IsNullOrEmpty(this.text);
+        }
+
+        public bool StartsWith(string prefix)
+        {
+            return this.text.StartsWith(prefix);
+        }
+
+        public StringView SaveLastPosition()
+        {
+            return new StringView(text, position);
+        } 
 
         public int GetPosition()
         {
             return this.position;
         }
 
-        public void SetPosition(int position)
+        public bool IsUnavailablePosition()
         {
-            this.position = position;
+            return position >= text.Length;
         }
-
         public char CharPeek()
         {
-            if (position < text.Length)
-            {
-                return text[position];
-            }
-
-            return text[position - 1];
+            return text[position];
         }
 
-        public int NextPosition()
+        public StringView NextPosition()
         {
-            return this.position++;
+            return new StringView(text, position++);
         }
 
-        public bool EndPosition()
+        public bool IsEndPosition()
         {
             return text.Length == this.position;
         }

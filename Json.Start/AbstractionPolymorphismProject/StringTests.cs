@@ -229,9 +229,9 @@ namespace AbstractionPolymorphismProject
             int expectedPosition = 0;
             var result = a.Match(test1Json);
             var resultt = ab.Match(test2Json);
-            Assert.False(result.Success());
+            Assert.True(result.Success());
             Assert.Equal(expectedPosition, result.RemainingText().GetPosition());
-            Assert.False(resultt.Success());
+            Assert.True(resultt.Success());
             Assert.Equal(expectedPosition, resultt.RemainingText().GetPosition());
         }
 
