@@ -33,10 +33,11 @@ class Program
 
         Value value = new Value();
         StringView text = new StringView(textJson);
-        int expectedResult = text.GetText().Length;
+        StringView expectedResult = new StringView(textJson, textJson.Length);
+        //int expectedResult = text.GetText().Length;
         var matchResult = value.Match(text);
 
-        if (matchResult.RemainingText().GetPosition() == expectedResult)
+        if (expectedResult.CompareTo(matchResult.RemainingText()))
         {
             Console.WriteLine("Textul introdus este un Json valid");
         }

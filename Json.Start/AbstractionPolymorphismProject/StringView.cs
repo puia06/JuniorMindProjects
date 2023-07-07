@@ -22,10 +22,6 @@ namespace AbstractionPolymorphismProject
             this.text = text;
             this.position = position;
         }
-        public string GetText()
-        {
-            return this.text;
-        }
 
         public bool IsEmpty()
         {
@@ -34,12 +30,20 @@ namespace AbstractionPolymorphismProject
 
         public bool StartsWith(string prefix)
         {
-            return this.text.StartsWith(prefix);
-        }
+            if (text.Length - position < prefix.Length)
+            {
+                return false;
+            }
 
-        public int GetPosition()
-        {
-            return this.position;
+            for (int i = 0; i < prefix.Length; i++)
+            {
+                if (text[position + i] != prefix[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public char CharPeek()

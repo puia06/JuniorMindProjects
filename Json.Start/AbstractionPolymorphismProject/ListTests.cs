@@ -94,8 +94,9 @@ namespace AbstractionPolymorphismProject
             var separator = new Sequence(whitespace, new Character(';'), whitespace);
             var list = new List(digits, separator);
 
-            StringView test = new StringView("1; 22  ;\n 333 \t; 22");
-            StringView expectedResult = new StringView("1; 22  ;\n 333 \t; 22", test.GetText().Length);
+            string st = "1; 22  ;\n 333 \t; 22";
+            StringView test = new StringView(st);
+            StringView expectedResult = new StringView(st, st.Length);
             var result = list.Match(test);
 
             Assert.True(result.Success());
