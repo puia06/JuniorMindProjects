@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FootballRankingSystem", "Fo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbstractionPolymorphismProject", "AbstractionPolymorphismProject\AbstractionPolymorphismProject.csproj", "{577A1FE2-4AF7-4B1E-A58B-AD06A8AABBB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonConsoleApp", "JsonConsoleApp\JsonConsoleApp.csproj", "{9855AF52-DD29-4C76-A6CF-E7488180F6B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonConsoleApp", "JsonConsoleApp\JsonConsoleApp.csproj", "{9855AF52-DD29-4C76-A6CF-E7488180F6B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCollectionsImp", "DataCollectionsImp\DataCollectionsImp.csproj", "{46DAEA52-71AA-4350-A902-870C72118660}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{9855AF52-DD29-4C76-A6CF-E7488180F6B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9855AF52-DD29-4C76-A6CF-E7488180F6B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9855AF52-DD29-4C76-A6CF-E7488180F6B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46DAEA52-71AA-4350-A902-870C72118660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46DAEA52-71AA-4350-A902-870C72118660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46DAEA52-71AA-4350-A902-870C72118660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46DAEA52-71AA-4350-A902-870C72118660}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

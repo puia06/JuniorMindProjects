@@ -34,7 +34,6 @@ class Program
         Value value = new Value();
         StringView text = new StringView(textJson);
         StringView expectedResult = new StringView(textJson, textJson.Length);
-        //int expectedResult = text.GetText().Length;
         var matchResult = value.Match(text);
 
         if (expectedResult.CompareTo(matchResult.RemainingText()))
@@ -46,4 +45,4 @@ class Program
             Console.WriteLine("Textul introdus nu este un Json valid");
         }
     }
-}
+} 
