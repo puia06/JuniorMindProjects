@@ -8,15 +8,18 @@ namespace DataCollectionsImp
     public class IntArray
     {
         private int[] array;
+        private int position;
+
         public IntArray()
         {
-            this.array = new int[0];
+            this.array = new int[4];
+            this.position = 0;
         }
 
         public void Add(int element)
         {
-            ResizeArray();
-            array[array.Length - 1] = element;
+            array[position] = element;
+            position++;
         }
 
         public int Count()
@@ -55,7 +58,8 @@ namespace DataCollectionsImp
 
         public void Insert(int index, int element)
         {
-            ResizeArray();
+            position++;
+            ResizeArrayIfNeeded();
             for (int i = array.Length - 1; i >= index; i--)
             {
                 array[i] = array[i - 1];
@@ -65,7 +69,8 @@ namespace DataCollectionsImp
 
         public void Clear()
         {
-            ResizeArray(-array.Length);
+            Array.Resize(ref array, 0);
+            position = 0;
         }
 
         public void Remove(int element)
@@ -73,6 +78,7 @@ namespace DataCollectionsImp
             if (array.Contains(element))
             {
                 RemoveAt(IndexOf(element));
+                position--;
             }
         }
 
@@ -81,14 +87,16 @@ namespace DataCollectionsImp
             for (int i = index; i < array.Length - 1; i++)
             {
                 array[i] = array[i + 1];
+                position--;
             }
-
-            ResizeArray(-1);
         }
 
-        private void ResizeArray(int x = 1)
+        private void ResizeArrayIfNeeded()
         {
-            Array.Resize(ref array, array.Length + x);
+            if (position + 1  % 4 == 0)
+            {
+                Array.Resize(ref array, array.Length * 2);
+            }
         }
     }
 }

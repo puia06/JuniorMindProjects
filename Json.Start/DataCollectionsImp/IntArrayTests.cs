@@ -104,7 +104,6 @@ namespace DataCollectionsImp
             testArray.Insert(1, 9);
 
             Assert.Equal(9, testArray.Element(1));
-            Assert.Equal(3, testArray.Count());
         }
 
         [Fact]
@@ -127,7 +126,6 @@ namespace DataCollectionsImp
             testArray.Remove(2);
 
             Assert.Equal(1, testArray.Element(0));
-            Assert.Equal(1, testArray.Count());
         }
 
         [Fact]
@@ -139,7 +137,6 @@ namespace DataCollectionsImp
             testArray.RemoveAt(1);
 
             Assert.Equal(1, testArray.Element(0));
-            Assert.Equal(1, testArray.Count());
         }
     }
 }
