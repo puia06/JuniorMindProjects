@@ -138,5 +138,21 @@ namespace DataCollectionsImp
 
             Assert.Equal(1, testArray.Element(0));
         }
+
+        [Fact]
+        public void RemoveAtAndCount_RemoveElement_ShouldReturnTrue()
+        {
+            var testArray = new IntArray();
+            testArray.Add(1);
+            testArray.Add(2);
+            testArray.Add(3);
+            testArray.Add(4);
+            testArray.RemoveAt(1);
+
+            Assert.Equal(1, testArray.Element(0));
+            Assert.Equal(3, testArray.Element(1));
+            Assert.Equal(4, testArray.Element(2));
+            Assert.Equal(3, testArray.Count());
+        }
     }
 }
