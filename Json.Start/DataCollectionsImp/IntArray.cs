@@ -15,7 +15,7 @@ namespace DataCollectionsImp
 
         public void Add(int element)
         {
-            Array.Resize(ref array, array.Length + 1);
+            ResizeArray();
             array[array.Length - 1] = element;
         }
 
@@ -35,16 +35,9 @@ namespace DataCollectionsImp
         }
 
         public bool Contains(int element)
-        {
-            foreach (int i in array) 
-            {
-                if (i == element)
-                {
-                    return true;
-                }
-            }
+        { 
 
-            return false;
+            return true ? IndexOf(element) > -1 : false;
         }
 
         public int IndexOf(int element)
@@ -62,71 +55,40 @@ namespace DataCollectionsImp
 
         public void Insert(int index, int element)
         {
-          int[] newArray = new int[array.Length + 1];
-          int newArrayIndex = 0;
-
-           for (int i = 0; i < array.Length; i++)
-           {
-              if (newArrayIndex == index)
-              {
-                    newArray[newArrayIndex] = element;
-                    newArrayIndex++;
-              }
-                newArray[newArrayIndex] = array[i];
-                newArrayIndex++;
+            ResizeArray();
+            for (int i = array.Length - 1; i >= index; i--)
+            {
+                array[i] = array[i - 1];
             }
-
-           array = newArray;
+            array[index] = element;
         }
 
         public void Clear()
         {
-            Array.Resize(ref array, 0);
+            ResizeArray(-array.Length);
         }
 
         public void Remove(int element)
         {
             if (array.Contains(element))
             {
-                int[] newArray = new int[array.Length - 1];
-                int newArrayIndex = 0;
-                int count = 0;
-
-                for (int i = 0; i < array.Length; i++)
-                {
-                    if (array[i] != element && count == 0)
-                    {
-                        newArray[newArrayIndex] = array[i];
-                        newArrayIndex++;
-                    }
-                    else
-                    {
-                        count++;
-                    }
-                }
-
-                array = newArray;
+                RemoveAt(IndexOf(element));
             }
         }
 
         public void RemoveAt(int index)
         {
-            if (index < array.Length)
+            for (int i = index; i < array.Length - 1; i++)
             {
-                int[] newArray = new int[array.Length - 1];
-                int newArrayIndex = 0;
-
-                for (int i = 0; i < array.Length; i++)
-                {
-                    if (i != index)
-                    {
-                        newArray[newArrayIndex] = array[i];
-                        newArrayIndex++;
-                    }
-                }
-
-                array = newArray;
+                array[i] = array[i + 1];
             }
+
+            ResizeArray(-1);
+        }
+
+        private void ResizeArray(int x = 1)
+        {
+            Array.Resize(ref array, array.Length + x);
         }
     }
 }
