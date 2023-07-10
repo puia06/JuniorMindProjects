@@ -24,7 +24,7 @@ namespace DataCollectionsImp
 
         public int Count()
         {
-            return array.Length;
+            return position;
         }
 
         public int Element(int index)
@@ -93,7 +93,7 @@ namespace DataCollectionsImp
 
         private void ResizeArrayIfNeeded()
         {
-            if (position + 1  % 4 == 0)
+            if (position  % 4 == 0)
             {
                 Array.Resize(ref array, array.Length * 2);
             }
