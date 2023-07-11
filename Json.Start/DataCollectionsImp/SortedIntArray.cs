@@ -28,7 +28,6 @@ namespace DataCollectionsImp
 
         public override int this[int index]
         {
-            get => array[index];
             set
             {
                 array[index] = value;
@@ -37,18 +36,22 @@ namespace DataCollectionsImp
         }
         private void SortArray()
         {
-            for (int i = 0; i < Count - 1; i++)
+            bool repeat;
+            do
             {
-                for (int j = i + 1; j < Count; j++)
+                repeat = false;
+                for (int i = 0; i < Count - 1; i++)
                 {
-                    if (base[i] > base[j])
+                    if (base[i] > base[i + 1])
                     {
                         int z = base[i];
-                        base[i] = base[j];
-                        base[j] = z;
+                        base[i] = base[i + 1];
+                        base[i + 1] = z;
+                        repeat = true;
                     }
                 }
             }
+            while (repeat);
         }
     }
 }
