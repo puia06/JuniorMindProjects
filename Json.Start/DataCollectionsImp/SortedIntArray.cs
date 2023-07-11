@@ -29,7 +29,11 @@ namespace DataCollectionsImp
         public override int this[int index]
         {
             get => array[index];
-            set => array[index] = value;
+            set
+            {
+                array[index] = value;
+                SortArray();
+            }
         }
         private void SortArray()
         {
