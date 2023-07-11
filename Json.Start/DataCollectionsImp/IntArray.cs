@@ -7,7 +7,7 @@ namespace DataCollectionsImp
 {
     public class IntArray
     {
-        private int[] array;
+        protected int[] array;
 
         public IntArray()
         {
