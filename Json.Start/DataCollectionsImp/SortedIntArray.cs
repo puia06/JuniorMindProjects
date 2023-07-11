@@ -22,16 +22,22 @@ namespace DataCollectionsImp
 
         public override void Insert(int index, int element)
         {
-            base.Insert(index, element);
-            SortArray();
+            if (IsValidOperation(index, element))
+            {
+                base.Insert(index, element);
+                SortArray();
+            }
         }
 
         public override int this[int index]
         {
             set
             {
-                array[index] = value;
-                SortArray();
+                if (IsValidOperation(index, value))
+                {
+                    array[index] = value;
+                    SortArray();
+                }
             }
         }
         private void SortArray()
@@ -52,6 +58,11 @@ namespace DataCollectionsImp
                 }
             }
             while (repeat);
+        }
+
+        private bool IsValidOperation(int index, int element)
+        {
+            return element >= base[index - 1] && element <= base[index + 1];
         }
     }
 }
