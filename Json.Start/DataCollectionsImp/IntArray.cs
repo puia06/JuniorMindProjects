@@ -8,12 +8,10 @@ namespace DataCollectionsImp
     public class IntArray
     {
         private int[] array;
-        private int count;
 
         public IntArray()
         {
             this.array = new int[4];
-            this.count = 0;
         }
 
         public void Add(int element)
@@ -22,7 +20,7 @@ namespace DataCollectionsImp
             Count++;
         }
 
-        public int Count { get; private set; }
+        public int Count { get; private set; } = 0;
 
         public int this[int index]
         {
@@ -32,13 +30,12 @@ namespace DataCollectionsImp
 
         public bool Contains(int element)
         { 
-
             return IndexOf(element) > -1;
         }
 
         public int IndexOf(int element)
         {
-            for(int i = 0; i < array.Length; i++)
+            for(int i = 0; i < Count; i++)
             {
                 if (array[i] == element)
                 {
@@ -51,9 +48,9 @@ namespace DataCollectionsImp
 
         public void Insert(int index, int element)
         {
-            count++;
+            Count++;
             ResizeArrayIfNeeded();
-            for (int i = array.Length - 1; i >= index; i--)
+            for (int i = Count - 1; i >= index; i--)
             {
                 array[i] = array[i - 1];
             }
@@ -69,12 +66,11 @@ namespace DataCollectionsImp
         public void Remove(int element)
         {
             RemoveAt(IndexOf(element));
-            Count--;
         }
 
         public void RemoveAt(int index)
         {
-            for (int i = index; i < array.Length - 1; i++)
+            for (int i = index; i < Count - 1; i++)
             {
                 array[i] = array[i + 1];
             }
