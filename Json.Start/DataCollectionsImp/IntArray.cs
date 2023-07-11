@@ -18,23 +18,16 @@ namespace DataCollectionsImp
 
         public void Add(int element)
         {
-            array[count] = element;
-            count++;
+            array[Count] = element;
+            Count++;
         }
 
-        public int Count()
-        {
-            return count;
-        }
+        public int Count { get; private set; }
 
-        public int Element(int index)
+        public int this[int index]
         {
-            return array[index];
-        }
-
-        public void SetElement(int index, int element)
-        {
-            array[index] = element;
+            get => array[index];
+            set => array[index] = value;
         }
 
         public bool Contains(int element)
@@ -70,13 +63,13 @@ namespace DataCollectionsImp
         public void Clear()
         {
             Array.Resize(ref array, 0);
-            count = 0;
+            Count = 0;
         }
 
         public void Remove(int element)
         {
             RemoveAt(IndexOf(element));
-            count--;
+            Count--;
         }
 
         public void RemoveAt(int index)
@@ -85,12 +78,12 @@ namespace DataCollectionsImp
             {
                 array[i] = array[i + 1];
             }
-            count--;
+            Count--;
         }
 
         private void ResizeArrayIfNeeded()
         {
-            if (count == array.Length)
+            if (Count == array.Length)
             {
                 Array.Resize(ref array, array.Length * 2);
             }

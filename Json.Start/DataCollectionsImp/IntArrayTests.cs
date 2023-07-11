@@ -9,8 +9,8 @@ namespace DataCollectionsImp
             testArray.Add(1);
             testArray.Add(2);
 
-            Assert.Equal(1, testArray.Element(0));
-            Assert.Equal(2, testArray.Element(1));
+            Assert.Equal(1, testArray[0]);
+            Assert.Equal(2, testArray[1]);
         }
 
         [Fact]
@@ -20,7 +20,7 @@ namespace DataCollectionsImp
             testArray.Add(1);
             testArray.Add(2);
 
-            Assert.Equal(2, testArray.Count());
+            Assert.Equal(2, testArray.Count);
         }
 
         [Fact]
@@ -30,7 +30,7 @@ namespace DataCollectionsImp
             testArray.Add(1);
             testArray.Add(2);
 
-            Assert.Equal(2, testArray.Element(1));
+            Assert.Equal(2, testArray[1]);
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace DataCollectionsImp
             testArray.Add(1);
             testArray.Add(2);
 
-            Assert.NotEqual(2, testArray.Element(0));
+            Assert.NotEqual(2, testArray[0]);
         }
 
         [Fact]
@@ -49,9 +49,9 @@ namespace DataCollectionsImp
             var testArray = new IntArray();
             testArray.Add(1);
             testArray.Add(2);
-            testArray.SetElement(1, 9);
+            testArray[1] = 9;
 
-            Assert.Equal(9, testArray.Element(1));
+            Assert.Equal(9, testArray[1]);
         }
 
         [Fact]
@@ -103,7 +103,7 @@ namespace DataCollectionsImp
             testArray.Add(2);
             testArray.Insert(1, 9);
 
-            Assert.Equal(9, testArray.Element(1));
+            Assert.Equal(9, testArray[1]);
         }
 
         [Fact]
@@ -114,7 +114,7 @@ namespace DataCollectionsImp
             testArray.Add(2);
             testArray.Clear();  
 
-            Assert.Equal(0, testArray.Count());
+            Assert.Equal(0, testArray.Count);
         }
 
         [Fact]
@@ -125,7 +125,7 @@ namespace DataCollectionsImp
             testArray.Add(2);
             testArray.Remove(2);
 
-            Assert.Equal(1, testArray.Element(0));
+            Assert.Equal(1, testArray[0]);
         }
 
         [Fact]
@@ -136,7 +136,7 @@ namespace DataCollectionsImp
             testArray.Add(2);
             testArray.RemoveAt(1);
 
-            Assert.Equal(1, testArray.Element(0));
+            Assert.Equal(1, testArray[0]);
         }
 
         [Fact]
@@ -149,10 +149,10 @@ namespace DataCollectionsImp
             testArray.Add(4);
             testArray.RemoveAt(1);
 
-            Assert.Equal(1, testArray.Element(0));
-            Assert.Equal(3, testArray.Element(1));
-            Assert.Equal(4, testArray.Element(2));
-            Assert.Equal(3, testArray.Count());
+            Assert.Equal(1, testArray[0]);
+            Assert.Equal(3, testArray[1]);
+            Assert.Equal(4, testArray[2]);
+            Assert.Equal(3, testArray.Count);
         }
     }
 }
