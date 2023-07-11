@@ -45,17 +45,31 @@ namespace DataCollectionsImp
         }
 
         [Fact]
+        public void SortArray_SetElement_InCorrectElement_ShouldReturnFalse()
+        {
+            var testArray = new SortedIntArray();
+            testArray.Add(3);
+            testArray.Add(2);
+            testArray.Add(2);
+            testArray[0] = 9;
+
+            Assert.Equal(2, testArray[0]);
+            Assert.Equal(2, testArray[1]);
+            Assert.Equal(3, testArray[2]);
+        }
+
+        [Fact]
         public void SortArray_SetElement_CorrectElement_ShouldReturnTrue()
         {
             var testArray = new SortedIntArray();
             testArray.Add(3);
-            testArray.Add(1);
             testArray.Add(2);
-            testArray[1] = 9;
+            testArray.Add(2);
+            testArray[0] = 1;
 
             Assert.Equal(1, testArray[0]);
-            Assert.Equal(3, testArray[1]);
-            Assert.Equal(9, testArray[2]);
+            Assert.Equal(2, testArray[1]);
+            Assert.Equal(3, testArray[2]);
         }
 
         [Fact]
@@ -104,7 +118,7 @@ namespace DataCollectionsImp
 
 
         [Fact]
-        public void SortArray_Insert_InsertElement_ShouldReturnTrue()
+        public void SortArray_Insert_InsertInvalidElement_ShouldReturnFalse()
         {
             var testArray = new SortedIntArray();
             testArray.Add(3);
@@ -112,7 +126,21 @@ namespace DataCollectionsImp
             testArray.Add(2);
             testArray.Insert(1, 9);
 
-            Assert.Equal(9, testArray[3]);
+            Assert.Equal(3, testArray.Count);
+        }
+
+        [Fact]
+        public void SortArray_Insert_InsertValidElement_ShouldReturnTrue()
+        {
+            var testArray = new SortedIntArray();
+            testArray.Add(4);
+            testArray.Add(1);
+            testArray.Add(2);
+            testArray.Insert(2, 3);
+
+            Assert.Equal(4, testArray.Count);
+            Assert.Equal(3, testArray[2]);
+            Assert.Equal(4, testArray[3]);
         }
 
         [Fact]

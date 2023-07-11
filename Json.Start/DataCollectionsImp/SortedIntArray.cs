@@ -25,7 +25,6 @@ namespace DataCollectionsImp
             if (IsValidOperation(index, element))
             {
                 base.Insert(index, element);
-                SortArray();
             }
         }
 
@@ -36,7 +35,6 @@ namespace DataCollectionsImp
                 if (IsValidOperation(index, value))
                 {
                     array[index] = value;
-                    SortArray();
                 }
             }
         }
@@ -62,6 +60,19 @@ namespace DataCollectionsImp
 
         private bool IsValidOperation(int index, int element)
         {
+            if (index < 0 || index >= Count)
+            {
+                return false;
+            }
+            if (index == Count - 1 )
+            {
+                return element >= base[index - 1];
+            }
+            if (index == 0)
+            {
+                return element <= base[index + 1];
+            }
+
             return element >= base[index - 1] && element <= base[index + 1];
         }
     }
