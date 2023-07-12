@@ -22,7 +22,7 @@ namespace DataCollectionsImp
 
         public override void Insert(int index, int element)
         {
-            if (IsValidOperation(index, element))
+            if (IsValidOperation(index, element, 1))
             {
                 base.Insert(index, element);
             }
@@ -32,7 +32,7 @@ namespace DataCollectionsImp
         {
             set
             {
-                if (IsValidOperation(index, value))
+                if (IsValidOperation(index, value, 0))
                 {
                     array[index] = value;
                 }
@@ -42,35 +42,35 @@ namespace DataCollectionsImp
         {
             for (int i = 1; i < Count; i++)
             {
-                int key = array[i];
+                int key = base[i];
                 int j = i - 1;
 
-                while (j >= 0 && array[j] > key)
+                while (j >= 0 && base[j] > key)
                 {
-                    array[j + 1] = array[j];
+                    base[j + 1] = base[j];
                     j--;
                 }
 
-                array[j + 1] = key;
+                base[j + 1] = key;
             }
         }
 
-        private bool IsValidOperation(int index, int element)
+        private bool IsValidOperation(int index, int element, int dif)
         {
             if (index < 0 || index >= Count)
             {
                 return false;
             }
-            if (index == Count - 1 )
+            if (index == Count - 1 && dif == 0)
             {
                 return element >= base[index - 1];
             }
-            if (index == 0)
+            if (index == 0 && dif == 0)
             {
                 return element <= base[index + 1];
             }
 
-            return element >= base[index - 1] && element <= base[index + 1];
+            return element >= base[index - 1] && element <= base[index + 1 - dif];
         }
     }
 }
