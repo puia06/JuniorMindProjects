@@ -42,16 +42,12 @@ namespace DataCollectionsImp
         {
             for (int i = 1; i < Count; i++)
             {
-                int key = base[i];
-                int j = i - 1;
-
-                while (j >= 0 && base[j] > key)
+                for (int j = i; j > 0 && array[j - 1] > array[j]; j--)
                 {
-                    base[j + 1] = base[j];
-                    j--;
+                    int x = array[j];
+                    array[j] = array[j - 1];
+                    array[j - 1] = x;
                 }
-
-                base[j + 1] = key;
             }
         }
 
