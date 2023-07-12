@@ -40,22 +40,19 @@ namespace DataCollectionsImp
         }
         private void SortArray()
         {
-            bool repeat;
-            do
+            for (int i = 1; i < Count; i++)
             {
-                repeat = false;
-                for (int i = 0; i < Count - 1; i++)
+                int key = array[i];
+                int j = i - 1;
+
+                while (j >= 0 && array[j] > key)
                 {
-                    if (base[i] > base[i + 1])
-                    {
-                        int z = base[i];
-                        base[i] = base[i + 1];
-                        base[i + 1] = z;
-                        repeat = true;
-                    }
+                    array[j + 1] = array[j];
+                    j--;
                 }
+
+                array[j + 1] = key;
             }
-            while (repeat);
         }
 
         private bool IsValidOperation(int index, int element)
