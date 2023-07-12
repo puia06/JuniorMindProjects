@@ -103,7 +103,22 @@ namespace DataCollectionsImp
             testArray.Add(2);
             testArray.Insert(1, 9);
 
+            Assert.Equal(1, testArray[0]);
             Assert.Equal(9, testArray[1]);
+            Assert.Equal(2, testArray[2]);
+        }
+
+        [Fact]
+        public void Insert_InsertElementPositionZero_ShouldReturnTrue()
+        {
+            var testArray = new IntArray();
+            testArray.Add(1);
+            testArray.Add(2);
+            testArray.Insert(0, 9);
+
+            Assert.Equal(9, testArray[0]);
+            Assert.Equal(1, testArray[1]);
+            Assert.Equal(2, testArray[2]);
         }
 
         [Fact]

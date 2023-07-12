@@ -22,7 +22,7 @@ namespace DataCollectionsImp
 
         public override void Insert(int index, int element)
         {
-            if (IsValidOperation(index, element, 1))
+            if (ElementAt(index - 1, element) <= element && element <= ElementAt(index, element))
             {
                 base.Insert(index, element);
             }
@@ -32,7 +32,7 @@ namespace DataCollectionsImp
         {
             set
             {
-                if (IsValidOperation(index, value, 0))
+                if (ElementAt(index - 1, value) <= value && value <= ElementAt(index + 1, value))
                 {
                     array[index] = value;
                 }
@@ -55,22 +55,14 @@ namespace DataCollectionsImp
             }
         }
 
-        private bool IsValidOperation(int index, int element, int dif)
+        private int ElementAt(int index, int element)
         {
-            if (index < 0 || index >= Count)
+            if (index <= 0 || index >= Count)
             {
-                return false;
-            }
-            if (index == Count - 1 && dif == 0)
-            {
-                return element >= base[index - 1];
-            }
-            if (index == 0 && dif == 0)
-            {
-                return element <= base[index + 1];
+                return element;
             }
 
-            return element >= base[index - 1] && element <= base[index + 1 - dif];
+            return base[index];
         }
     }
 }

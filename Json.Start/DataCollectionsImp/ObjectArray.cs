@@ -51,7 +51,7 @@ namespace DataCollectionsImp
         {
             Count++;
             ResizeArrayIfNeeded();
-            for (int i = Count - 1; i >= index; i--)
+            for (int i = Count - 1; i > index; i--)
             {
                 array[i] = array[i - 1];
             }

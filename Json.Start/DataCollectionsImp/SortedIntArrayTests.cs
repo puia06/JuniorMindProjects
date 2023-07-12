@@ -59,7 +59,7 @@ namespace DataCollectionsImp
         }
 
         [Fact]
-        public void SortArray_SetElement_CorrectElement_ShouldReturnTrue()
+        public void SortArray_SetElement_StartValidElement_ShouldReturnTrue()
         {
             var testArray = new SortedIntArray();
             testArray.Add(3);
@@ -70,6 +70,20 @@ namespace DataCollectionsImp
             Assert.Equal(1, testArray[0]);
             Assert.Equal(2, testArray[1]);
             Assert.Equal(3, testArray[2]);
+        }
+
+        [Fact]
+        public void SortArray_SetElement_EndValidElement_ShouldReturnTrue()
+        {
+            var testArray = new SortedIntArray();
+            testArray.Add(3);
+            testArray.Add(2);
+            testArray.Add(2);
+            testArray[2] = 4;
+
+            Assert.Equal(2, testArray[0]);
+            Assert.Equal(2, testArray[1]);
+            Assert.Equal(4, testArray[2]);
         }
 
         [Fact]
@@ -127,6 +141,30 @@ namespace DataCollectionsImp
             testArray.Insert(1, 9);
 
             Assert.Equal(3, testArray.Count);
+        }
+
+        [Fact]
+        public void SortArray_Insert_InsertValidElementEndPosition_ShouldReturnTrue()
+        {
+            var testArray = new SortedIntArray();
+            testArray.Add(3);
+            testArray.Add(1);
+            testArray.Add(2);
+            testArray.Insert(3, 9);
+
+            Assert.Equal(4, testArray.Count);
+        }
+
+        [Fact]
+        public void SortArray_Insert_InsertValidElementStartPosition_ShouldReturnFalse()
+        {
+            var testArray = new SortedIntArray();
+            testArray.Add(4);
+            testArray.Add(2);
+            testArray.Add(3);
+            testArray.Insert(0, 1);
+
+            Assert.Equal(4, testArray.Count);
         }
 
         [Fact]
