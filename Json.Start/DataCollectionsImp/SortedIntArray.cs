@@ -35,7 +35,7 @@ namespace DataCollectionsImp
                 if (ElementAt(index - 1, value) <= value && value <= ElementAt(index + 1, value))
                 {
                     array[index] = value;
-                }
+                } 
             }
         }
         private void SortArray()
