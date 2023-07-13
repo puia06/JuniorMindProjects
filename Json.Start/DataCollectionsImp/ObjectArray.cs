@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace DataCollectionsImp
 {
-    public class ObjectArray
+    public class ObjectArray : IEnumerable
     {
         protected object[] array;
+        private ObjectArrayHelper helper;
 
         public ObjectArray()
         {
@@ -76,6 +78,11 @@ namespace DataCollectionsImp
                 array[i] = array[i + 1];
             }
             Count--;
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return helper;
         }
 
         private void ResizeArrayIfNeeded()
