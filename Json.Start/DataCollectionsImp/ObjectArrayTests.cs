@@ -66,7 +66,7 @@ namespace DataCollectionsImp
         public void IndexOf_ElementNotPresent_ShouldReturnFalse()
         {
             var testArray = new ObjectArray();
-            testArray.Add(1);   
+            testArray.Add(1);
             testArray.Add(2);
 
             Assert.Equal(-1, testArray.IndexOf("string"));
@@ -119,5 +119,20 @@ namespace DataCollectionsImp
 
             Assert.Equal(2, testArray[1]);
         }
+
+        [Fact]
+        public void GetEnumeratorTest()
+        {
+            var testArray = new ObjectArray();
+            testArray.Add(1);
+            testArray.Add(2);
+            var enumerator = testArray.GetEnumerator();
+            enumerator.MoveNext();
+            int val = (int)enumerator.Current;
+            Assert.Equal(1, val);
+            enumerator.MoveNext();
+            Assert.Equal(2, enumerator.Current);
+        }
+
     }
 }
