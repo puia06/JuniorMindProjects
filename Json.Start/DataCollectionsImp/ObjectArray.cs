@@ -10,7 +10,6 @@ namespace DataCollectionsImp
     public class ObjectArray : IEnumerable
     {
         protected object[] array;
-        private ObjectArrayHelper helper;
 
         public ObjectArray()
         {

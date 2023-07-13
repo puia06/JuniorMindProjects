@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace DataCollectionsImp
 {
-    public class ObjectArrayHelper : IEnumerator
+    public class ObjectEnumerator : IEnumerator
     {
         private ObjectArray array;
         private int position;
 
-        public ObjectArrayHelper(ObjectArray array)
+        public ObjectEnumerator(ObjectArray array)
         {
             this.array = array;
             this.position = 0;

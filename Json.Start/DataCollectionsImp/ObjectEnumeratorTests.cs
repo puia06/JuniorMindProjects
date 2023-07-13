@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataCollectionsImp
 {
-    public class ObjectArrayHelperTests
+    public class ObjectEnumeratorTests
     {
         [Fact]
         public void Current_ShouldReturnTrue()
@@ -15,7 +15,7 @@ namespace DataCollectionsImp
             objectArray.Add(1);
             objectArray.Add(2);
             objectArray.Add(3);
-            var testArray = new ObjectArrayHelper(objectArray);
+            var testArray = new ObjectEnumerator(objectArray);
 
             Assert.Equal(1, testArray.Current);
         }
@@ -27,7 +27,7 @@ namespace DataCollectionsImp
             objectArray.Add(1);
             objectArray.Add(2);
             objectArray.Add(3);
-            var testArray = new ObjectArrayHelper(objectArray);
+            var testArray = new ObjectEnumerator(objectArray);
             testArray.MoveNext();
 
             Assert.Equal(2, testArray.Current);
@@ -40,7 +40,7 @@ namespace DataCollectionsImp
             objectArray.Add(1);
             objectArray.Add(2);
             objectArray.Add(3);
-            var testArray = new ObjectArrayHelper(objectArray);
+            var testArray = new ObjectEnumerator(objectArray);
             testArray.MoveNext();
             testArray.MoveNext();
             testArray.Reset();
