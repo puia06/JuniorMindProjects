@@ -2,22 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DataCollectionsImp
 {
-    public class List <T> : IEnumerable <T>
+    public class Listt<T> : IEnumerable
     {
-        protected object[] array;
-        private ObjectEnumerator helper;
+        private T[] array;
 
-        public List()
+        public Listt()
         {
-            this.array = new object[4];
+            this.array = new T[4];
         }
 
-        public void Add(object element)
+        public void Add(T element)
         {
             array[Count] = element;
             Count++;
@@ -25,22 +26,22 @@ namespace DataCollectionsImp
 
         public int Count { get; private set; } = 0;
 
-        public object this[int index]
+        public T this[int index]
         {
             get => array[index];
             set => array[index] = value;
         }
 
-        public bool Contains(object element)
+        public bool Contains(T element)
         {
             return IndexOf(element) > -1;
         }
 
-        public int IndexOf(object element)
+        public int IndexOf(T element)
         {
             for (int i = 0; i < Count; i++)
             {
-                if (array[i] == element)
+                if (array[i].Equals(element))
                 {
                     return i;
                 }
@@ -49,7 +50,7 @@ namespace DataCollectionsImp
             return -1;
         }
 
-        public void Insert(int index, object element)
+        public void Insert(int index, T element)
         {
             Count++;
             ResizeArrayIfNeeded();
@@ -66,7 +67,7 @@ namespace DataCollectionsImp
             Count = 0;
         }
 
-        public void Remove(object element)
+        public void Remove(T element)
         {
             RemoveAt(IndexOf(element));
         }
