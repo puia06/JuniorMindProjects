@@ -82,7 +82,10 @@ namespace DataCollectionsImp
 
         public IEnumerator GetEnumerator()
         {
-            return helper;
+            foreach (var element in array)
+            {
+                yield return element;
+            }
         }
 
         private void ResizeArrayIfNeeded()
