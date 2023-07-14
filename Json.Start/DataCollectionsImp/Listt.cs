@@ -122,7 +122,7 @@ namespace DataCollectionsImp
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return (IEnumerator<T>)this.GetEnumerator();
         }
     }
 }
