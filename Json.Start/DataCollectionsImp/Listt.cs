@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace DataCollectionsImp
 {
-    public class Listt<T> : IEnumerable
+    public class Listt<T> : IEnumerable, IList<T>
     {
         private T[] array;
 
@@ -25,6 +25,8 @@ namespace DataCollectionsImp
         }
 
         public int Count { get; private set; } = 0;
+
+        public bool IsReadOnly { get; private set; }
 
         public virtual T this[int index]
         {
@@ -95,6 +97,32 @@ namespace DataCollectionsImp
             {
                 Array.Resize(ref array, array.Length * 2);
             }
+        }
+
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            int index = arrayIndex;
+            foreach (T item in this)
+            {
+                array[index] = item;
+                index++;
+            }
+        }
+
+         bool ICollection<T>.Remove(T item)
+        {
+            if (array.Contains(item))
+            {
+                RemoveAt(IndexOf(item));
+                return true;
+            }
+
+            return false;
+        }
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            throw new NotImplementedException();
         }
     }
 }

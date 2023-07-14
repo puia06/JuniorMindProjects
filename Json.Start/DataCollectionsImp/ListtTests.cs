@@ -112,7 +112,7 @@ namespace DataCollectionsImp
         [Fact]
         public void RemoveAt_RemoveElement_ShouldReturnTrue()
         {
-            var testArray = new List<int>();
+            var testArray = new Listt<int>();
             testArray.Add(1);
             testArray.Add(2);
             testArray.RemoveAt(0);
