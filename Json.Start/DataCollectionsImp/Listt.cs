@@ -18,7 +18,7 @@ namespace DataCollectionsImp
             this.array = new T[4];
         }
 
-        public void Add(T element)
+        public virtual void Add(T element)
         {
             array[Count] = element;
             Count++;
@@ -26,7 +26,7 @@ namespace DataCollectionsImp
 
         public int Count { get; private set; } = 0;
 
-        public T this[int index]
+        public virtual T this[int index]
         {
             get => array[index];
             set => array[index] = value;
@@ -50,7 +50,7 @@ namespace DataCollectionsImp
             return -1;
         }
 
-        public void Insert(int index, T element)
+        public virtual void Insert(int index, T element)
         {
             Count++;
             ResizeArrayIfNeeded();

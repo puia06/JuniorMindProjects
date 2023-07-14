@@ -64,7 +64,7 @@ namespace DataCollectionsImp
             var testArray = new SortedListt<int>();
             testArray.Add(3);
             testArray.Add(2);
-            testArray[0] = 3;
+            testArray[0] = 4;
 
             Assert.Equal(2, testArray[0]);
             Assert.Equal(3, testArray[1]);
