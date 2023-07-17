@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Xunit.Sdk;
 
 namespace DataCollectionsImp
 {
@@ -20,8 +21,15 @@ namespace DataCollectionsImp
 
         public virtual void Add(T element)
         {
-            array[Count] = element;
-            Count++;
+            try
+            {
+                array[Count] = element;
+                Count++;
+            }
+            catch (NotSupportedException)
+            {
+                Console.WriteLine("List is readonly!");
+            }
         }
 
         public int Count { get; private set; } = 0;
@@ -54,6 +62,7 @@ namespace DataCollectionsImp
 
         public virtual void Insert(int index, T element)
         {
+            CheckIfArrayIndexIsValid(index);
             Count++;
             ResizeArrayIfNeeded();
             for (int i = Count - 1; i > index; i--)
@@ -82,6 +91,7 @@ namespace DataCollectionsImp
 
         public void RemoveAt(int index)
         {
+            CheckIfArrayIndexIsValid(index);
             for (int i = index; i < Count - 1; i++)
             {
                 array[i] = array[i + 1];
@@ -107,11 +117,36 @@ namespace DataCollectionsImp
 
         public void CopyTo(T[] array, int arrayIndex)
         {
+            CheckIfArrayIsNull(this.array);
+            CheckIfArrayIndexIsValid(arrayIndex);
             int index = arrayIndex;
-            foreach (T item in this)
+            try
             {
-                array[index] = item;
-                index++;
+                foreach (T item in this)
+                {
+                    array[index] = item;
+                    index++;
+                }
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine("Can't copy. Array length is too big!");
+            }
+        }
+
+        private void CheckIfArrayIsNull(T[] array)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullException(paramName: nameof(array), message: "Array is null!");
+            }
+        }
+
+        private void CheckIfArrayIndexIsValid(int index)
+        {
+            if (index >= array.Length || index < 0)
+            {
+                throw new ArgumentOutOfRangeException(paramName: nameof(index), message: "Array index is invalid!");
             }
         }
 

@@ -127,7 +127,7 @@ namespace DataCollectionsImp
             var testArray = new IntArray();
             testArray.Add(1);
             testArray.Add(2);
-            testArray.Clear();  
+            testArray.Clear();
 
             Assert.Equal(0, testArray.Count);
         }
@@ -168,6 +168,51 @@ namespace DataCollectionsImp
             Assert.Equal(3, testArray[1]);
             Assert.Equal(4, testArray[2]);
             Assert.Equal(3, testArray.Count);
+        }
+
+        [Fact]
+        public void Insert_InsertElement_InvalidPosition_ExceptionTest_ShouldReturnException()
+        {
+            var testArray = new IntArray();
+            testArray.Add(1);
+            testArray.Add(2);
+            testArray.Add(3);
+            testArray.Add(4);
+
+            var exception = Assert.Throws<IndexOutOfRangeException>(() => testArray.Insert(-1, 0));
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public void DividedByZeroException()
+        {
+            var test = 5;
+            int result;
+            try
+            {
+               result = test / 0;
+               Assert.True(false, "Expected DividedByZeroException was not thrown.");
+            }
+            catch (DivideByZeroException)
+            {
+                Assert.True(true, "DividedByZeroException was caught successfully.");
+            }
+        }
+
+        [Fact]
+        public void NullReferenceException()
+        {
+            string test = null;
+            int result;
+            try
+            {
+                result = test.Length;
+                Assert.True(false, "Expected NullReferenceException was not thrown.");
+            }
+            catch (NullReferenceException)
+            {
+                Assert.True(true, "NullReferenceException was caught successfully.");
+            }
         }
     }
 }
