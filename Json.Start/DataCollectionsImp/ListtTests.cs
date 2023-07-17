@@ -102,11 +102,25 @@ namespace DataCollectionsImp
             testArray.Add("string");
             testArray.Add(2.2);
             testArray.Add(3);
-            testArray.Remove("string");
 
+            Assert.True(testArray.Remove("string"));
             Assert.Equal(2.2, testArray[0]);
             Assert.Equal(3, testArray[1]);
             Assert.Equal(2, testArray.Count);
+        }
+
+        [Fact]
+        public void Remove_RemoveElement_ShouldReturnFalse()
+        {
+            var testArray = new Listt<object>();
+            testArray.Add("string");
+            testArray.Add(2.2);
+            testArray.Add(3);
+
+            Assert.False(testArray.Remove("abc"));
+            Assert.Equal("string", testArray[0]);
+            Assert.Equal(2.2, testArray[1]);
+            Assert.Equal(3, testArray.Count);
         }
 
         [Fact]

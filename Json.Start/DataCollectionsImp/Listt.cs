@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace DataCollectionsImp
 {
-    public class Listt<T> : IEnumerable, IList<T>
+    public class Listt<T> : IList<T>
     {
         private T[] array;
 
@@ -69,9 +69,15 @@ namespace DataCollectionsImp
             Count = 0;
         }
 
-        public void Remove(T element)
+        public bool Remove(T element)
         {
-            RemoveAt(IndexOf(element));
+            if (array.Contains(element))
+            {
+                RemoveAt(IndexOf(element));
+                return true;
+            }
+
+            return false;
         }
 
         public void RemoveAt(int index)
@@ -83,7 +89,7 @@ namespace DataCollectionsImp
             Count--;
         }
 
-        public IEnumerator GetEnumerator()
+       public IEnumerator GetEnumerator()
         {
             foreach (var element in array)
             {
@@ -109,20 +115,9 @@ namespace DataCollectionsImp
             }
         }
 
-         bool ICollection<T>.Remove(T item)
-        {
-            if (array.Contains(item))
-            {
-                RemoveAt(IndexOf(item));
-                return true;
-            }
-
-            return false;
-        }
-
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
-            return (IEnumerator<T>)this.GetEnumerator();
+            return ((IEnumerable<T>)array).GetEnumerator();
         }
     }
 }
