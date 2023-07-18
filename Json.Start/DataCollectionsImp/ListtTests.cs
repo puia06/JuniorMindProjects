@@ -190,8 +190,20 @@ namespace DataCollectionsImp
             testArray.Add(2);
             testArray.Add(3);
             testArray.Add(4);
-            var newArray = new int[3];
-            Assert.Throws<ArgumentOutOfRangeException>(() => testArray.CopyTo(newArray, 2));
+            var newArray = new int[6];
+            Assert.Throws<ArgumentOutOfRangeException>(() => testArray.CopyTo(newArray, 7));
+        }
+
+        [Fact]
+        public void CopyTo_InvalidArrayLength_ShouldReturnTrue()
+        {
+            var testArray = new Listt<int>();
+            testArray.Add(1);
+            testArray.Add(2);
+            testArray.Add(3);
+            testArray.Add(4);
+            var newArray = new int[6];
+            Assert.Throws<ArgumentException>(() => testArray.CopyTo(newArray, 4));
         }
     }
 }

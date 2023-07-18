@@ -62,7 +62,7 @@ namespace DataCollectionsImp
 
         public virtual void Insert(int index, T element)
         {
-            CheckIfArrayIndexIsValid(index);
+            CheckIndex(index);
             Count++;
             ResizeArrayIfNeeded();
             for (int i = Count - 1; i > index; i--)
@@ -91,7 +91,7 @@ namespace DataCollectionsImp
 
         public void RemoveAt(int index)
         {
-            CheckIfArrayIndexIsValid(index);
+            CheckIndex(index);
             for (int i = index; i < Count - 1; i++)
             {
                 array[i] = array[i + 1];
@@ -118,19 +118,14 @@ namespace DataCollectionsImp
         public void CopyTo(T[] array, int arrayIndex)
         {
             CheckIfArrayIsNull(array);
-            CheckIfArrayIndexToCopyIsValid(arrayIndex, array);
+            CheckIndex(arrayIndex, array);
+            CheckLengthToCopy(array, arrayIndex);
             int index = arrayIndex;
-            try
+
+            foreach (T item in this)
             {
-                foreach (T item in this)
-                {
-                    array[index] = item;
-                    index++;
-                }
-            }
-            catch (ArgumentException)
-            {
-                Console.WriteLine("Can't copy. Array length is too big!");
+                array[index] = item;
+                index++;
             }
         }
 
@@ -142,18 +137,26 @@ namespace DataCollectionsImp
             }
         }
 
-        private void CheckIfArrayIndexIsValid(int index)
+        private void CheckIndex(int index)
         {
             if (index >= array.Length || index < 0)
             {
                 throw new ArgumentOutOfRangeException(paramName: nameof(index), message: "Index is invalid!");
             }
         }
-        private void CheckIfArrayIndexToCopyIsValid(int index, T[] array)
+
+        private void CheckIndex(int index, T[] array)
         {
-            if (array.Length < this.array.Length + index || index < 0)
+            if (index >= array.Length || index < 0)
             {
                 throw new ArgumentOutOfRangeException(paramName: nameof(index), message: "Index is invalid!");
+            }
+        }
+        private void CheckLengthToCopy(T[] array, int index)
+        {
+            if (array.Length < this.array.Length + index)
+            {
+                throw new ArgumentException(paramName: nameof(array), message: "Can't copy. Array length is too big!");
             }
         }
 
