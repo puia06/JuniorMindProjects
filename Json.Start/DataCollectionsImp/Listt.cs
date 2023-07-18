@@ -117,8 +117,8 @@ namespace DataCollectionsImp
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            CheckIfArrayIsNull(this.array);
-            CheckIfArrayIndexIsValid(arrayIndex);
+            CheckIfArrayIsNull(array);
+            CheckIfArrayIndexToCopyIsValid(arrayIndex, array);
             int index = arrayIndex;
             try
             {
@@ -146,7 +146,14 @@ namespace DataCollectionsImp
         {
             if (index >= array.Length || index < 0)
             {
-                throw new ArgumentOutOfRangeException(paramName: nameof(index), message: "Array index is invalid!");
+                throw new ArgumentOutOfRangeException(paramName: nameof(index), message: "Index is invalid!");
+            }
+        }
+        private void CheckIfArrayIndexToCopyIsValid(int index, T[] array)
+        {
+            if (array.Length < this.array.Length + index || index < 0)
+            {
+                throw new ArgumentOutOfRangeException(paramName: nameof(index), message: "Index is invalid!");
             }
         }
 

@@ -84,6 +84,17 @@ namespace DataCollectionsImp
             Assert.Equal(9, testArray[1]);
         }
 
+
+        [Fact]
+        public void Insert_InvalidIndex_ShouldReturnTrue()
+        {
+            var testArray = new Listt<int>();
+            testArray.Add(1);
+            testArray.Add(2);
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => testArray.Insert(4, 9));
+        }
+
         [Fact]
         public void Clear_ClearElements_ShouldReturnTrue()
         {
@@ -132,6 +143,55 @@ namespace DataCollectionsImp
             testArray.RemoveAt(0);
 
             Assert.Equal(2, testArray[0]);
+        }
+
+        [Fact]
+        public void RemoveAt_InvalidIndex_ShouldReturnTrue()
+        {
+            var testArray = new Listt<int>();
+            testArray.Add(1);
+            testArray.Add(2);
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => testArray.RemoveAt(4));
+        }
+
+        [Fact]
+        public void CopyTo_ShouldReturnTrue()
+        {
+            var testArray = new Listt<int>();
+            testArray.Add(1);
+            testArray.Add(2);
+            testArray.Add(3);
+            testArray.Add(4);
+            var newArray = new int[6];
+            testArray.CopyTo(newArray, 2);
+
+            Assert.Equal(0, newArray[0]);
+            Assert.Equal(0, newArray[1]);
+            Assert.Equal(1, newArray[2]);
+            Assert.Equal(2, newArray[3]);
+            Assert.Equal(3, newArray[4]);
+            Assert.Equal(4, newArray[5]);
+        }
+
+        [Fact]
+        public void CopyTo_NullArray_ShouldReturnTrue()
+        {
+            var testArray = new Listt<int>();
+            int[] newArray = null;
+            Assert.Throws<ArgumentNullException>(() => testArray.CopyTo(newArray, 2));
+        }
+
+        [Fact]
+        public void CopyTo_InvalidIndex_ShouldReturnTrue()
+        {
+            var testArray = new Listt<int>();
+            testArray.Add(1);
+            testArray.Add(2);
+            testArray.Add(3);
+            testArray.Add(4);
+            var newArray = new int[3];
+            Assert.Throws<ArgumentOutOfRangeException>(() => testArray.CopyTo(newArray, 2));
         }
     }
 }
