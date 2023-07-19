@@ -162,7 +162,7 @@ namespace DataCollectionsImp
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
-            return ((IEnumerable<T>)array).GetEnumerator();
+            yield return (T)GetEnumerator();
         }
     }
 }
