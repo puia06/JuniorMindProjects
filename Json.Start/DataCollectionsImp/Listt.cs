@@ -30,13 +30,18 @@ namespace DataCollectionsImp
 
         public int Count { get; private set; } = 0;
 
-        public bool IsReadOnly { get; private set; }
+        public bool IsReadOnly { get; set; } = false;
 
         public virtual T this[int index]
         {
-            get => array[index];
+            get
+            {
+                CheckIndex(index, array);
+                return array[index];
+            }
             set
             {
+                CheckIndex(index, array);
                 CheckIfIsReadOnly();
                 array[index] = value;
             }
@@ -102,7 +107,7 @@ namespace DataCollectionsImp
             Count--;
         }
 
-       public IEnumerator GetEnumerator()
+       public IEnumerator<T> GetEnumerator()
         {
             foreach (var element in array)
             {
@@ -159,18 +164,13 @@ namespace DataCollectionsImp
         {
             if (this.IsReadOnly)
             {
-                throw new ReadOnlyException("IList is ReadOnly!");
+                throw new NotSupportedException("IList is ReadOnly!");
             }
         }
 
-        public void MakeListReadOnly()
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            this.IsReadOnly = true;
-        }
-
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            return (IEnumerator<T>)GetEnumerator();
+            return GetEnumerator();
         }
     }
 }
