@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace DataCollectionsImp
     public class ListtTests
     {
         [Fact]
-        public void Add_IndStringDouble_ShouldReturnTrue()
+        public void Add_IntStringDouble_ShouldReturnTrue()
         {
             var testArray = new Listt<object>();
             testArray.Add(1);
@@ -21,6 +22,16 @@ namespace DataCollectionsImp
         }
 
         [Fact]
+        public void Add_IsReadOnly_ShoudThrowException()
+        {
+            var testArray = new Listt<object>();
+            testArray.Add(1);
+            testArray.Add("string");
+            testArray.MakeListReadOnly();
+            Assert.Throws<ReadOnlyException>(() => testArray.Add(2.2));
+        }
+
+        [Fact]
         public void SetElement_CorrectElement_ShouldReturnTrue()
         {
             var testArray = new Listt<int>();
@@ -29,6 +40,16 @@ namespace DataCollectionsImp
             testArray[0] = 0;
 
             Assert.Equal(0, testArray[0]);
+        }
+
+        [Fact]
+        public void Set_IsReadOnly_ShoudThrowException()
+        {
+            var testArray = new Listt<object>();
+            testArray.Add(1);
+            testArray.Add("string");
+            testArray.MakeListReadOnly();
+            Assert.Throws<ReadOnlyException>(() => testArray[0] = 1);
         }
 
         [Fact]
@@ -96,6 +117,16 @@ namespace DataCollectionsImp
         }
 
         [Fact]
+        public void Insert_IsReadOnly_ShoudThrowException()
+        {
+            var testArray = new Listt<object>();
+            testArray.Add(1);
+            testArray.Add("string");
+            testArray.MakeListReadOnly();
+            Assert.Throws<ReadOnlyException>(() => testArray.Insert(1, 1));
+        }
+
+        [Fact]
         public void Clear_ClearElements_ShouldReturnTrue()
         {
             var testArray = new Listt<string>();
@@ -104,6 +135,16 @@ namespace DataCollectionsImp
             testArray.Clear();
 
             Assert.Equal(0, testArray.Count);
+        }
+
+        [Fact]
+        public void Clear_IsReadOnly_ShoudThrowException()
+        {
+            var testArray = new Listt<object>();
+            testArray.Add(1);
+            testArray.Add("string");
+            testArray.MakeListReadOnly();
+            Assert.Throws<ReadOnlyException>(() => testArray.Clear());
         }
 
         [Fact]
@@ -135,6 +176,16 @@ namespace DataCollectionsImp
         }
 
         [Fact]
+        public void Remove_IsReadOnly_ShoudThrowException()
+        {
+            var testArray = new Listt<object>();
+            testArray.Add(1);
+            testArray.Add("string");
+            testArray.MakeListReadOnly();
+            Assert.Throws<ReadOnlyException>(() => testArray.Remove(1));
+        }
+
+        [Fact]
         public void RemoveAt_RemoveElement_ShouldReturnTrue()
         {
             var testArray = new Listt<int>();
@@ -153,6 +204,16 @@ namespace DataCollectionsImp
             testArray.Add(2);
 
             Assert.Throws<ArgumentOutOfRangeException>(() => testArray.RemoveAt(4));
+        }
+
+        [Fact]
+        public void RemoveAt_IsReadOnly_ShoudThrowException()
+        {
+            var testArray = new Listt<object>();
+            testArray.Add(1);
+            testArray.Add("string");
+            testArray.MakeListReadOnly();
+            Assert.Throws<ReadOnlyException>(() => testArray.RemoveAt(0));
         }
 
         [Fact]

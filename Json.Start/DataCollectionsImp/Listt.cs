@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,15 +23,9 @@ namespace DataCollectionsImp
 
         public virtual void Add(T element)
         {
-            try
-            {
-                array[Count] = element;
-                Count++;
-            }
-            catch (NotSupportedException)
-            {
-                Console.WriteLine("List is readonly!");
-            }
+            CheckIfIsReadOnly();
+            array[Count] = element;
+            Count++;
         }
 
         public int Count { get; private set; } = 0;
@@ -39,7 +35,11 @@ namespace DataCollectionsImp
         public virtual T this[int index]
         {
             get => array[index];
-            set => array[index] = value;
+            set
+            {
+                CheckIfIsReadOnly();
+                array[index] = value;
+            }
         }
 
         public bool Contains(T element)
@@ -62,6 +62,7 @@ namespace DataCollectionsImp
 
         public virtual void Insert(int index, T element)
         {
+            CheckIfIsReadOnly();
             CheckIndex(index);
             Count++;
             ResizeArrayIfNeeded();
@@ -74,6 +75,7 @@ namespace DataCollectionsImp
 
         public void Clear()
         {
+            CheckIfIsReadOnly();
             Array.Resize(ref array, 0);
             Count = 0;
         }
@@ -91,6 +93,7 @@ namespace DataCollectionsImp
 
         public void RemoveAt(int index)
         {
+            CheckIfIsReadOnly();
             CheckIndex(index);
             for (int i = index; i < Count - 1; i++)
             {
@@ -160,9 +163,22 @@ namespace DataCollectionsImp
             }
         }
 
+        private void CheckIfIsReadOnly()
+        {
+            if (this.IsReadOnly)
+            {
+                throw new ReadOnlyException("IList is ReadOnly!");
+            }
+        }
+
+        public void MakeListReadOnly()
+        {
+            this.IsReadOnly = true;
+        }
+
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
-            yield return (T)GetEnumerator();
+            return (IEnumerator<T>)GetEnumerator();
         }
     }
 }
