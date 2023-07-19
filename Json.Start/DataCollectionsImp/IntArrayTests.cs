@@ -200,6 +200,45 @@ namespace DataCollectionsImp
         }
 
         [Fact]
+        public void OverflowException()
+        {
+            int maxInt = int.MaxValue;
+            checked
+            {
+                Assert.Throws<OverflowException>(() => maxInt++);
+            }
+        }
+
+        [Fact]
+        public void FormatException()
+        {
+            try
+            {
+                int number = int.Parse("abc");
+                Assert.True(false, "Expected FormatException was not thrown.");
+            }
+            catch (FormatException)
+            {
+                Assert.True(true, "FormatException was caught successfully.");
+            }
+        }
+
+        [Fact]
+        public void IndexOutOfRange()
+        {
+            var example = new int[2];
+            try
+            {
+                int a = example[3];
+                Assert.True(false, "Expected IndexOutOfRangeException was not thrown.");
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Assert.True(true, "IndexOutOfRangeException was caught successfully.");
+            }
+        }
+
+        [Fact]
         public void NullReferenceException()
         {
             string test = null;

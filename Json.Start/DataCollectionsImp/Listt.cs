@@ -63,7 +63,7 @@ namespace DataCollectionsImp
         public virtual void Insert(int index, T element)
         {
             CheckIfIsReadOnly();
-            CheckIndex(index);
+            CheckIndex(index, this.array);
             Count++;
             ResizeArrayIfNeeded();
             for (int i = Count - 1; i > index; i--)
@@ -94,7 +94,7 @@ namespace DataCollectionsImp
         public void RemoveAt(int index)
         {
             CheckIfIsReadOnly();
-            CheckIndex(index);
+            CheckIndex(index, this.array);
             for (int i = index; i < Count - 1; i++)
             {
                 array[i] = array[i + 1];
@@ -137,14 +137,6 @@ namespace DataCollectionsImp
             if (array == null)
             {
                 throw new ArgumentNullException(paramName: nameof(array), message: "Array is null!");
-            }
-        }
-
-        private void CheckIndex(int index)
-        {
-            if (index >= array.Length || index < 0)
-            {
-                throw new ArgumentOutOfRangeException(paramName: nameof(index), message: "Index is invalid!");
             }
         }
 
