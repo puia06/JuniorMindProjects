@@ -9,9 +9,9 @@ namespace DataCollectionsImp
     internal class DecoratorSortedListt<T> : ListtDecorator<T> where T : IComparable<T>
     {
         private IList<T> sortedListt;
-        public DecoratorSortedListt(IList<T> sortDescendingList) : base(sortDescendingList)
+        public DecoratorSortedListt(IList<T> sortedListt) : base(sortedListt)
         {
-            sortedListt = sortDescendingList;
+            this.sortedListt = sortedListt;
         }
 
         public override T this[int index]
