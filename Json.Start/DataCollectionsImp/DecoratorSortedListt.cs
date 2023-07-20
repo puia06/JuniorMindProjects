@@ -6,37 +6,35 @@ using System.Threading.Tasks;
 
 namespace DataCollectionsImp
 {
-    internal class DecoratorSortedListt<T> : ListtDecorator<T> where T : IComparable<T>
+    public class DecoratorSortedListt<T> : ListtDecorator<T> where T : IComparable<T>
     {
-        private IList<T> sortedListt;
-        public DecoratorSortedListt(IList<T> sortedListt) : base(sortedListt)
+        public DecoratorSortedListt(IList<T> list) : base(list)
         {
-            this.sortedListt = sortedListt;
         }
 
         public override T this[int index]
         {
             set
             {
-                sortedListt[index] = value;
+                base[index] = value;
                 SortArray();
             }
         }
         public override void Add(T item)
         {
-            sortedListt.Add(item);
+            base.Add(item);
             SortArray();
         }
 
         public override void Insert(int index, T item)
         {
-            sortedListt.Insert(index, item);
+            base.Insert(index, item);
             SortArray();
         }
 
         public override void RemoveAt(int index)
         {
-            sortedListt.RemoveAt(index);
+            base.RemoveAt(index);
             SortArray();
         }
         private void SortArray()
