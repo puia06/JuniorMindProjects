@@ -30,7 +30,7 @@ namespace DataCollectionsImp
 
         public int Count { get; private set; } = 0;
 
-        public bool IsReadOnly { get; set; } = false;
+        public bool IsReadOnly { get; } = false;
 
         public virtual T this[int index]
         {

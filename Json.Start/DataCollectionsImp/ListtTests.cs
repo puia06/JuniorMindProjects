@@ -33,16 +33,6 @@ namespace DataCollectionsImp
         }
 
         [Fact]
-        public void Set_IsReadOnly_ShoudThrowException()
-        {
-            var testArray = new Listt<object>();
-            testArray.Add(1);
-            testArray.Add("string");
-            testArray.IsReadOnly = true;
-            Assert.Throws<NotSupportedException>(() => testArray[0] = 1);
-        }
-
-        [Fact]
         public void Contains_Element_ShouldReturnTrue()
         {
             var testArray = new List<string>();

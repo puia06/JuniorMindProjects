@@ -20,15 +20,13 @@ namespace DataCollectionsImp
 
         public int Count { get; private set; } = 0;
 
-        public bool IsReadOnly { get; set; } = true;
+        public bool IsReadOnly { get;} = true;
 
         public T this[int index]
         {
-            get
-            {
-                return readOnlyList[index];
-            }
-             set => throw new NotSupportedException("IList is ReadOnly!"); }
+            get => readOnlyList[index];
+            set => throw new NotSupportedException("IList is ReadOnly!"); 
+        }
 
         public void Add(T item)
         {
