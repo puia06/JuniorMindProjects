@@ -5,39 +5,38 @@ namespace DataCollectionsImp
 {
     public class Stream
     {
-    public (string, string) WritingMethod(string filePath, string text, bool gzip = false, bool crypt = false)
-    {
+        public (string, string) WritingMethod(StreamWriter stream, string filePath, string text, bool gzip = false, bool crypt = false)
+        {
             string key = "";
             string vector = "";
-        if (crypt)
-        {
-            text = EncryptDataWithAes(text, out string keyBase64, out string vectorBase64);
-                 key = keyBase64;
-                 vector = vectorBase64;
+            if (crypt)
+            {
+                text = EncryptDataWithAes(text, out string keyBase64, out string vectorBase64);
+                key = keyBase64;
+                vector = vectorBase64;
+            }
+
+            Write(stream, text);
+
+            if (gzip)
+            {
+                GzipFile(filePath);
+            }
+
+            return (key, vector);
         }
 
-        Write(filePath, text);
-
-        if (gzip)
-        {
-             GzipFile(filePath);
-        }
-
-        return (key, vector);
-    }
-
-        public string ReadingMethod(string filePath, string key, string vector, bool gzip = false, bool crypt = false)
+        public string ReadingMethod(StreamReader stream, string filePath, string key, string vector, bool gzip = false, bool crypt = false)
         {
             string result = "";
-            result = Read(filePath);
             if (gzip)
             {
                 UnGzipFile(filePath + ".zip");
-                result = Read(filePath + ".zip" + "_unzipped");
+                result = Read(stream);
             }
             else
             {
-                result = Read(filePath);
+                result = Read(stream);
             }
 
             if (crypt)
@@ -49,22 +48,18 @@ namespace DataCollectionsImp
         }
 
 
-        private string Read(string filePath)
+        private string Read(StreamReader stream)
         {
-            string result = "";
-            using (StreamReader reader = new StreamReader(filePath))
-            {
-                result = reader.ReadToEnd();
-            }
+            string result = stream.ReadToEnd();
+            stream.Close();
+
             return result;
         }
 
-        private void Write(string filePath, string text)
+        private void Write(StreamWriter stream, string text)
         {
-            using (StreamWriter writer = new StreamWriter(filePath))
-            {
-                writer.Write(text);
-            }
+            stream.Write(text);
+            stream.Close();
         }
 
         private static void GzipFile(string filePath)
@@ -87,6 +82,11 @@ namespace DataCollectionsImp
 
             using (FileStream compressedFileStream = File.Open(filePath, FileMode.Open))
             {
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+
                 using (FileStream outputFileStream = File.Create(outputFilePath))
                 {
                     using (var decompressor = new GZipStream(compressedFileStream, CompressionMode.Decompress))
@@ -104,7 +104,7 @@ namespace DataCollectionsImp
                 aesAlgorithm.Key = Convert.FromBase64String(keyBase64);
                 aesAlgorithm.IV = Convert.FromBase64String(vectorBase64);
 
-        
+
                 ICryptoTransform decryptor = aesAlgorithm.CreateDecryptor();
 
                 byte[] cipher = Convert.FromBase64String(cipherText);
