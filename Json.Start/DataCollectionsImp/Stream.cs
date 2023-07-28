@@ -1,108 +1,69 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO.Compression;
-using System.Linq;
-using System.Reflection.Metadata;
+﻿using System.IO.Compression;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataCollectionsImp
 {
     public class Stream
     {
-        public string Read(string filePath, bool gzip = false, bool crypt = false)
+    public (string, string) WritingMethod(string filePath, string text, bool gzip = false, bool crypt = false)
+    {
+            string key = "";
+            string vector = "";
+        if (crypt)
+        {
+            text = EncryptDataWithAes(text, out string keyBase64, out string vectorBase64);
+                 key = keyBase64;
+                 vector = vectorBase64;
+        }
+
+        Write(filePath, text);
+
+        if (gzip)
+        {
+             GzipFile(filePath);
+        }
+
+        return (key, vector);
+    }
+
+        public string ReadingMethod(string filePath, string key, string vector, bool gzip = false, bool crypt = false)
         {
             string result = "";
+            result = Read(filePath);
             if (gzip)
             {
-                UnGzipFile(filePath);
+                UnGzipFile(filePath + ".zip");
+                result = Read(filePath + ".zip" + "_unzipped");
+            }
+            else
+            {
+                result = Read(filePath);
             }
 
-            using (StreamReader reader = new StreamReader(filePath))
-             {
-                result = reader.ReadToEnd();
-
-                if (crypt)
-                {
-                    result = DecryptString(result);
-                }
+            if (crypt)
+            {
+                result = DecryptDataWithAes(result, key, vector);
             }
 
             return result;
         }
 
-        public void Write(string filePath, string text, bool gzip = false, bool crypt = false)
+
+        private string Read(string filePath)
         {
-            if (crypt)
+            string result = "";
+            using (StreamReader reader = new StreamReader(filePath))
             {
-                byte[] encryptedBytes = EncryptString(text);
-                text = Encoding.UTF8.GetString(encryptedBytes); 
+                result = reader.ReadToEnd();
             }
-
-            if (gzip)
-            {
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    using (StreamWriter writer = new StreamWriter(ms))
-                    {
-                        writer.Write(text);
-                    }
-
-                    byte[] compressedData = ms.ToArray();
-                    GzipFile(filePath);
-                }
-            }
-            else
-            {
-                using (StreamWriter writer = new StreamWriter(filePath))
-                {
-                    writer.Write(text);
-                }
-            }
-   
+            return result;
         }
 
-        static byte[] EncryptString(string plainText)
+        private void Write(string filePath, string text)
         {
-            using (Aes encodeAlg = Aes.Create())
+            using (StreamWriter writer = new StreamWriter(filePath))
             {
-                ICryptoTransform encryptor = encodeAlg.CreateEncryptor(encodeAlg.Key, encodeAlg.IV);
-
-                using (MemoryStream msEncrypt = new MemoryStream())
-                {
-                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-                    {
-                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-                        {
-                            swEncrypt.Write(plainText);
-                        }
-
-                       return msEncrypt.ToArray();
-                    }
-                }
-            }
-        }
-
-        static string DecryptString(string cipherText)
-        {
-            byte[] cipherTextByte = Encoding.UTF8.GetBytes(cipherText);
-
-            using (Aes aesAlg = Aes.Create())
-            {
-                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-
-                using (MemoryStream msDecrypt = new MemoryStream(cipherTextByte))
-                {
-                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
-                    {
-                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
-                        {
-                            return srDecrypt.ReadToEnd();
-                        }
-                    }
-                }
+                writer.Write(text);
             }
         }
 
@@ -133,6 +94,58 @@ namespace DataCollectionsImp
                         decompressor.CopyTo(outputFileStream);
                     }
                 }
+            }
+        }
+
+        private static string DecryptDataWithAes(string cipherText, string keyBase64, string vectorBase64)
+        {
+            using (Aes aesAlgorithm = Aes.Create())
+            {
+                aesAlgorithm.Key = Convert.FromBase64String(keyBase64);
+                aesAlgorithm.IV = Convert.FromBase64String(vectorBase64);
+
+        
+                ICryptoTransform decryptor = aesAlgorithm.CreateDecryptor();
+
+                byte[] cipher = Convert.FromBase64String(cipherText);
+
+                using (MemoryStream ms = new MemoryStream(cipher))
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader sr = new StreamReader(cs))
+                        {
+                            return sr.ReadToEnd();
+                        }
+                    }
+                }
+            }
+        }
+
+        public static string EncryptDataWithAes(string plainText, out string keyBase64, out string vectorBase64)
+        {
+            using (Aes aesAlgorithm = Aes.Create())
+            {
+
+                keyBase64 = Convert.ToBase64String(aesAlgorithm.Key);
+                vectorBase64 = Convert.ToBase64String(aesAlgorithm.IV);
+                ICryptoTransform encryptor = aesAlgorithm.CreateEncryptor();
+
+                byte[] encryptedData;
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter sw = new StreamWriter(cs))
+                        {
+                            sw.Write(plainText);
+                        }
+                        encryptedData = ms.ToArray();
+                    }
+                }
+
+                return Convert.ToBase64String(encryptedData);
             }
         }
     }
